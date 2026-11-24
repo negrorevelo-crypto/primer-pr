@@ -1,4 +1,5 @@
 (() => {
+  document.documentElement.classList.add('js');
   const supported = new Set(['en', 'es']);
   const params = new URLSearchParams(window.location.search);
   let explicit = params.get('lang');

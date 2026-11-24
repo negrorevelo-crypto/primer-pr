@@ -3,7 +3,7 @@ declare(strict_types=1);
 require_once dirname(__DIR__) . '/config/bootstrap.php';
 
 $service = trim((string)($_GET['service'] ?? ''));
-$allowedServices = ['home-care', 'repairs', 'design', 'project-oversight'];
+$allowedServices = ['repairs', 'remodeling', 'design', 'installations'];
 if (!in_array($service, $allowedServices, true)) {
     $service = '';
 }
@@ -15,8 +15,9 @@ if (!in_array($service, $allowedServices, true)) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="<?= h(app_base_path()) ?>">
   <meta name="theme-color" content="#f6f3ee">
-  <meta name="description" content="Tell Chelart about your property and request a project consultation in Orlando and Central Florida.">
-  <title>Start a Quote | Chelart</title>
+  <meta name="description" content="Request a quote for repairs, remodeling or interior design in Central Florida.">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png"><link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
+  <title>Chelart Construction | Repairs, Remodeling & Interior Design in Central Florida</title>
   <script src="assets/js/language-init.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,10 +29,10 @@ if (!in_array($service, $allowedServices, true)) {
 <body class="quote-page">
   <header class="site-header quote-header">
     <div class="nav-wrap">
-      <a class="brand" href="./" aria-label="Chelart home"><img src="assets/img/chelart-logo-transparent.png" alt="Chelart logo"></a>
+      <a class="brand" href="./" aria-label="Chelart home"><img src="assets/img/chelart-logo-192.png" alt="Chelart Construction logo" width="192" height="192" srcset="assets/img/chelart-logo-192.png 192w" sizes="96px"></a>
       <div class="quote-nav-actions">
         <div class="language-switch" role="group" aria-label="Select language"><button type="button" data-language-switch="en">EN</button><span aria-hidden="true">/</span><button type="button" data-language-switch="es">ES</button></div>
-        <a class="text-link back-link" href="./">Back to Chelart <span aria-hidden="true">↗</span></a>
+        <a class="text-link back-link" href="./">Home <span aria-hidden="true">←</span></a>
       </div>
     </div>
   </header>
@@ -45,7 +46,7 @@ if (!in_array($service, $allowedServices, true)) {
     </aside>
     <section class="quote-form-panel" aria-labelledby="quote-form-title">
       <div class="quote-form-head">
-        <div><p class="eyebrow">Project inquiry</p><h2 id="quote-form-title">Start a quote</h2></div>
+        <div><p class="eyebrow">Project inquiry</p><h2 id="quote-form-title">Get a quote</h2></div>
         <span class="step-count" data-step-count>01 <span>/</span> 04</span>
       </div>
       <div class="progress-track" aria-hidden="true"><span data-progress></span></div>
@@ -60,8 +61,9 @@ if (!in_array($service, $allowedServices, true)) {
           <div class="field-grid">
             <label class="field"><span>Property type</span><select name="property_type" required><option value="">Choose one</option><option value="single-family">Single-family home</option><option value="condo">Condo or townhome</option><option value="commercial">Commercial space</option><option value="other">Other</option></select></label>
             <label class="field"><span>City</span><input name="city" type="text" maxlength="100" placeholder="e.g. Orlando" required></label>
-            <label class="field"><span>ZIP code</span><input name="postal_code" inputmode="numeric" maxlength="20" placeholder="e.g. 32801" required></label>
+            <label class="field"><span>ZIP code</span><input name="postal_code" inputmode="numeric" pattern="\d{5}" maxlength="5" placeholder="e.g. 32801" required></label>
           </div>
+          <p class="field-error" data-step-error hidden>Choose a property type.</p>
         </fieldset>
 
         <fieldset class="form-step" data-step="2">
@@ -70,11 +72,10 @@ if (!in_array($service, $allowedServices, true)) {
           <div class="choice-grid">
             <?php
             $serviceOptions = [
-                'home-care' => ['Home care', 'Maintenance and planned upkeep'],
-                'repairs' => ['Repairs & maintenance', 'Handyman, painting, fixtures'],
-                'design' => ['Design & renovation', 'Interior design and remodeling'],
-                'commercial' => ['Commercial space', 'Design or improvements for a business'],
-                'project-oversight' => ['Project oversight', 'Coordination and follow-through'],
+                'repairs' => ['Repairs & maintenance', 'Handyman work, carpentry, painting, fixture updates and general upkeep.'],
+                'remodeling' => ['Kitchen & bath remodeling', 'Full kitchen and bathroom remodels.'],
+                'design' => ['Interior design & space planning', 'Homes and commercial spaces.'],
+                'installations' => ['Lighting & installations', 'Decorative lighting, fixtures and home EV chargers.'],
                 'other' => ['Something else', 'Tell us more in the next step'],
             ];
             foreach ($serviceOptions as $key => [$label, $description]):
@@ -93,7 +94,7 @@ if (!in_array($service, $allowedServices, true)) {
           <div class="field-grid field-grid-2">
             <label class="field"><span>When would you like to begin?</span><select name="project_timeline" required><option value="">Choose a timeframe</option><option value="asap">As soon as possible</option><option value="within-month">Within a month</option><option value="one-to-three-months">1–3 months</option><option value="planning">I’m planning ahead</option></select></label>
             <label class="field"><span>Best way to reach you</span><select name="preferred_contact" required><option value="email">Email</option><option value="phone">Phone</option><option value="text">Text message</option></select></label>
-          </div>
+          </div><p class="field-error" data-step-error hidden>Please complete the required project details.</p>
         </fieldset>
 
         <fieldset class="form-step" data-step="4">
@@ -106,18 +107,19 @@ if (!in_array($service, $allowedServices, true)) {
           </div>
           <label class="consent"><input type="checkbox" name="consent" value="1" required><span>I agree that Chelart may use these details to respond to my project inquiry.</span></label>
           <p class="privacy-note">Please don’t include payment details or other sensitive information in this form.</p>
+          <p class="field-error" data-step-error hidden>Please complete the required contact details and consent.</p>
         </fieldset>
 
         <div class="form-error" data-form-error role="alert" hidden></div>
         <div class="form-controls">
           <button class="button button-quiet" type="button" data-back hidden><span aria-hidden="true">←</span> Back</button>
           <button class="button button-primary" type="button" data-next>Continue <span aria-hidden="true">→</span></button>
-          <button class="button button-primary" type="submit" data-submit hidden>Send inquiry <span aria-hidden="true">↗</span></button>
+          <button class="button button-primary" type="submit" data-submit hidden>Send inquiry <span aria-hidden="true">→</span></button>
         </div>
         <p class="form-footnote">Your request is private and will be reviewed by the Chelart team.</p>
       </form>
     </section>
   </main>
-  <footer class="quote-footer"><a href="mailto:chelartusa@gmail.com">chelartusa@gmail.com</a><span>© <?= date('Y') ?> Chelart</span><span>Central Florida</span></footer>
+  <footer class="quote-footer"><a href="mailto:chelartusa@gmail.com">chelartusa@gmail.com</a><span>© 2026 Chelart Construction LLC</span><span>Central Florida</span></footer>
 </body>
 </html>

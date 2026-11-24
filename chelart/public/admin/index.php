@@ -174,6 +174,7 @@ $lastPage = max(1, (int)ceil($totalRequests / $pageSize));
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow, noarchive">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="../favicon-180.png"><link rel="icon" type="image/png" sizes="512x512" href="../favicon-512.png">
   <title>Solicitudes de cotización | Chelart</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -187,7 +188,7 @@ $lastPage = max(1, (int)ceil($totalRequests / $pageSize));
 <body class="quote-page">
   <header class="site-header quote-header">
     <div class="nav-wrap">
-      <a class="brand" href="../" aria-label="Inicio de Chelart"><img src="../assets/img/chelart-logo-transparent.png" alt="Chelart"></a>
+      <a class="brand" href="../" aria-label="Inicio de Chelart"><img src="../assets/img/chelart-logo-192.png" alt="Chelart Construction" width="192" height="192" srcset="../assets/img/chelart-logo-192.png 192w" sizes="96px"></a>
       <?php if ($isAuthenticated): ?>
         <form method="post" class="admin-actions"><input type="hidden" name="csrf_token" value="<?= admin_h($_SESSION['quote_admin_csrf']) ?>"><input type="hidden" name="action" value="logout"><button class="button button-quiet" type="submit">Cerrar sesión</button></form>
       <?php endif; ?>

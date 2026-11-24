@@ -10,6 +10,13 @@
   window.addEventListener('scroll', updateHeader, { passive: true });
 
   if (menuButton && nav) {
+    const closeMenu = () => {
+      menuButton.setAttribute('aria-expanded', 'false');
+      const spanish = document.documentElement.lang === 'es';
+      menuButton.setAttribute('aria-label', spanish ? 'Abrir menú' : 'Open menu');
+      nav.classList.remove('is-open');
+      document.body.classList.remove('menu-open');
+    };
     menuButton.addEventListener('click', () => {
       const open = menuButton.getAttribute('aria-expanded') !== 'true';
       menuButton.setAttribute('aria-expanded', String(open));
@@ -21,14 +28,19 @@
       document.body.classList.toggle('menu-open', open);
     });
     nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-      menuButton.setAttribute('aria-expanded', 'false');
-      nav.classList.remove('is-open');
-      document.body.classList.remove('menu-open');
+      closeMenu();
     }));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+        closeMenu();
+        menuButton.focus();
+      }
+    });
   }
 
   const revealItems = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('animations-ready');
     const observer = new IntersectionObserver((entries, instance) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -39,7 +51,21 @@
     }, { threshold: 0.14, rootMargin: '0px 0px -30px 0px' });
     revealItems.forEach((item) => observer.observe(item));
   } else {
+    document.documentElement.classList.add('animations-ready');
     revealItems.forEach((item) => item.classList.add('is-visible'));
+  }
+
+  const mobileCta = document.querySelector('.mobile-cta');
+  const hero = document.querySelector('.hero');
+  if (mobileCta && hero && 'IntersectionObserver' in window) {
+    const heroObserver = new IntersectionObserver(([entry]) => {
+      mobileCta.classList.toggle('is-visible', !entry.isIntersecting);
+    }, { threshold: 0.05 });
+    heroObserver.observe(hero);
+  } else if (mobileCta && hero) {
+    const updateMobileCta = () => mobileCta.classList.toggle('is-visible', window.scrollY > hero.offsetHeight - window.innerHeight);
+    updateMobileCta();
+    window.addEventListener('scroll', updateMobileCta, { passive: true });
   }
 
   const quoteForm = document.querySelector('#quote-form');
@@ -75,10 +101,31 @@
     }
     const fields = [...step.querySelectorAll('input[required], select[required], textarea[required]')];
     const invalid = fields.find((field) => !field.checkValidity());
+    const stepError = step.querySelector('[data-step-error]');
+    if (stepError) stepError.hidden = !invalid;
     if (invalid) {
-      invalid.reportValidity();
+      invalid.setAttribute('aria-invalid', 'true');
+      if (invalid.name === 'postal_code' && invalid.validity.patternMismatch) {
+        stepError.textContent = document.documentElement.lang === 'es'
+          ? 'Escribe un código postal de 5 dígitos.'
+          : 'Enter a 5-digit ZIP code.';
+      } else if (invalid.name === 'postal_code') {
+        stepError.textContent = document.documentElement.lang === 'es'
+          ? 'Escribe un código postal de 5 dígitos.'
+          : 'Enter a 5-digit ZIP code.';
+      } else if (invalid.name === 'property_type') {
+        stepError.textContent = document.documentElement.lang === 'es'
+          ? 'Elige el tipo de propiedad.'
+          : 'Choose a property type.';
+      } else if (stepError) {
+        stepError.textContent = document.documentElement.lang === 'es'
+          ? 'Completa los datos obligatorios de la propiedad.'
+          : 'Complete the required property details.';
+      }
+      invalid.focus();
       return false;
     }
+    fields.forEach((field) => field.removeAttribute('aria-invalid'));
     return true;
   };
 
@@ -101,8 +148,8 @@
     if (submitButton) {
       submitButton.disabled = true;
       submitButton.innerHTML = document.documentElement.lang === 'es'
-        ? 'Enviando… <span aria-hidden="true">↗</span>'
-        : 'Sending… <span aria-hidden="true">↗</span>';
+        ? 'Enviando… <span aria-hidden="true">→</span>'
+        : 'Sending… <span aria-hidden="true">→</span>';
     }
   });
   renderStep();

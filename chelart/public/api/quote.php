@@ -6,11 +6,10 @@ require_once dirname(__DIR__, 2) . '/config/database.php';
 require_once dirname(__DIR__, 2) . '/config/notifications.php';
 
 const SERVICE_LABELS = [
-    'home-care' => 'Home care',
     'repairs' => 'Repairs & maintenance',
-    'design' => 'Design & renovation',
-    'commercial' => 'Commercial space',
-    'project-oversight' => 'Project oversight',
+    'remodeling' => 'Kitchen & bath remodeling',
+    'design' => 'Interior design & space planning',
+    'installations' => 'Lighting & installations',
     'other' => 'Something else',
 ];
 
@@ -83,7 +82,7 @@ $fieldLimits = [
 
 if ($fullName === '' || $fieldLimits['name'] > 120 || !filter_var($email, FILTER_VALIDATE_EMAIL)
     || $fieldLimits['email'] > 254 || $phone === '' || $fieldLimits['phone'] > 40
-    || $city === '' || $fieldLimits['city'] > 100 || $postalCode === '' || $fieldLimits['postal'] > 20
+    || $city === '' || $fieldLimits['city'] > 100 || !preg_match('/^\d{5}$/', $postalCode)
     || !in_array($propertyType, $propertyTypes, true) || !in_array($timeline, $timelines, true)
     || !in_array($preferredContact, $contactMethods, true) || $scope === '' || $fieldLimits['scope'] > 3000
     || count($services) === 0 || !$consent) {

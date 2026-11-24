@@ -9,20 +9,20 @@ require_once dirname(__DIR__) . '/config/bootstrap.php';
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="<?= h(app_base_path()) ?>">
   <meta name="theme-color" content="#f6f3ee">
-  <meta name="description" content="Repairs, kitchen and bath remodeling and interior design for homes and businesses in Orlando and Central Florida. Hablamos español.">
-  <link rel="canonical" href="https://chelartconstruction.revelco.com.co/">
-  <meta property="og:type" content="website"><meta property="og:url" content="https://chelartconstruction.revelco.com.co/">
+  <meta name="description" content="Repairs, kitchen and bath remodeling and interior design for homes and businesses in Sanford, Orlando and Central Florida. Hablamos español.">
+  <link rel="canonical" href="https://chelart.com/">
+  <meta property="og:type" content="website"><meta property="og:url" content="https://chelart.com/">
   <meta property="og:title" content="Chelart Construction | Repairs, Remodeling & Interior Design in Central Florida">
-  <meta property="og:description" content="Repairs, kitchen and bath remodeling and interior design for homes and businesses in Orlando and Central Florida. Hablamos español.">
-  <meta property="og:image" content="https://chelartconstruction.revelco.com.co/assets/img/og-kitchen-project.jpg">
+  <meta property="og:description" content="Repairs, kitchen and bath remodeling and interior design for homes and businesses in Sanford, Orlando and Central Florida. Hablamos español.">
+  <meta property="og:image" content="https://chelart.com/assets/img/og-kitchen-project.jpg">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Chelart Construction | Repairs, Remodeling & Interior Design in Central Florida">
-  <meta name="twitter:description" content="Repairs, kitchen and bath remodeling and interior design for homes and businesses in Orlando and Central Florida. Hablamos español.">
-  <meta name="twitter:image" content="https://chelartconstruction.revelco.com.co/assets/img/og-kitchen-project.jpg">
+  <meta name="twitter:description" content="Repairs, kitchen and bath remodeling and interior design for homes and businesses in Sanford, Orlando and Central Florida. Hablamos español.">
+  <meta name="twitter:image" content="https://chelart.com/assets/img/og-kitchen-project.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
   <link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
   <title>Chelart Construction | Repairs, Remodeling & Interior Design in Central Florida</title>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"Chelart Construction LLC","telephone":"+1-689-250-9674","email":"chelartusa@gmail.com","areaServed":"Central Florida","sameAs":["https://www.instagram.com/chelart_construction/"],"knowsLanguage":["en","es"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"Chelart Construction LLC","url":"https://chelart.com/","image":"https://chelart.com/assets/img/og-kitchen-project.jpg","logo":"https://chelart.com/assets/img/chelart-logo-740.png","telephone":"+1-689-250-9674","email":"chelartusa@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Sanford","addressRegion":"FL","addressCountry":"US"},"areaServed":[{"@type":"City","name":"Sanford, FL"},{"@type":"AdministrativeArea","name":"Seminole County, FL"},{"@type":"City","name":"Orlando, FL"},{"@type":"AdministrativeArea","name":"Central Florida"}],"sameAs":["https://www.instagram.com/chelart_construction/"],"knowsLanguage":["en","es"]}</script>
   <script src="assets/js/language-init.js?v=20261124"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
@@ -45,7 +45,7 @@ require_once dirname(__DIR__) . '/config/bootstrap.php';
       <p class="eyebrow reveal">Repairs · remodeling · interior design</p>
       <h1 id="hero-title" class="reveal">Your home,<br><em>thoughtfully</em><br>cared for.</h1>
       <p class="hero-lede reveal">Repairs, remodeling and interior design for homes and businesses in Central Florida.</p>
-      <p class="hero-location reveal"><span class="location-dot"></span> Orlando · Central Florida</p>
+      <p class="hero-location reveal"><span class="location-dot"></span> Sanford · Orlando · Central Florida</p>
       <div class="hero-actions reveal"><!-- PENDIENTE: confirmar si la cotización es gratuita. Si no, el botón dice "Get a quote →" -->
         <a class="button button-primary" href="quote.php">Get a free quote <span aria-hidden="true">→</span></a><a class="text-link" href="#work">See our work <span aria-hidden="true">↓</span></a></div>
     </div><div class="hero-visual">
@@ -111,6 +111,6 @@ require_once dirname(__DIR__) . '/config/bootstrap.php';
   <footer class="site-footer"><div class="footer-top"><a class="footer-brand" href="./">Chelart Construction<span>Repairs · Remodeling · Interior design</span></a>
     <div class="footer-contact"><a href="mailto:chelartusa@gmail.com">chelartusa@gmail.com</a><a href="tel:+16892509674">(689) 250-9674</a><!-- PENDIENTE: correo con dominio propio, p. ej. hola@chelart… --></div>
     <a class="text-link" href="https://www.instagram.com/chelart_construction" target="_blank" rel="noopener">Instagram <span aria-hidden="true">↗</span></a></div>
-    <div class="footer-bottom"><span>© 2026 Chelart Construction LLC. All rights reserved.</span><span>Orlando · Central Florida</span><a href="quote.php">Get a free quote →</a></div></footer>
+    <div class="footer-bottom"><span>© 2026 Chelart Construction LLC. All rights reserved.</span><span>Sanford · Orlando · Central Florida</span><a href="quote.php">Get a free quote →</a></div></footer>
   <nav class="mobile-cta" aria-label="Quick contact"><a href="tel:+16892509674">Call</a><a href="quote.php">Quote</a></nav>
 </body></html>

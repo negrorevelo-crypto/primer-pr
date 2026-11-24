@@ -13,5 +13,5 @@ return [
     'QUOTE_MAIL_FROM' => 'website@chelartconstruction.revelco.com.co',
     'QUOTE_ADMIN_USERNAME' => 'chelart-admin',
     'QUOTE_ADMIN_PASSWORD_HASH' => 'REPLACE_WITH_A_PHP_PASSWORD_HASH',
-    'QUOTE_ADMIN_URL' => 'https://chelartconstruction.revelco.com.co/admin/',
+    'QUOTE_ADMIN_URL' => 'https://chelart.com/admin/',
 ];

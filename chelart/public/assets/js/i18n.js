@@ -1,7 +1,7 @@
 (() => {
   const translations = {
     'Chelart Construction | Repairs, Remodeling & Interior Design in Central Florida': 'Chelart Construction | Reparaciones, remodelación y diseño en Central Florida',
-    'Repairs, kitchen and bath remodeling and interior design for homes and businesses in Orlando and Central Florida. Hablamos español.': 'Reparaciones, remodelación de cocinas y baños y diseño interior para hogares y negocios en Orlando y Central Florida. Hablamos español.',
+    'Repairs, kitchen and bath remodeling and interior design for homes and businesses in Sanford, Orlando and Central Florida. Hablamos español.': 'Reparaciones, remodelación de cocinas y baños y diseño interior para hogares y negocios en Sanford, Orlando y Central Florida. Hablamos español.',
     'Chelart home': 'Inicio de Chelart', 'Primary navigation': 'Navegación principal',
     'Chelart service area and qualifications': 'Zona de servicio y credenciales de Chelart',
     'Select language': 'Seleccionar idioma', 'Open menu': 'Abrir menú', 'Close menu': 'Cerrar menú',
@@ -12,7 +12,7 @@
     'Repairs · remodeling · interior design': 'REPARACIONES · REMODELACIÓN · DISEÑO INTERIOR',
     'Your home,': 'Tu hogar,', 'thoughtfully': 'cuidado con esmero.', 'cared for.': '',
     'Repairs, remodeling and interior design for homes and businesses in Central Florida.': 'Reparaciones, remodelaciones y diseño interior para hogares y negocios en Central Florida.',
-    'Orlando · Central Florida': 'ORLANDO · CENTRAL FLORIDA',
+    'Sanford · Orlando · Central Florida': 'SANFORD · ORLANDO · CENTRAL FLORIDA',
     'Residential & commercial': 'Residencial y comercial', 'We speak Spanish': 'Hablamos español',
     '5-star client reviews': 'Clientes 5 estrellas',
     'Considered care for every part of your home.': 'Cuidado pensado para cada espacio de tu hogar.',
@@ -80,7 +80,7 @@
     'Where should we picture the work?': '¿Dónde se realizará el trabajo?',
     'Property type': 'Tipo de propiedad', 'Choose one': 'Selecciona una opción',
     'Single-family home': 'Casa unifamiliar', 'Condo or townhome': 'Condominio o casa adosada',
-    'Commercial space': 'Local comercial', 'Other': 'Otro', 'City': 'Ciudad', 'e.g. Orlando': 'Ej.: Orlando',
+    'Commercial space': 'Local comercial', 'Other': 'Otro', 'City': 'Ciudad', 'e.g. Sanford': 'Ej.: Sanford',
     'ZIP code': 'Código postal', 'e.g. 32801': 'Ej.: 32801',
     'Choose a property type.': 'Elige el tipo de propiedad.', 'Complete the required property details.': 'Completa los datos obligatorios de la propiedad.',
     'Enter a 5-digit ZIP code.': 'Escribe un código postal de 5 dígitos.',
@@ -137,8 +137,8 @@
     document.documentElement.lang = spanish ? 'es' : 'en';
     document.documentElement.dataset.language = spanish ? 'es' : 'en';
     const description = spanish
-      ? 'Reparaciones, remodelación de cocinas y baños y diseño interior para hogares y negocios en Orlando y Central Florida. Hablamos español.'
-      : 'Repairs, kitchen and bath remodeling and interior design for homes and businesses in Orlando and Central Florida. Hablamos español.';
+      ? 'Reparaciones, remodelación de cocinas y baños y diseño interior para hogares y negocios en Sanford, Orlando y Central Florida. Hablamos español.'
+      : 'Repairs, kitchen and bath remodeling and interior design for homes and businesses in Sanford, Orlando and Central Florida. Hablamos español.';
     document.querySelector('meta[name="description"]')?.setAttribute('content', description);
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
     document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description);

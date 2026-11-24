@@ -26,6 +26,22 @@ function chelart_setting(string $key, string $default = ''): string
     return is_scalar($value) ? (string)$value : $default;
 }
 
+/** Dominio oficial: los demás nombres del sitio redirigen (301) a https://chelart.com */
+const CHELART_CANONICAL_HOST = 'chelart.com';
+(static function (): void {
+    $host = strtolower(preg_replace('/:\d+$/', '', (string)($_SERVER['HTTP_HOST'] ?? '')));
+    $redirectHosts = ['chelartconstruction.revelco.com.co', 'www.chelart.com'];
+    if (PHP_SAPI === 'cli' || !in_array($host, $redirectHosts, true)) {
+        return;
+    }
+    $uri = (string)($_SERVER['REQUEST_URI'] ?? '/');
+    if (str_starts_with($uri, '/plesk-site-preview/')) {
+        return;
+    }
+    header('Location: https://' . CHELART_CANONICAL_HOST . $uri, true, 301);
+    exit;
+})();
+
 $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
     || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
 

@@ -68,10 +68,10 @@ function send_quote_notification(string $reference, array $quote, array $service
 function quote_admin_url(): string
 {
     $configured = trim(chelart_setting('QUOTE_ADMIN_URL'));
-    $url = $configured !== '' ? $configured : 'https://chelartconstruction.revelco.com.co/admin/';
+    $url = $configured !== '' ? $configured : 'https://chelart.com/admin/';
     if (!filter_var($url, FILTER_VALIDATE_URL) || strtolower((string)parse_url($url, PHP_URL_SCHEME)) !== 'https') {
         error_log('Chelart quote notification skipped: QUOTE_ADMIN_URL must be a valid HTTPS URL.');
-        return 'https://chelartconstruction.revelco.com.co/admin/';
+        return 'https://chelart.com/admin/';
     }
 
     return rtrim($url, '/') . '/';

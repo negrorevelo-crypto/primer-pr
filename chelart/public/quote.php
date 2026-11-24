@@ -41,7 +41,7 @@ if (!in_array($service, $allowedServices, true)) {
       <p class="eyebrow">A thoughtful first step</p>
       <h1>Tell us about<br>your home.</h1>
       <p>Share a few details about the property and what you have in mind. This isn’t an instant price calculator; it helps Chelart understand the scope and follow up with you.</p>
-      <div class="quote-aside-note"><span class="note-rule"></span><span>Orlando · Central Florida</span></div>
+      <div class="quote-aside-note"><span class="note-rule"></span><span>Sanford · Orlando · Central Florida</span></div>
       <div class="aside-contact"><span>Prefer to talk?</span><a href="tel:+16892509674">(689) 250-9674</a></div>
     </aside>
     <section class="quote-form-panel" aria-labelledby="quote-form-title">
@@ -60,7 +60,7 @@ if (!in_array($service, $allowedServices, true)) {
           <p class="step-help">Where should we picture the work?</p>
           <div class="field-grid">
             <label class="field"><span>Property type</span><select name="property_type" required><option value="">Choose one</option><option value="single-family">Single-family home</option><option value="condo">Condo or townhome</option><option value="commercial">Commercial space</option><option value="other">Other</option></select></label>
-            <label class="field"><span>City</span><input name="city" type="text" maxlength="100" placeholder="e.g. Orlando" required></label>
+            <label class="field"><span>City</span><input name="city" type="text" maxlength="100" placeholder="e.g. Sanford" required></label>
             <label class="field"><span>ZIP code</span><input name="postal_code" inputmode="numeric" pattern="\d{5}" maxlength="5" placeholder="e.g. 32801" required></label>
           </div>
           <p class="field-error" data-step-error hidden>Choose a property type.</p>

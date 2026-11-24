@@ -23,10 +23,10 @@ require_once dirname(__DIR__) . '/config/bootstrap.php';
   <link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
   <title>Chelart Construction | Repairs, Remodeling & Interior Design in Central Florida</title>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"Chelart Construction LLC","telephone":"+1-689-250-9674","email":"chelartusa@gmail.com","areaServed":"Central Florida","sameAs":["https://www.instagram.com/chelart_construction/"],"knowsLanguage":["en","es"]}</script>
-  <script src="assets/js/language-init.js"></script>
+  <script src="assets/js/language-init.js?v=20261124"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css"><script defer src="assets/js/i18n.js"></script><script defer src="assets/js/site.js"></script>
+  <link rel="stylesheet" href="assets/css/site.css?v=20261124"><script defer src="assets/js/i18n.js?v=20261124"></script><script defer src="assets/js/site.js?v=20261124"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>

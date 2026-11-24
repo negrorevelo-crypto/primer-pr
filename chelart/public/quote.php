@@ -18,13 +18,13 @@ if (!in_array($service, $allowedServices, true)) {
   <meta name="description" content="Request a quote for repairs, remodeling or interior design in Central Florida.">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png"><link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
   <title>Chelart Construction | Repairs, Remodeling & Interior Design in Central Florida</title>
-  <script src="assets/js/language-init.js"></script>
+  <script src="assets/js/language-init.js?v=20261124"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css">
-  <script defer src="assets/js/i18n.js"></script>
-  <script defer src="assets/js/site.js"></script>
+  <link rel="stylesheet" href="assets/css/site.css?v=20261124">
+  <script defer src="assets/js/i18n.js?v=20261124"></script>
+  <script defer src="assets/js/site.js?v=20261124"></script>
 </head>
 <body class="quote-page">
   <header class="site-header quote-header">

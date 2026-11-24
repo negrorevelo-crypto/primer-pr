@@ -6,3 +6,4 @@ chelart/public/hash-temporal.php
 # Entorno local
 .env
 *.log
+entregas/

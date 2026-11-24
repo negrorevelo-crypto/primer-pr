@@ -22,7 +22,7 @@ function fail(int $status, string $message): never
 {
     http_response_code($status);
     header('Content-Type: text/html; charset=utf-8');
-    echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="' . h(app_base_path()) . '"><title>Quote request | Chelart</title><script src="assets/js/language-init.js"></script><link rel="stylesheet" href="assets/css/site.css"><script defer src="assets/js/i18n.js"></script></head><body class="thanks-page"><main class="thanks-card"><p class="eyebrow">Request not sent</p><h1>We couldn’t submit that yet.</h1><p>' . h($message) . '</p><a class="button button-primary" href="quote.php">Return to the quote form</a></main></body></html>';
+    echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="' . h(app_base_path()) . '"><title>Quote request | Chelart</title><script src="assets/js/language-init.js?v=20261124"></script><link rel="stylesheet" href="assets/css/site.css?v=20261124"><script defer src="assets/js/i18n.js?v=20261124"></script></head><body class="thanks-page"><main class="thanks-card"><p class="eyebrow">Request not sent</p><h1>We couldn’t submit that yet.</h1><p>' . h($message) . '</p><a class="button button-primary" href="quote.php">Return to the quote form</a></main></body></html>';
     exit;
 }
 

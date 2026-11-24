@@ -121,6 +121,7 @@
     'Modern Florida home with a covered living area and pool': 'Casa moderna de Florida con zona de estar cubierta y piscina',
     'Chelart team planning a solar panel installation on a Florida home': 'Equipo de Chelart planificando la instalación de paneles solares en una casa de Florida',
     'Chelart kitchen remodeling project': 'Proyecto de remodelación de cocina de Chelart',
+    'Modern kitchen with wood cabinets and a white island': 'Cocina moderna con gabinetes de madera e isla blanca',
     'Decorative lighting installed above a kitchen island': 'Iluminación decorativa sobre una isla de cocina',
     'Interior stairs opening toward a landscaped garden': 'Escalera interior junto a un jardín paisajístico',
   };

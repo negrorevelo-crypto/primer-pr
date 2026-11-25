@@ -13,10 +13,10 @@ if (!preg_match('/^CH-[A-Z0-9-]{8,24}$/', $reference)) {
   <base href="<?= h(app_base_path()) ?>">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png"><link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
   <title>Inquiry received | Chelart</title>
-  <script src="assets/js/language-init.js?v=20261124"></script>
-  <link rel="stylesheet" href="assets/css/site.css?v=20261124">
-  <script defer src="assets/js/i18n.js?v=20261124"></script>
-  <script defer src="assets/js/site.js?v=20261124"></script>
+  <script src="assets/js/language-init.js?v=20261125"></script>
+  <link rel="stylesheet" href="assets/css/site.css?v=20261125">
+  <script defer src="assets/js/i18n.js?v=20261125"></script>
+  <script defer src="assets/js/site.js?v=20261125"></script>
 </head>
 <body class="thanks-page">
   <header class="site-header quote-header"><div class="nav-wrap"><a class="brand" href="./" aria-label="Chelart home"><img src="assets/img/chelart-logo-192.png" alt="Chelart Construction logo" width="192" height="192" srcset="assets/img/chelart-logo-192.png 192w" sizes="96px"></a><div class="quote-nav-actions"><div class="language-switch" role="group" aria-label="Select language"><button type="button" data-language-switch="en">EN</button><span aria-hidden="true">/</span><button type="button" data-language-switch="es">ES</button></div></div></div></header>

@@ -40,7 +40,20 @@ function db(): PDO
         } catch (PDOException $e) {
             error_log('DB: ' . $e->getMessage());
             http_response_code(500);
-            exit('No hay conexión con la base de datos. Revise app/config.php.');
+            preg_match('/\[(\d{4})\]/', $e->getMessage(), $m);
+            $causas = [
+                '1045' => 'El usuario o la contraseña de la base de datos no son correctos (claves usuario y clave).',
+                '1044' => 'El usuario no tiene acceso a esa base de datos: revise que el nombre (clave nombre) sea exacto y que el usuario pertenezca a esa base en Plesk.',
+                '1049' => 'No existe una base de datos con ese nombre (clave nombre). Cópielo tal cual aparece en Plesk.',
+                '2002' => 'No se encontró el servidor de base de datos (clave host). Use el que muestra Plesk en Bases de datos.',
+                '2005' => 'No se encontró el servidor de base de datos (clave host). Use el que muestra Plesk en Bases de datos.',
+                '2054' => 'El servidor MySQL pide otro método de autenticación. Cambie la contraseña del usuario en Plesk.',
+            ];
+            $codigo = $m[1] ?? '';
+            header('Content-Type: text/html; charset=utf-8');
+            exit('<p style="font:16px system-ui;margin:24px">No hay conexión con la base de datos. Revise app/config.php.<br>'
+                . htmlspecialchars($causas[$codigo] ?? 'Código del error: ' . ($codigo ?: (string)$e->getCode()), ENT_QUOTES, 'UTF-8')
+                . '<br><small>Servidor configurado: ' . htmlspecialchars($c['host'] . ':' . (int)($c['puerto'] ?? 3306) . ' · base: ' . $c['nombre'], ENT_QUOTES, 'UTF-8') . '</small></p>');
         }
     }
     return $pdo;

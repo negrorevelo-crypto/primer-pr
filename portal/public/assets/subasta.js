@@ -321,7 +321,7 @@
 
   function selectorDificultad() {
     return `<div class="opciones-juego"><span class="etiqueta">Velocidad del otro operador</span><div class="seg" role="group" aria-label="Velocidad del otro operador">${Object.entries(DIFICULTAD)
-      .map(([k, d]) => `<a data-dif="${k}"${k === dificultad ? ' aria-current="true"' : ""}>${d.t} · ${fmtS(d.media).replace(",000", "")}</a>`).join("")}</div></div>`;
+      .map(([k, d]) => `<a data-dif="${k}"${k === dificultad ? ' aria-current="true"' : ""}>${d.t} · ${String(d.media / 1000).replace(".", ",")} s</a>`).join("")}</div></div>`;
   }
   function conectarDificultad() {
     tarjeta.querySelectorAll("[data-dif]").forEach((a) => a.addEventListener("click", () => {

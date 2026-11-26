@@ -234,13 +234,15 @@
       return;
     }
     errorBox.hidden = true;
-    submitButton.disabled = true;
-    submitButton.innerHTML = t('Sending… <span aria-hidden="true">→</span>', 'Enviando… <span aria-hidden="true">→</span>');
+    setSending(true);
   });
 
-  // Si el usuario vuelve con el botón Atrás, el botón queda habilitado otra vez.
-  window.addEventListener('pageshow', () => {
-    submitButton.disabled = false;
-    submitButton.innerHTML = t('Submit my Christmas quote request <span aria-hidden="true">→</span>', 'Enviar mi solicitud de cotización navideña <span aria-hidden="true">→</span>');
-  });
+  // Los dos textos del botón están en el HTML (y los traduce i18n.js); solo se muestra uno u otro.
+  function setSending(sending) {
+    submitButton.disabled = sending;
+    submitButton.querySelector('[data-submit-label]').hidden = sending;
+    submitButton.querySelector('[data-submit-sending]').hidden = !sending;
+  }
+  // Al volver con el botón Atrás del navegador, el botón queda habilitado otra vez.
+  window.addEventListener('pageshow', () => setSending(false));
 })();

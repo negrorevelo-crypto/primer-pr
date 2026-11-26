@@ -19,7 +19,7 @@ if (!preg_match('/^XMAS-[A-F0-9]{8}$/', $reference)) {
   <script src="assets/js/language-init.js?v=20261125"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=20261126">
-  <link rel="stylesheet" href="assets/css/christmas.css?v=20261131">
+  <link rel="stylesheet" href="assets/css/christmas.css?v=20261132">
   <script defer src="assets/js/christmas-i18n.js?v=20261128"></script>
   <script defer src="assets/js/i18n.js?v=20261126"></script>
   <script defer src="assets/js/site.js?v=20261126"></script>

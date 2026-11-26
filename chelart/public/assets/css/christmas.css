@@ -213,3 +213,4 @@
 /* En español "DE DESCUENTO" es largo: va en una segunda línea más pequeña. */
 html[lang="es"] .xmas-offer-value { white-space: normal; }
 html[lang="es"] .xmas-offer-value span { display: block; margin-top: 2px; font-size: .46em; letter-spacing: .04em; }
+.xmas-submit [hidden] { display: none !important; }

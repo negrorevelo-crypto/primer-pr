@@ -124,11 +124,11 @@ function christmas_choice_chips(string $name, array $catalog, string $type, bool
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="<?= h($heroBase) ?>-800.jpg" imagesrcset="<?= h(implode(', ', $heroSources)) ?>" imagesizes="(max-width: 700px) 100vw, 55vw">
   <link rel="stylesheet" href="assets/css/site.css?v=20261126">
-  <link rel="stylesheet" href="assets/css/christmas.css?v=20261131">
+  <link rel="stylesheet" href="assets/css/christmas.css?v=20261132">
   <script defer src="assets/js/christmas-i18n.js?v=20261128"></script>
   <script defer src="assets/js/i18n.js?v=20261126"></script>
   <script defer src="assets/js/site.js?v=20261126"></script>
-  <script defer src="assets/js/christmas.js?v=20261127"></script>
+  <script defer src="assets/js/christmas.js?v=20261131"></script>
 </head>
 <body class="xmas-page">
   <a class="skip-link" href="<?= h($page) ?>#main">Skip to content</a>
@@ -285,7 +285,7 @@ function christmas_choice_chips(string $name, array $catalog, string $type, bool
           </fieldset>
 
           <div class="form-error" data-form-error role="alert" tabindex="-1" hidden></div>
-          <div class="form-controls"><button class="button button-primary xmas-submit" type="submit" data-submit>Submit my Christmas quote request <span aria-hidden="true">→</span></button></div>
+          <div class="form-controls"><button class="button button-primary xmas-submit" type="submit" data-submit><span data-submit-label>Submit my Christmas quote request</span><span data-submit-sending hidden>Sending…</span> <span aria-hidden="true">→</span></button></div>
           <p class="form-footnote">Prices are quoted individually after our team reviews your request. Submitting this form does not create a charge or a final price.</p>
         </form>
       </div>

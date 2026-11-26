@@ -126,7 +126,7 @@ if ($x || $nueva) {
       <div class="panel-cab"><h2>Corredores</h2><a class="btn btn-chico" href="<?= h(url('admin/usuario.php')) ?>"><?= icono('mas') ?>Nuevo usuario</a></div>
       <?php if (!$corredores): ?><div class="vacio"><p>Aún no hay usuarios en esta firma.</p></div><?php else: ?>
       <div class="tabla-envoltura"><table class="tabla"><thead><tr><th>Nombre</th><th>Rol</th><th>Licencia</th></tr></thead><tbody>
-        <?php foreach ($corredores as $c): ?><tr><td><a class="fila-enlace" href="<?= h(url('admin/usuario.php?id=' . (int)$c['id'])) ?>"><?= h($c['nombre']) ?></a><br><small><?= h($c['usuario']) ?></small></td><td><?= h(ROLES[$c['rol']]) ?></td><td><?= $c['fin_vig'] ? '<span class="chip chip-verde">Hasta ' . h(fmt_fecha($c['fin_vig'])) . '</span>' : ($c['rol'] === 'admin' ? '<span class="tenue">—</span>' : ($c['fin_lic'] && $c['fin_lic'] < date('Y-m-d') ? '<span class="chip chip-rojo">Vencida</span>' : '<span class="chip chip-gris">Sin licencia</span>')) ?></td></tr><?php endforeach; ?>
+        <?php foreach ($corredores as $c): ?><tr><td><a class="fila-enlace" href="<?= h(url('admin/usuario.php?id=' . (int)$c['id'])) ?>"><?= h($c['nombre']) ?></a><br><small><?= h($c['usuario']) ?></small></td><td><?= h(ROLES[$c['rol']]) ?></td><td><?= $c['fin_vig'] ? '<span class="chip chip-verde">Hasta ' . h(fmt_fecha($c['fin_vig'])) . '</span>' : ($c['rol'] === 'admin' ? '<span class="tenue">—</span>' : ($c['fin_lic'] && $c['fin_lic'] < date('Y-m-d') ? '<span class="chip chip-gris">Vencida</span>' : '<span class="chip chip-gris">Sin licencia</span>')) ?></td></tr><?php endforeach; ?>
       </tbody></table></div>
       <?php endif; ?>
     </section>

@@ -147,7 +147,7 @@
     const cerrado = { lanzada: "Oferta lanzada.", cancelada: "Oferta cancelada.", agotada: "Se agotó el tiempo." }[resultado];
     [iOferta, iConfirma].forEach((i) => { if (i >= 0 && cuerpo(i)) cuerpo(i).innerHTML = `<p>${cerrado}</p>`; });
     const datos = {
-      token, resultado, errores,
+      token, resultado, errores, escenario: "lanzamiento-v1",
       tiempo_reaccion_ms: tReac,
       tiempo_total_ms: resultado === "lanzada" ? total : null,
       valor_inicial: valorInicial || null,

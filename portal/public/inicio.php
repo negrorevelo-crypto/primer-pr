@@ -63,7 +63,7 @@ cabeza($saludo . ', ' . $nombreCorto, h($u['firma_nombre'] ?? 'Cuenta individual
 <div class="tablero">
   <section class="panel puesto" aria-labelledby="t-marca">
     <div>
-      <h2 id="t-marca">Su mejor marca</h2>
+      <h2 id="t-marca">Su mejor marca <span class="tenue" style="font-weight:400;font-size:14px">· <?= h(ESCENARIOS[ESCENARIO_DEFECTO]) ?></span></h2>
       <div class="puesto-marca" style="margin-top:10px">
         <span class="cifra"><?= $est['mejor'] !== null ? h(number_format($est['mejor'] / 1000, 3, ',', '.')) : '—' ?></span>
         <?php if ($est['mejor'] !== null): ?><span class="tenue">segundos</span><span class="record"><?= icono('rombo') ?>Récord personal</span><?php endif; ?>

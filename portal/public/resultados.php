@@ -5,6 +5,7 @@ $uid = (int)$u['id'];
 
 $periodos = ['7' => '7 días', '30' => '30 días', '90' => '90 días', 'todo' => 'Todo'];
 $per = array_key_exists($_GET['p'] ?? '', $periodos) ? $_GET['p'] : '30';
+$esc = escenario_valido($_GET['e'] ?? ESCENARIO_DEFECTO);
 $desde = $per === 'todo' ? '2000-01-01' : date('Y-m-d', strtotime('-' . (int)$per . ' days'));
 
 // Firma a mostrar: la propia; el administrador puede elegir
@@ -18,10 +19,10 @@ if ($u['rol'] === 'admin') {
 $firmaNombre = $firmaId ? q('SELECT nombre FROM firmas WHERE id = ?', [$firmaId])->fetchColumn() : null;
 $verEquipo = in_array($u['rol'], ['admin', 'admin_firma'], true) && $firmaId;
 
-$est = estadisticas($uid);
-$serie = serie_tiempos($uid, 40);
-$hist = q("SELECT * FROM intentos WHERE usuario_id = ? AND creado_en >= ? ORDER BY id DESC LIMIT 100", [$uid, $desde])->fetchAll();
-$rank = ranking_firma($firmaId, $desde);
+$est = estadisticas($uid, $esc);
+$serie = serie_tiempos($uid, 40, $esc);
+$hist = q("SELECT * FROM intentos WHERE usuario_id = ? AND escenario = ? AND creado_en >= ? ORDER BY id DESC LIMIT 100", [$uid, $esc, $desde])->fetchAll();
+$rank = ranking_firma($firmaId, $desde, $esc);
 
 $equipo = [];
 if ($verEquipo) {
@@ -32,19 +33,25 @@ if ($verEquipo) {
                   AVG(CASE WHEN i.resultado = 'lanzada' THEN i.tiempo_total_ms END) promedio,
                   SUM(i.errores) errores,
                   MAX(i.creado_en) ultima
-                 FROM usuarios u LEFT JOIN intentos i ON i.usuario_id = u.id AND i.creado_en >= ?
+                 FROM usuarios u LEFT JOIN intentos i ON i.usuario_id = u.id AND i.escenario = ? AND i.creado_en >= ?
                  WHERE u.firma_id = ? AND u.activo = 1 AND u.rol <> 'admin'
-                 GROUP BY u.id, u.nombre, u.usuario ORDER BY mejor IS NULL, mejor ASC", [$desde, $firmaId])->fetchAll();
+                 GROUP BY u.id, u.nombre, u.usuario ORDER BY mejor IS NULL, mejor ASC", [$esc, $desde, $firmaId])->fetchAll();
 }
 
 $filtro = '<div class="seg" role="group" aria-label="Periodo">';
 foreach ($periodos as $k => $t) {
-    $qs = http_build_query(array_filter(['p' => $k, 'firma' => $u['rol'] === 'admin' ? $firmaId : null]));
+    $qs = http_build_query(array_filter(['p' => $k, 'e' => $esc, 'firma' => $u['rol'] === 'admin' ? $firmaId : null]));
     $filtro .= '<a href="?' . h($qs) . '"' . ($k === $per ? ' aria-current="true"' : '') . '>' . $t . '</a>';
 }
 $filtro .= '</div>';
+$filtro .= '<div class="seg" role="group" aria-label="Escenario">';
+foreach (ESCENARIOS as $k => $t) {
+    $qs = http_build_query(array_filter(['p' => $per, 'e' => $k, 'firma' => $u['rol'] === 'admin' ? $firmaId : null]));
+    $filtro .= '<a href="?' . h($qs) . '"' . ($k === $esc ? ' aria-current="true"' : '') . '>' . h($t) . '</a>';
+}
+$filtro .= '</div>';
 if ($firmas) {
-    $filtro .= '<form method="get" class="fila"><input type="hidden" name="p" value="' . h($per) . '"><select name="firma" aria-label="Firma" onchange="this.form.submit()">';
+    $filtro .= '<form method="get" class="fila"><input type="hidden" name="p" value="' . h($per) . '"><input type="hidden" name="e" value="' . h($esc) . '"><select name="firma" aria-label="Firma" onchange="this.form.submit()">';
     foreach ($firmas as $f) $filtro .= '<option value="' . (int)$f['id'] . '"' . ((int)$f['id'] === $firmaId ? ' selected' : '') . '>' . h($f['nombre']) . '</option>';
     $filtro .= '</select></form>';
 }

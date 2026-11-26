@@ -27,6 +27,15 @@ Pago (transferencia / Nequi)  →  Administrador activa la licencia  →  Corred
   - Registro de acciones en la tabla `auditoria`.
   - Cada partida usa un token de un solo uso, para que no se puedan reportar tiempos imposibles.
 
+## Escenarios del juego
+
+| Escenario | Qué entrena |
+| --- | --- |
+| **Subasta (réplica de la rueda)** | La pantalla de subasta descendente de la grabación del 24 de noviembre: reloj hasta la apertura, aparece **Lanzar Oferta**, ventana **Colocación** con precio base y **Soy humano**, **Lanzar** y **Aceptar**. Un operador simulado compite por el calce (normal 4,5 s, exigente 3,5 s, experto 2,8 s). |
+| **Lanzamiento básico** | El juego original, con las ventanas del puesto calibrado. |
+
+Cada escenario tiene sus propias marcas y su propio ranking. La réplica no usa el logo ni la dirección de la plataforma real, y se identifica como simulación.
+
 ## Base de datos
 
 | Tabla | Contenido |

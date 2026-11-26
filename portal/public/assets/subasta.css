@@ -1,0 +1,118 @@
+/* Réplica de la pantalla de subasta de la rueda (lienzo 1920 × 1020, medidas tomadas de la grabación) */
+.rp { position: absolute; left: 0; top: 0; width: 1920px; height: 1020px; transform-origin: 0 0; overflow: hidden; background: #2e3437; color: #fff; font-family: Roboto, "Segoe UI", Arial, sans-serif; user-select: none; }
+.rp * { box-sizing: border-box; }
+.rp .abs { position: absolute; }
+
+/* Navegador simulado */
+.rp-nav { left: 0; top: 0; width: 1920px; height: 150px; background: #fff; color: #1f1f1f; }
+.rp-pestanas { left: 0; top: 0; width: 1920px; height: 50px; background: #d3e3fd; }
+.rp-pestana { left: 52px; top: 6px; width: 290px; height: 44px; background: #fff; border-radius: 10px 10px 0 0; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; }
+.rp-pestana i { width: 18px; height: 18px; border-radius: 50%; background: #d2161e; display: inline-block; }
+.rp-url { left: 150px; top: 58px; width: 1666px; height: 42px; border-radius: 21px; background: #edf2fa; display: flex; align-items: center; padding: 0 46px; font-size: 17px; color: #1f1f1f; }
+.rp-marcadores { left: 16px; top: 114px; font-size: 15px; color: #444; }
+
+/* Encabezado y menú */
+.rp-cab { left: 0; top: 150px; width: 1920px; height: 82px; background: #2d313e; }
+.rp-logo { left: 16px; top: 167px; width: 48px; height: 48px; background: #fff; border-radius: 3px; color: #2d313e; font: 700 12px/48px Arial, sans-serif; text-align: center; }
+.rp-reloj { left: 105px; top: 180px; font-size: 24px; font-weight: 700; letter-spacing: .2px; }
+.rp-usuario { right: 26px; top: 166px; display: flex; align-items: center; gap: 10px; font-size: 18px; }
+.rp-usuario .av { width: 50px; height: 50px; border-radius: 50%; background: #c7ccd4; }
+.rp-con { right: 98px; top: 212px; font-size: 17px; }
+.rp-lado { left: 0; top: 232px; width: 80px; height: 788px; background: #2d313e; }
+.rp-lado-act { left: 0; top: 302px; width: 80px; height: 58px; background: #1e6fd0; }
+.rp-lado-act::after { content: ""; position: absolute; left: 33px; top: 23px; width: 14px; height: 12px; border-top: 2px solid #fff; border-bottom: 2px solid #fff; box-shadow: inset 0 3px 0 -1px transparent; }
+.rp-lado-raya { left: 30px; top: 270px; width: 20px; height: 1px; background: #6b7180; }
+
+/* Pestañas y paneles superiores */
+.rp-tabs { left: 80px; top: 232px; width: 1840px; height: 26px; background: #000; font-size: 15px; }
+.rp-tab { top: 4px; display: flex; gap: 10px; align-items: center; color: #fff; }
+.rp-tab.gris { color: #8a8f98; }
+.rp-tab.sel { background: #10213f; padding: 0 12px; top: 0; height: 26px; }
+.rp-filtros { left: 80px; top: 258px; width: 920px; height: 152px; background: #030d21; font-size: 15px; }
+.rp-lbl { font-size: 15px; font-weight: 500; }
+.rp-linea { height: 1px; background: #c9ced6; }
+.rp-scroll { height: 13px; border-radius: 7px; background: #1e5894; }
+.rp-adj { left: 1005px; top: 258px; width: 915px; height: 152px; background: #2e3437; font-size: 15px; }
+.rp-cols { font-size: 15px; color: #fff; }
+.rp-sub-tab { left: 80px; top: 418px; width: 112px; height: 24px; background: #000; font-size: 15px; display: flex; align-items: center; gap: 10px; padding-left: 12px; }
+.rp-banda { left: 80px; top: 452px; width: 1840px; height: 66px; background: #030d21; }
+.rp-campo b { display: block; font-size: 12.5px; font-weight: 700; }
+.rp-campo span { display: block; font-size: 16px; margin-top: 6px; padding-bottom: 6px; border-bottom: 1px solid #c9ced6; width: 188px; white-space: nowrap; }
+
+/* Productos */
+.rp-prod-cab { left: 80px; top: 520px; width: 1840px; height: 44px; background: #1c1d20; color: #c4c8ce; font-size: 15px; padding: 10px 16px; }
+.rp-col-cab { left: 80px; top: 565px; width: 1840px; height: 40px; background: #1c1d20; font-size: 15px; color: #e8eaed; }
+.rp-fila { left: 80px; top: 607px; width: 1822px; height: 30px; background: #2e3339; font-size: 13.5px; transition: background 120ms; }
+.rp-fila.naranja { background: #f5a606; }
+.rp-fila.verdosa { background: #2c4f46; }
+.rp-fila.azul { background: #085d7c; }
+.rp-c { top: 0; height: 30px; display: flex; align-items: center; white-space: nowrap; }
+.rp-pb { left: 111px; width: 156px; justify-content: flex-end; padding-right: 12px; background: #e7a628; color: #1b1b1b; }
+.rp-fila.naranja .rp-pb { background: transparent; color: #fff; }
+.rp-pb.verde { background: #2dfc43; color: #fff; }
+.rp-of { left: 282px; width: 188px; padding-left: 18px; background: #38272a; color: #fff; }
+.rp-roj { left: 470px; width: 210px; background: #861824; }
+.rp-ofertar { left: 482px; top: 5px; width: 110px; height: 21px; background: #7d7d7d; color: #a3a3a3; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 14px; border-radius: 2px; }
+.rp-ofertar em { color: #f5c400; font-style: normal; font-weight: 700; }
+.rp-ico-mas { left: 616px; top: 4px; width: 22px; height: 22px; background: #f5a606; color: #861824; font-weight: 900; font-size: 20px; line-height: 21px; text-align: center; border-radius: 2px; }
+.rp-ico-bote { left: 648px; top: 5px; width: 18px; height: 20px; background: #f5a606; border-radius: 2px; }
+.rp-ico-bote::after { content: "×"; position: absolute; left: 4px; top: -2px; color: #861824; font-weight: 900; font-size: 16px; }
+.rp-lanzar { left: 696px; top: 3px; width: 132px; height: 25px; background: #e33038; color: #fff; border: 0; font: 700 15px/25px Roboto, "Segoe UI", Arial, sans-serif; cursor: pointer; border-radius: 2px; }
+.rp-lanzar:hover { background: #ef3a42; }
+.rp-subya { left: 932px; }
+.rp-pos { left: 1150px; width: 40px; justify-content: center; }
+.rp-temp { left: 1211px; }
+.rp-pie { left: 80px; top: 965px; width: 1840px; height: 55px; background: #030d21; }
+.rp-chat { left: 1829px; top: 928px; width: 74px; height: 74px; border-radius: 50%; background: #e8f3fb; box-shadow: 0 2px 8px rgba(0,0,0,.4); }
+.rp-chat::after { content: "•••"; position: absolute; left: 0; right: 0; top: 22px; text-align: center; color: #2d313e; font-size: 20px; letter-spacing: 2px; }
+
+/* Ventanas emergentes */
+.rp-velo { left: 0; top: 150px; width: 1920px; height: 870px; background: rgba(0, 0, 0, .3); }
+.rp-modal { background: #000; border: 1.5px solid #1c4f8f; box-shadow: 0 0 60px 20px rgba(0, 0, 0, .35); }
+.rp-coloc { left: 700px; top: 326px; width: 521px; height: 521px; }
+.rp-coloc h3 { position: absolute; left: 0; right: 0; top: 94px; margin: 0; text-align: center; font-size: 24px; font-weight: 500; }
+.rp-coloc h4 { position: absolute; left: 0; right: 0; top: 135px; margin: 0; text-align: center; font-size: 18px; font-weight: 500; }
+.rp-pblbl { left: 71px; top: 200px; font-size: 14px; font-weight: 700; }
+.rp-pbin { left: 71px; top: 222px; width: 378px; height: 34px; background: transparent; border: 0; border-bottom: 1px solid #c9ced6; color: #fff; font: 500 20px Roboto, "Segoe UI", Arial, sans-serif; padding: 0; outline: none; }
+.rp-pbin:focus { border-bottom: 2px solid #2078cc; }
+.rp-cap { left: 71px; top: 283px; width: 378px; height: 94px; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 3px; color: #333; cursor: pointer; }
+.rp-cap-caja { left: 19px; top: 28px; width: 38px; height: 38px; border: 2px solid #c1c1c1; border-radius: 4px; background: #fff; }
+.rp-cap.girando .rp-cap-caja { border: 3px solid #e3e3e3; border-top-color: #555; border-radius: 50%; animation: rp-gira .7s linear infinite; }
+.rp-cap.ok .rp-cap-caja { border-color: #00b04f; }
+.rp-cap.ok .rp-cap-caja::after { content: ""; position: absolute; left: 11px; top: 4px; width: 10px; height: 20px; border: solid #00b04f; border-width: 0 4px 4px 0; transform: rotate(45deg); }
+.rp-cap-txt { left: 76px; top: 36px; font-size: 17px; }
+.rp-cap-marca { right: 12px; top: 14px; width: 80px; text-align: center; font-size: 10px; color: #555; }
+.rp-cap-marca i { display: block; width: 36px; height: 36px; margin: 0 auto 4px; border-radius: 8px; background: linear-gradient(135deg, #2fc5a6, #1c8fb5); }
+@keyframes rp-gira { to { transform: rotate(360deg); } }
+.rp-btn { height: 45px; border: 0; color: #fff; font: 500 18px Roboto, "Segoe UI", Arial, sans-serif; background: #2078cc; cursor: pointer; border-radius: 2px; }
+.rp-btn:disabled { background: #7e7e7e; color: #9a9a9a; cursor: default; }
+.rp-btn:not(:disabled):hover { background: #2a86de; }
+.rp-blanzar { left: 71px; top: 405px; width: 110px; }
+.rp-aten { left: 739px; top: 473px; width: 444px; height: 226px; }
+.rp-aten h3 { position: absolute; left: 31px; top: 50px; margin: 0; font-size: 24px; font-weight: 500; }
+.rp-aten p { position: absolute; left: 31px; top: 108px; margin: 0; font-size: 17px; }
+.rp-aten-x { left: 385px; top: 31px; width: 26px; height: 25px; background: #1e6fd0; color: #fff; border: 0; font-size: 14px; cursor: pointer; }
+.rp-bacep { left: 31px; top: 162px; width: 110px; }
+.rp-bcanc { left: 171px; top: 162px; width: 110px; }
+
+/* Avisos */
+.rp-toast { left: 1413px; top: 899px; width: 490px; height: 98px; border: 1.5px solid #1c68b3; background: #060a14; display: flex; align-items: center; gap: 22px; padding: 0 30px 0 22px; font-size: 14.5px; font-weight: 500; opacity: 0; transition: opacity 180ms; pointer-events: none; }
+.rp-toast.ver { opacity: 1; }
+.rp-toast.error, .rp-toast.otro { background: #1c68b3; }
+.rp-toast .ti { width: 24px; height: 24px; border-radius: 50%; background: #1fb5d9; color: #060a14; font: 900 15px/24px Arial; text-align: center; flex: none; }
+.rp-toast.error .ti { border-radius: 2px; background: #e5202e; color: #fff; }
+.rp-toast .tx { position: absolute; right: 14px; top: 10px; font-size: 15px; }
+
+/* Juego alrededor de la réplica */
+.juego.replica .juego-barra { display: none; }
+.juego.replica { grid-template-rows: 1fr; }
+.juego.replica.en-pausa .juego-barra { display: flex; }
+.juego.replica.en-pausa { grid-template-rows: auto 1fr; }
+.rp-anticipo { left: 50%; top: 700px; transform: translateX(-50%); background: #e5202e; color: #fff; padding: 10px 18px; border-radius: 999px; font-size: 18px; font-weight: 600; opacity: 0; transition: opacity 160ms; pointer-events: none; white-space: nowrap; }
+.rp-anticipo.ver { opacity: 1; }
+.opciones-juego { display: grid; gap: 12px; }
+.opciones-juego .seg a { cursor: pointer; }
+.rp .rp-pestana, .rp .rp-url { color: #1f1f1f; }
+.rp .rp-marcadores { color: #444; }
+.rp input.rp-pbin { width: 378px; min-height: 0; height: 34px; padding: 0; background: transparent; border: 0; border-bottom: 1px solid #c9ced6; border-radius: 0; box-shadow: none; color: #fff; font: 500 20px Roboto, "Segoe UI", Arial, sans-serif; }
+.rp input.rp-pbin:focus { border-bottom: 2px solid #2078cc; box-shadow: none; }

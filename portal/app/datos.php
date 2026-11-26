@@ -1,15 +1,23 @@
 <?php
 declare(strict_types=1);
 
+const ESCENARIOS = ['subasta-v1' => 'Subasta (réplica de la rueda)', 'lanzamiento-v1' => 'Lanzamiento básico'];
+const ESCENARIO_DEFECTO = 'subasta-v1';
+
+function escenario_valido($e): string
+{
+    return is_string($e) && isset(ESCENARIOS[$e]) ? $e : ESCENARIO_DEFECTO;
+}
+
 /** Resumen de partidas de un usuario */
-function estadisticas(int $uid): array
+function estadisticas(int $uid, string $esc = ESCENARIO_DEFECTO): array
 {
     $r = q("SELECT COUNT(*) total,
                    SUM(resultado = 'lanzada') lanzadas,
                    MIN(CASE WHEN resultado = 'lanzada' THEN tiempo_total_ms END) mejor,
                    SUM(errores) errores
-            FROM intentos WHERE usuario_id = ?", [$uid])->fetch();
-    $ult = q("SELECT tiempo_total_ms FROM intentos WHERE usuario_id = ? AND resultado = 'lanzada' ORDER BY id DESC LIMIT 10", [$uid])->fetchAll(PDO::FETCH_COLUMN);
+            FROM intentos WHERE usuario_id = ? AND escenario = ?", [$uid, $esc])->fetch();
+    $ult = q("SELECT tiempo_total_ms FROM intentos WHERE usuario_id = ? AND escenario = ? AND resultado = 'lanzada' ORDER BY id DESC LIMIT 10", [$uid, $esc])->fetchAll(PDO::FETCH_COLUMN);
     $r['promedio10'] = $ult ? (int)round(array_sum($ult) / count($ult)) : null;
     $r['total'] = (int)$r['total'];
     $r['lanzadas'] = (int)$r['lanzadas'];
@@ -19,20 +27,20 @@ function estadisticas(int $uid): array
 }
 
 /** Últimas partidas lanzadas, de la más antigua a la más reciente */
-function serie_tiempos(int $uid, int $n = 20): array
+function serie_tiempos(int $uid, int $n = 20, string $esc = ESCENARIO_DEFECTO): array
 {
-    $f = q("SELECT tiempo_total_ms ms, creado_en FROM intentos WHERE usuario_id = ? AND resultado = 'lanzada' ORDER BY id DESC LIMIT " . (int)$n, [$uid])->fetchAll();
+    $f = q("SELECT tiempo_total_ms ms, creado_en FROM intentos WHERE usuario_id = ? AND escenario = ? AND resultado = 'lanzada' ORDER BY id DESC LIMIT " . (int)$n, [$uid, $esc])->fetchAll();
     return array_reverse($f);
 }
 
 /** Ranking de la firma: mejor tiempo por corredor en el periodo */
-function ranking_firma(?int $firmaId, string $desde): array
+function ranking_firma(?int $firmaId, string $desde, string $esc = ESCENARIO_DEFECTO): array
 {
     if (!$firmaId) return [];
     return q("SELECT u.id, u.nombre, MIN(i.tiempo_total_ms) mejor, COUNT(*) partidas
               FROM intentos i JOIN usuarios u ON u.id = i.usuario_id
-              WHERE i.firma_id = ? AND i.resultado = 'lanzada' AND i.creado_en >= ? AND u.activo = 1
-              GROUP BY u.id, u.nombre ORDER BY mejor ASC, partidas DESC", [$firmaId, $desde])->fetchAll();
+              WHERE i.firma_id = ? AND i.escenario = ? AND i.resultado = 'lanzada' AND i.creado_en >= ? AND u.activo = 1
+              GROUP BY u.id, u.nombre ORDER BY mejor ASC, partidas DESC", [$firmaId, $esc, $desde])->fetchAll();
 }
 
 function ultima_calibracion(int $uid): ?array

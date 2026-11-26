@@ -53,19 +53,20 @@ if ($resultado === 'lanzada') {
     $total = null;
 }
 
+$escenario = escenario_valido($d['escenario'] ?? 'lanzamiento-v1');
 $detalle = json_encode($d['detalle'] ?? null, JSON_UNESCAPED_UNICODE);
 if (strlen((string)$detalle) > 8000) $detalle = null;
 
 $uid = (int)$u['id'];
-$antes = estadisticas($uid)['mejor'];
+$antes = estadisticas($uid, $escenario)['mejor'];
 $cal = ultima_calibracion($uid);
 
-q('INSERT INTO intentos (usuario_id, firma_id, resultado, tiempo_reaccion_ms, tiempo_total_ms, valor_inicial, valor_lanzado, errores, calibracion_id, detalle) VALUES (?,?,?,?,?,?,?,?,?,?)',
-    [$uid, $u['firma_id'], $resultado, $reac, $total, $vIni, $vLan, $errores, $cal['id'] ?? null, $detalle]);
+q('INSERT INTO intentos (usuario_id, firma_id, escenario, resultado, tiempo_reaccion_ms, tiempo_total_ms, valor_inicial, valor_lanzado, errores, calibracion_id, detalle) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+    [$uid, $u['firma_id'], $escenario, $resultado, $reac, $total, $vIni, $vLan, $errores, $cal['id'] ?? null, $detalle]);
 
 $esRecord = $resultado === 'lanzada' && ($antes === null || $total < $antes);
 $posicion = null;
-$rank = ranking_firma($u['firma_id'] ? (int)$u['firma_id'] : null, date('Y-m-d', strtotime('-30 days')));
+$rank = ranking_firma($u['firma_id'] ? (int)$u['firma_id'] : null, date('Y-m-d', strtotime('-30 days')), $escenario);
 foreach ($rank as $i => $r) if ((int)$r['id'] === $uid) $posicion = $i + 1;
 
 salir_json(200, [

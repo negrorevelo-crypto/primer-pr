@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calibrador de pantalla</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--ink:#1b1f24;--muted:#5b6470;--line:#dde1e6;
+  --accent:#c8102e;--accent-ink:#fff;--ok:#1a7f37;--ok-bg:#e6f6ea;--warn:#8a5a00;--warn-bg:#fff6d6;
+  --mon:#e7ebf0;--mon-line:#9aa4af;--win:#1f6feb;--win-bg:rgba(31,111,235,.14);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0f1216;--card:#171b21;--ink:#e6e9ed;--muted:#9aa4af;--line:#2a313a;
+  --accent:#ff4d5e;--accent-ink:#111;--ok:#3fb950;--ok-bg:#10281a;--warn:#e3b341;--warn-bg:#2b2410;
+  --mon:#222932;--mon-line:#56606b;--win:#4493f8;--win-bg:rgba(68,147,248,.18);
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,"Segoe UI",Roboto,sans-serif}
+main{max-width:980px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:24px;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 24px}
+section.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:16px}
+h2{font-size:17px;margin:0 0 4px;display:flex;gap:10px;align-items:center}
+h2 .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:14px;flex:none}
+.hint{color:var(--muted);margin:0 0 14px;font-size:14px}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+input[type=text],input[type=email],input[type=number],select,textarea{width:100%;padding:9px 10px;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px}
+textarea{min-height:60px;resize:vertical}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+button{font:inherit;cursor:pointer;border-radius:6px;padding:9px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+button:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+.datos{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.dato{background:var(--card);padding:10px 12px}
+.dato b{display:block;font-size:18px;font-variant-numeric:tabular-nums}
+.dato span{font-size:12px;color:var(--muted)}
+.aviso{padding:10px 12px;border-radius:6px;font-size:14px;margin-top:12px}
+.aviso.warn{background:var(--warn-bg);color:var(--warn)}
+.aviso.ok{background:var(--ok-bg);color:var(--ok)}
+.radio{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;cursor:pointer;color:var(--ink);font-size:15px}
+.radio input{margin-top:4px}
+.radio small{display:block;color:var(--muted)}
+#escritorio{position:relative;width:100%;margin-top:12px;user-select:none;touch-action:none}
+.monitor{position:absolute;background:var(--mon);border:2px solid var(--mon-line);border-radius:4px}
+.monitor .et{position:absolute;left:6px;bottom:4px;font-size:11px;color:var(--muted)}
+.ventana{position:absolute;border:2px solid var(--win);background:var(--win-bg);border-radius:3px;cursor:move;overflow:hidden;font-size:11px;padding:2px 4px;color:var(--ink)}
+.ventana.sel{outline:2px solid var(--accent);outline-offset:1px;z-index:5}
+.ventana .tit{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ventana .med{color:var(--muted);font-variant-numeric:tabular-nums}
+.ventana .asa{position:absolute;right:0;bottom:0;width:14px;height:14px;background:var(--win);cursor:nwse-resize}
+table.vent{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+table.vent th,table.vent td{padding:4px;border-bottom:1px solid var(--line);text-align:left}
+table.vent input{padding:5px 6px}
+table.vent td.n input{width:80px}
+.tabla-scroll{overflow-x:auto}
+#prueba{position:fixed;inset:0;background:#000;display:none;z-index:100}
+#prueba svg{position:absolute;inset:0;width:100%;height:100%}
+#prueba .barra{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+#prueba .barra button{font-size:15px}
+.ok-txt{color:var(--ok);font-weight:600}.mal-txt{color:var(--accent);font-weight:600}
+#resultado{margin-top:12px}
+.codigo{font:600 20px/1.2 ui-monospace,Consolas,monospace;letter-spacing:.5px}
+details summary{cursor:pointer;color:var(--muted);font-size:14px}
+pre{white-space:pre-wrap;font-size:12px;background:var(--bg);padding:10px;border-radius:6px;max-height:280px;overflow:auto}
+</style>
+</head>
+<body>
+<main>
+  <h1>Calibrador de pantalla</h1>
+  <p class="sub">Simulador de entrenamiento de ofertas. Tarda unos 5 minutos. Ábrelo en el computador y el navegador que usas en la rueda de negocios.</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>Tus datos</h2>
+    <p class="hint">Con esto asociamos la configuración a tu usuario del simulador.</p>
+    <div class="grid">
+      <div><label for="nombre">Nombre completo *</label><input id="nombre" type="text" autocomplete="name" maxlength="120"></div>
+      <div><label for="correo">Correo</label><input id="correo" type="email" autocomplete="email" maxlength="160"></div>
+      <div><label for="firma">Firma comisionista</label><input id="firma" type="text" maxlength="120" value="Mercado y Bolsa S.A."></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>Tu pantalla</h2>
+    <p class="hint">Estos datos se leen solos. Antes, deja el zoom del navegador en 100 %: presiona <b>Ctrl + 0</b> (cero).</p>
+    <div class="datos" id="datos"></div>
+    <div id="avisoZoom"></div>
+    <div class="grid" style="margin-top:14px">
+      <div>
+        <label for="escala">Escala de Windows (Configuración › Pantalla › Escala)</label>
+        <select id="escala">
+          <option value="100">100 %</option><option value="125">125 %</option><option value="150">150 %</option>
+          <option value="175">175 %</option><option value="200">200 %</option><option value="225">225 %</option>
+          <option value="250">250 %</option><option value="300">300 %</option><option value="otra">Otra</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <button id="btnDetectar">Volver a detectar</button>
+      <button id="btnMonitores">Detectar todos mis monitores</button>
+      <button id="btnAgregarMonitor">Agregar monitor a mano</button>
+    </div>
+    <div id="avisoMonitores"></div>
+    <div id="formMonitor" hidden>
+      <div class="grid" style="margin-top:12px">
+        <div><label for="mRes">Resolución del monitor</label><input id="mRes" type="text" placeholder="1920 x 1080"></div>
+        <div><label for="mEsc">Escala de ese monitor (%)</label><input id="mEsc" type="number" value="100" min="100" max="400" step="25"></div>
+        <div><label for="mPos">Ubicación respecto a este monitor</label>
+          <select id="mPos"><option value="derecha">A la derecha</option><option value="izquierda">A la izquierda</option><option value="arriba">Arriba</option><option value="abajo">Abajo</option></select></div>
+      </div>
+      <div class="row"><button id="btnGuardarMonitor" class="primary">Agregar</button><button id="btnCancelarMonitor">Cancelar</button></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>Prueba de ajuste</h2>
+    <p class="hint">Se abre en pantalla completa el área de trabajo del simulador (<span id="lienzoTxt"></span>). Revisa que veas las 4 esquinas rojas completas y que el círculo se vea redondo.</p>
+    <div class="row"><button id="btnPrueba" class="primary">Iniciar prueba en pantalla completa</button></div>
+    <div id="resPrueba"></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>Distribución de tus ventanas</h2>
+    <p class="hint">¿Cómo quieres ver las ventanas en el simulador?</p>
+    <label class="radio"><input type="radio" name="modo" value="grabacion" checked><span>Igual a la sesión grabada<small>Todos los corredores ven la misma distribución.</small></span></label>
+    <label class="radio"><input type="radio" name="modo" value="mi-puesto"><span>Como las tengo en mi computador<small>Arrastra cada ventana a su lugar y cambia su tamaño desde la esquina inferior derecha.</small></span></label>
+    <div id="editor" hidden>
+      <div id="escritorio"></div>
+      <div class="tabla-scroll">
+        <table class="vent">
+          <thead><tr><th>Ventana</th><th>X</th><th>Y</th><th>Ancho</th><th>Alto</th><th></th></tr></thead>
+          <tbody id="tablaVentanas"></tbody>
+        </table>
+      </div>
+      <div class="row"><button id="btnAgregarVentana">Agregar ventana</button><button id="btnReiniciarVentanas">Restablecer</button></div>
+      <p class="hint" style="margin-top:8px">Medidas en píxeles de Windows. Puedes cambiar el nombre de cada ventana.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">5</span>Captura y envío</h2>
+    <p class="hint">Opcional pero muy útil: adjunta una captura de tu escritorio con la plataforma abierta como la usas. Tómala con <b>Windows + Impr Pant</b>; queda en <b>Imágenes › Capturas de pantalla</b>. Puedes tapar datos de clientes.</p>
+    <label for="capturas">Capturas (PNG o JPG, máximo 3)</label>
+    <input id="capturas" type="file" accept="image/png,image/jpeg,image/webp" multiple>
+    <div style="margin-top:12px"><label for="comentario">Comentarios</label><textarea id="comentario" maxlength="1000" placeholder="Algo que debamos saber de tu puesto de trabajo"></textarea></div>
+    <label class="radio" style="margin-top:12px"><input type="checkbox" id="autoriza"><span>Autorizo el tratamiento de estos datos para configurar el simulador de entrenamiento, conforme a la Ley 1581 de 2012.</span></label>
+    <div class="row"><button id="btnEnviar" class="primary">Enviar configuración</button><button id="btnDescargar">Descargar mi perfil</button></div>
+    <div id="resultado"></div>
+    <details style="margin-top:12px"><summary>Ver los datos que se envían</summary><pre id="vistaJson"></pre></details>
+  </section>
+</main>
+
+<div id="prueba" role="dialog" aria-label="Prueba de ajuste">
+  <svg id="svgPrueba" preserveAspectRatio="xMidYMid meet"></svg>
+  <div class="barra">
+    <button id="btnPruebaOk" class="primary">Veo las 4 esquinas y el círculo redondo</button>
+    <button id="btnPruebaMal">Algo se ve cortado o deformado</button>
+  </div>
+</div>
+
+<script>
+(() => {
+"use strict";
+const $ = s => document.querySelector(s);
+const params = new URLSearchParams(location.search);
+const lienzo = (() => {
+  const m = /^(\d{3,5})x(\d{3,5})$/i.exec(params.get("lienzo") || "");
+  return m ? { w: +m[1], h: +m[2] } : { w: 1920, h: 1080 };
+})();
+const ESCALAS = [100,125,150,175,200,225,250,300,350,400];
+const CLAVE = "calibrador-borrador-v1";
+
+const estado = {
+  deteccion: null,
+  monitores: [],
+  monitoresOrigen: "este",
+  ventanas: [],
+  modo: "grabacion",
+  pruebaAjuste: { lienzo, respuesta: null },
+};
+
+// ---------- Borrador local ----------
+function cargarBorrador() {
+  try {
+    const b = JSON.parse(localStorage.getItem(CLAVE) || "null");
+    if (!b) return;
+    ["nombre","correo","firma"].forEach(k => { if (b[k]) $("#" + k).value = b[k]; });
+  } catch (e) {}
+}
+function guardarBorrador() {
+  try {
+    localStorage.setItem(CLAVE, JSON.stringify({ nombre: $("#nombre").value, correo: $("#correo").value, firma: $("#firma").value }));
+  } catch (e) {}
+}
+
+// ---------- Detección ----------
+function navegador() {
+  const ua = navigator.userAgent;
+  let m;
+  if ((m = /Edg\/(\d+)/.exec(ua))) return "Edge " + m[1];
+  if ((m = /OPR\/(\d+)/.exec(ua))) return "Opera " + m[1];
+  if ((m = /Firefox\/(\d+)/.exec(ua))) return "Firefox " + m[1];
+  if ((m = /Chrome\/(\d+)/.exec(ua))) return "Chrome " + m[1];
+  if ((m = /Version\/(\d+).*Safari/.exec(ua))) return "Safari " + m[1];
+  return "Desconocido";
+}
+async function sistema() {
+  try {
+    if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+      const v = await navigator.userAgentData.getHighEntropyValues(["platformVersion"]);
+      if (navigator.userAgentData.platform === "Windows") {
+        return parseInt(v.platformVersion, 10) >= 13 ? "Windows 11" : "Windows 10";
+      }
+      if (navigator.userAgentData.platform) return navigator.userAgentData.platform;
+    }
+  } catch (e) {}
+  const ua = navigator.userAgent;
+  if (/Windows/.test(ua)) return "Windows";
+  if (/Mac OS X/.test(ua)) return "macOS";
+  if (/Linux/.test(ua)) return "Linux";
+  return "Desconocido";
+}
+function escalaCercana(v) {
+  return ESCALAS.reduce((a, b) => Math.abs(b - v) < Math.abs(a - v) ? b : a);
+}
+async function detectar() {
+  const dpr = window.devicePixelRatio || 1;
+  const zoom = window.outerWidth && window.innerWidth ? Math.round(window.outerWidth / window.innerWidth * 100) : null;
+  const zoomNormal = zoom === null || (zoom >= 95 && zoom <= 106);
+  const escalaWin = zoomNormal ? escalaCercana(dpr * 100) : escalaCercana(dpr * 100 / (zoom / 100));
+  estado.deteccion = {
+    pantallaCss: { w: screen.width, h: screen.height },
+    areaDisponibleCss: { w: screen.availWidth, h: screen.availHeight },
+    devicePixelRatio: dpr,
+    resolucionFisica: { w: Math.round(screen.width * dpr), h: Math.round(screen.height * dpr) },
+    escalaWindowsEstimada: escalaWin,
+    ventanaNavegador: { innerW: window.innerWidth, innerH: window.innerHeight, outerW: window.outerWidth, outerH: window.outerHeight },
+    zoomEstimado: zoom,
+    pantallaExtendida: typeof screen.isExtended === "boolean" ? screen.isExtended : null,
+    profundidadColor: screen.colorDepth,
+    tactil: navigator.maxTouchPoints > 0,
+    navegador: navegador(),
+    sistema: await sistema(),
+    idioma: navigator.language,
+    zonaHoraria: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    fecha: new Date().toISOString(),
+  };
+  $("#escala").value = String(escalaWin);
+  if (estado.monitoresOrigen === "este") {
+    estado.monitores = [{ id: 1, etiqueta: "Este monitor", x: 0, y: 0, w: screen.width, h: screen.height, dpr, principal: true }];
+    if (!estado.ventanas.length) ventanasPorDefecto();
+  }
+  pintarDatos(zoomNormal);
+  pintarEscritorio();
+  actualizarJson();
+}
+function pintarDatos(zoomNormal) {
+  const d = estado.deteccion;
+  const items = [
+    [d.resolucionFisica.w + " × " + d.resolucionFisica.h, "Resolución de la pantalla"],
+    [d.escalaWindowsEstimada + " %", "Escala de Windows (estimada)"],
+    [d.pantallaCss.w + " × " + d.pantallaCss.h, "Píxeles que ve el navegador"],
+    [d.areaDisponibleCss.w + " × " + d.areaDisponibleCss.h, "Sin barra de tareas"],
+    [d.ventanaNavegador.innerW + " × " + d.ventanaNavegador.innerH, "Área útil de esta ventana"],
+    [(d.zoomEstimado ?? "—") + " %", "Zoom del navegador (estimado)"],
+    [estado.monitores.length + (d.pantallaExtendida ? " (hay más)" : ""), "Monitores"],
+    [d.navegador, d.sistema],
+  ];
+  $("#datos").innerHTML = items.map(([v, t]) => `<div class="dato"><b>${esc(v)}</b><span>${esc(t)}</span></div>`).join("");
+  $("#avisoZoom").innerHTML = zoomNormal ? "" :
+    `<div class="aviso warn">El zoom del navegador parece estar en ${d.zoomEstimado} %. Presiona <b>Ctrl + 0</b> y luego “Volver a detectar”.</div>`;
+  if (d.pantallaExtendida && estado.monitoresOrigen === "este") {
+    $("#avisoMonitores").innerHTML = `<div class="aviso warn">Tienes más de un monitor. Presiona “Detectar todos mis monitores” y acepta el permiso del navegador, o agrégalos a mano.</div>`;
+  }
+}
+async function detectarMonitores() {
+  if (!("getScreenDetails" in window)) {
+    $("#avisoMonitores").innerHTML = `<div class="aviso warn">Este navegador no permite leer todos los monitores. Usa Chrome o Edge, o agrégalos a mano.</div>`;
+    return;
+  }
+  try {
+    const sd = await window.getScreenDetails();
+    estado.monitores = sd.screens.map((s, i) => ({
+      id: i + 1,
+      etiqueta: s.label || "Monitor " + (i + 1),
+      x: s.left, y: s.top, w: s.width, h: s.height,
+      dpr: s.devicePixelRatio, principal: !!s.isPrimary,
+    }));
+    estado.monitoresOrigen = "api";
+    $("#avisoMonitores").innerHTML = `<div class="aviso ok">Se detectaron ${estado.monitores.length} monitor(es).</div>`;
+    ventanasPorDefecto();
+    pintarDatos(true);
+    pintarEscritorio();
+    actualizarJson();
+  } catch (e) {
+    $("#avisoMonitores").innerHTML = `<div class="aviso warn">No se dio el permiso. Puedes agregar los monitores a mano.</div>`;
+  }
+}
+function agregarMonitorManual() {
+  const m = /(\d{3,5})\s*[x×*]\s*(\d{3,5})/i.exec($("#mRes").value);
+  if (!m) { alert("Escribe la resolución como 1920 x 1080"); return; }
+  const esc = Math.max(100, Math.min(400, +$("#mEsc").value || 100)) / 100;
+  const w = Math.round(+m[1] / esc), h = Math.round(+m[2] / esc);
+  const base = estado.monitores.find(x => x.principal) || estado.monitores[0];
+  const minX = Math.min(...estado.monitores.map(x => x.x)), maxX = Math.max(...estado.monitores.map(x => x.x + x.w));
+  const minY = Math.min(...estado.monitores.map(x => x.y)), maxY = Math.max(...estado.monitores.map(x => x.y + x.h));
+  const pos = $("#mPos").value;
+  let x = base.x, y = base.y;
+  if (pos === "derecha") x = maxX;
+  if (pos === "izquierda") x = minX - w;
+  if (pos === "arriba") y = minY - h;
+  if (pos === "abajo") y = maxY;
+  estado.monitores.push({ id: estado.monitores.length + 1, etiqueta: "Monitor " + (estado.monitores.length + 1), x, y, w, h, dpr: esc, principal: false, manual: true });
+  estado.monitoresOrigen = "manual";
+  $("#formMonitor").hidden = true;
+  pintarDatos(true);
+  pintarEscritorio();
+  actualizarJson();
+}
+
+// ---------- Prueba de ajuste ----------
+function dibujarPrueba() {
+  const { w: W, h: H } = lienzo;
+  const svg = $("#svgPrueba");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  let g = "";
+  for (let x = 100; x < W; x += 100) g += `<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#333" stroke-width="1"/>`;
+  for (let y = 100; y < H; y += 100) g += `<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="#333" stroke-width="1"/>`;
+  const L = 120, t = 10;
+  const esquina = (x, y, sx, sy) => `<path d="M${x} ${y + sy * L} L${x} ${y} L${x + sx * L} ${y}" fill="none" stroke="#ff3b3b" stroke-width="${t * 2}"/>`;
+  const factor = Math.min(window.innerWidth / W, window.innerHeight / H);
+  estado.pruebaAjuste.factor = +factor.toFixed(4);
+  estado.pruebaAjuste.viewport = { w: window.innerWidth, h: window.innerHeight };
+  estado.pruebaAjuste.pantallaCompleta = !!document.fullscreenElement;
+  svg.innerHTML = `
+    <rect x="0" y="0" width="${W}" height="${H}" fill="#111"/>
+    ${g}
+    <rect x="1" y="1" width="${W - 2}" height="${H - 2}" fill="none" stroke="#fff" stroke-width="2"/>
+    ${esquina(0, 0, 1, 1)}${esquina(W, 0, -1, 1)}${esquina(0, H, 1, -1)}${esquina(W, H, -1, -1)}
+    <circle cx="${W / 2}" cy="${H / 2}" r="${H * 0.28}" fill="none" stroke="#4493f8" stroke-width="6"/>
+    <text x="${W / 2}" y="${H / 2 - 30}" fill="#fff" font-size="48" font-family="Segoe UI, sans-serif" text-anchor="middle">Lienzo ${W} × ${H}</text>
+    <text x="${W / 2}" y="${H / 2 + 30}" fill="#9aa4af" font-size="30" font-family="Segoe UI, sans-serif" text-anchor="middle">Tu ventana: ${window.innerWidth} × ${window.innerHeight} · factor ${factor.toFixed(3).replace(".", ",")}</text>`;
+}
+async function iniciarPrueba() {
+  $("#prueba").style.display = "block";
+  try { await document.documentElement.requestFullscreen(); } catch (e) {}
+  setTimeout(dibujarPrueba, 250);
+}
+function terminarPrueba(resp) {
+  dibujarPrueba();
+  estado.pruebaAjuste.respuesta = resp;
+  $("#prueba").style.display = "none";
+  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  const p = estado.pruebaAjuste;
+  $("#resPrueba").innerHTML = resp === "ok"
+    ? `<p class="ok-txt" style="margin-top:12px">Listo: la aplicación encaja en tu pantalla (factor ${String(p.factor).replace(".", ",")}).</p>`
+    : `<p class="mal-txt" style="margin-top:12px">Gracias. Cuéntanos en Comentarios qué se veía mal y adjunta una captura.</p>`;
+  actualizarJson();
+}
+window.addEventListener("resize", () => { if ($("#prueba").style.display === "block") dibujarPrueba(); });
+document.addEventListener("fullscreenchange", () => { if ($("#prueba").style.display === "block") setTimeout(dibujarPrueba, 150); });
+
+// ---------- Editor de ventanas ----------
+const NOMBRES = ["Rueda de negocios", "Libro de ofertas", "Ingreso de oferta", "Confirmación", "Mensajes"];
+let sigId = 1, seleccion = null, k = 1;
+function ventanasPorDefecto() {
+  const m = estado.monitores.find(x => x.principal) || estado.monitores[0];
+  if (!m) return;
+  const W = m.w, H = estado.deteccion ? Math.min(m.h, estado.deteccion.areaDisponibleCss.h) : m.h;
+  const r = (v) => Math.round(v);
+  const marcos = [
+    [0, 0, .6, .65], [.6, 0, .4, .65], [0, .65, .35, .35], [.35, .65, .3, .35], [.65, .65, .35, .35],
+  ];
+  sigId = 1;
+  estado.ventanas = marcos.map(([x, y, w, h], i) => ({
+    id: sigId++, nombre: NOMBRES[i], x: r(m.x + x * W), y: r(m.y + y * H), w: r(w * W), h: r(h * H),
+  }));
+}
+function limites() {
+  const ms = estado.monitores;
+  return {
+    x0: Math.min(...ms.map(m => m.x)), y0: Math.min(...ms.map(m => m.y)),
+    x1: Math.max(...ms.map(m => m.x + m.w)), y1: Math.max(...ms.map(m => m.y + m.h)),
+  };
+}
+function pintarEscritorio() {
+  if ($("#editor").hidden || !estado.monitores.length) return;
+  const cont = $("#escritorio");
+  const L = limites();
+  k = cont.clientWidth / (L.x1 - L.x0);
+  cont.style.height = Math.round((L.y1 - L.y0) * k) + "px";
+  let html = estado.monitores.map(m => `<div class="monitor" style="left:${(m.x - L.x0) * k}px;top:${(m.y - L.y0) * k}px;width:${m.w * k}px;height:${m.h * k}px"><span class="et">${esc(m.etiqueta)} · ${Math.round(m.w * m.dpr)}×${Math.round(m.h * m.dpr)}${m.principal ? " · principal" : ""}</span></div>`).join("");
+  html += estado.ventanas.map(v => `<div class="ventana${v.id === seleccion ? " sel" : ""}" data-id="${v.id}" style="left:${(v.x - L.x0) * k}px;top:${(v.y - L.y0) * k}px;width:${v.w * k}px;height:${v.h * k}px"><div class="tit">${esc(v.nombre)}</div><div class="med">${v.w}×${v.h}</div><div class="asa" data-asa="1"></div></div>`).join("");
+  cont.innerHTML = html;
+  pintarTabla();
+}
+function pintarTabla() {
+  $("#tablaVentanas").innerHTML = estado.ventanas.map(v => `<tr data-id="${v.id}">
+    <td><input type="text" data-c="nombre" value="${esc(v.nombre)}" maxlength="60"></td>
+    <td class="n"><input type="number" data-c="x" value="${v.x}"></td>
+    <td class="n"><input type="number" data-c="y" value="${v.y}"></td>
+    <td class="n"><input type="number" data-c="w" value="${v.w}" min="40"></td>
+    <td class="n"><input type="number" data-c="h" value="${v.h}" min="30"></td>
+    <td><button data-borrar="${v.id}" aria-label="Quitar ventana">Quitar</button></td></tr>`).join("");
+}
+function moverVentanaDom(v) {
+  const L = limites();
+  const el = $(`.ventana[data-id="${v.id}"]`);
+  if (!el) return;
+  el.style.left = (v.x - L.x0) * k + "px"; el.style.top = (v.y - L.y0) * k + "px";
+  el.style.width = v.w * k + "px"; el.style.height = v.h * k + "px";
+  el.querySelector(".med").textContent = v.w + "×" + v.h;
+}
+let arrastre = null;
+$("#escritorio").addEventListener("pointerdown", e => {
+  const el = e.target.closest(".ventana");
+  if (!el) return;
+  const v = estado.ventanas.find(x => x.id === +el.dataset.id);
+  seleccion = v.id;
+  document.querySelectorAll(".ventana").forEach(n => n.classList.toggle("sel", n === el));
+  arrastre = { v, modo: e.target.dataset.asa ? "tam" : "mover", sx: e.clientX, sy: e.clientY, x: v.x, y: v.y, w: v.w, h: v.h };
+  el.setPointerCapture(e.pointerId);
+  e.preventDefault();
+});
+$("#escritorio").addEventListener("pointermove", e => {
+  if (!arrastre) return;
+  const a = arrastre, dx = (e.clientX - a.sx) / k, dy = (e.clientY - a.sy) / k;
+  const snap = v => Math.round(v / 5) * 5;
+  if (a.modo === "mover") { a.v.x = snap(a.x + dx); a.v.y = snap(a.y + dy); }
+  else { a.v.w = Math.max(40, snap(a.w + dx)); a.v.h = Math.max(30, snap(a.h + dy)); }
+  moverVentanaDom(a.v);
+});
+const soltar = () => { if (arrastre) { arrastre = null; pintarTabla(); actualizarJson(); } };
+$("#escritorio").addEventListener("pointerup", soltar);
+$("#escritorio").addEventListener("pointercancel", soltar);
+$("#tablaVentanas").addEventListener("input", e => {
+  const tr = e.target.closest("tr"); if (!tr) return;
+  const v = estado.ventanas.find(x => x.id === +tr.dataset.id);
+  const c = e.target.dataset.c;
+  v[c] = c === "nombre" ? e.target.value : Math.round(+e.target.value || 0);
+  if (c === "nombre") { const t = $(`.ventana[data-id="${v.id}"] .tit`); if (t) t.textContent = v.nombre; }
+  else moverVentanaDom(v);
+  actualizarJson();
+});
+$("#tablaVentanas").addEventListener("click", e => {
+  const id = e.target.dataset.borrar; if (!id) return;
+  estado.ventanas = estado.ventanas.filter(v => v.id !== +id);
+  pintarEscritorio(); actualizarJson();
+});
+$("#btnAgregarVentana").onclick = () => {
+  const m = estado.monitores.find(x => x.principal) || estado.monitores[0];
+  estado.ventanas.push({ id: sigId++, nombre: "Ventana " + (estado.ventanas.length + 1), x: m.x + 40, y: m.y + 40, w: Math.round(m.w * .3), h: Math.round(m.h * .3) });
+  pintarEscritorio(); actualizarJson();
+};
+$("#btnReiniciarVentanas").onclick = () => { ventanasPorDefecto(); pintarEscritorio(); actualizarJson(); };
+document.querySelectorAll('input[name="modo"]').forEach(r => r.addEventListener("change", () => {
+  estado.modo = document.querySelector('input[name="modo"]:checked').value;
+  $("#editor").hidden = estado.modo !== "mi-puesto";
+  pintarEscritorio(); actualizarJson();
+}));
+window.addEventListener("resize", () => { if (!arrastre) pintarEscritorio(); });
+
+// ---------- Perfil y envío ----------
+function monitorDe(v) {
+  const cx = v.x + v.w / 2, cy = v.y + v.h / 2;
+  return estado.monitores.find(m => cx >= m.x && cx < m.x + m.w && cy >= m.y && cy < m.y + m.h) || null;
+}
+function perfil() {
+  return {
+    version: 1,
+    corredor: { nombre: $("#nombre").value.trim(), correo: $("#correo").value.trim(), firma: $("#firma").value.trim() },
+    deteccion: estado.deteccion,
+    escalaConfirmada: $("#escala").value,
+    monitores: estado.monitores,
+    monitoresOrigen: estado.monitoresOrigen,
+    pruebaAjuste: { ...estado.pruebaAjuste, comentario: $("#comentario").value.trim() },
+    modo: estado.modo,
+    ventanas: estado.modo === "mi-puesto" ? estado.ventanas.map(v => {
+      const m = monitorDe(v);
+      return { ...v, monitor: m ? m.id : null,
+        relativo: m ? { x: +((v.x - m.x) / m.w).toFixed(4), y: +((v.y - m.y) / m.h).toFixed(4), w: +(v.w / m.w).toFixed(4), h: +(v.h / m.h).toFixed(4) } : null };
+    }) : [],
+    autorizacionDatos: $("#autoriza").checked,
+  };
+}
+function actualizarJson() { $("#vistaJson").textContent = JSON.stringify(perfil(), null, 2); }
+function validar() {
+  if (!$("#nombre").value.trim()) { $("#nombre").focus(); return "Escribe tu nombre en el paso 1."; }
+  if (!$("#autoriza").checked) return "Marca la autorización de tratamiento de datos.";
+  const f = $("#capturas").files;
+  if (f.length > 3) return "Puedes adjuntar máximo 3 capturas.";
+  for (const x of f) if (x.size > 12 * 1024 * 1024) return `La captura “${x.name}” supera 12 MB.`;
+  return null;
+}
+async function enviar() {
+  const err = validar();
+  const out = $("#resultado");
+  if (err) { out.innerHTML = `<div class="aviso warn">${esc(err)}</div>`; return; }
+  if (estado.pruebaAjuste.respuesta === null && !confirm("No hiciste la prueba de ajuste (paso 3). ¿Enviar de todos modos?")) return;
+  const fd = new FormData();
+  fd.append("perfil", JSON.stringify(perfil()));
+  for (const x of $("#capturas").files) fd.append("capturas[]", x, x.name);
+  const b = $("#btnEnviar"); b.disabled = true; b.textContent = "Enviando…";
+  try {
+    const r = await fetch("guardar.php", { method: "POST", body: fd });
+    const j = await r.json().catch(() => ({ ok: false, error: "Respuesta inválida del servidor." }));
+    if (!j.ok) throw new Error(j.error || "Error " + r.status);
+    out.innerHTML = `<div class="aviso ok">Configuración recibida. Tu código es <span class="codigo">${esc(j.codigo)}</span></div>`;
+    guardarBorrador();
+  } catch (e) {
+    out.innerHTML = `<div class="aviso warn">No se pudo enviar: ${esc(e.message)}. Usa “Descargar mi perfil” y envía el archivo por correo.</div>`;
+  } finally { b.disabled = false; b.textContent = "Enviar configuración"; }
+}
+function descargar() {
+  const nombre = ($("#nombre").value.trim() || "corredor").replace(/[^\wÁÉÍÓÚÑáéíóúñ-]+/g, "_");
+  const blob = new Blob([JSON.stringify(perfil(), null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = `perfil-pantalla-${nombre}.json`; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+// ---------- Eventos ----------
+$("#lienzoTxt").textContent = lienzo.w + " × " + lienzo.h;
+$("#btnDetectar").onclick = () => { estado.monitoresOrigen = "este"; $("#avisoMonitores").innerHTML = ""; detectar(); };
+$("#btnMonitores").onclick = detectarMonitores;
+$("#btnAgregarMonitor").onclick = () => { $("#formMonitor").hidden = false; $("#mRes").focus(); };
+$("#btnCancelarMonitor").onclick = () => { $("#formMonitor").hidden = true; };
+$("#btnGuardarMonitor").onclick = agregarMonitorManual;
+$("#btnPrueba").onclick = iniciarPrueba;
+$("#btnPruebaOk").onclick = () => terminarPrueba("ok");
+$("#btnPruebaMal").onclick = () => terminarPrueba("mal");
+$("#btnEnviar").onclick = enviar;
+$("#btnDescargar").onclick = descargar;
+["nombre","correo","firma","comentario","escala","autoriza"].forEach(id => $("#" + id).addEventListener("input", () => { actualizarJson(); guardarBorrador(); }));
+$("#autoriza").addEventListener("change", actualizarJson);
+cargarBorrador();
+detectar();
+})();
+</script>
+</body>
+</html>

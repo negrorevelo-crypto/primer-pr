@@ -1,30 +1,50 @@
 /* Campaña Christmas Decoration Service: usa los tokens de site.css (marfil, terracota, Playfair + DM Sans). */
 .xmas-page { --glow: #ffd58a; }
 
-/* Hero */
-.xmas-hero .hero-copy { padding-top: 64px; padding-bottom: 64px; }
-.xmas-hero .eyebrow { margin-bottom: 18px; }
-.xmas-hero .xmas-title { max-width: 620px; margin: 0; font-family: var(--serif); font-size: clamp(40px, 4.1vw, 64px); font-weight: 500; line-height: 1.02; letter-spacing: -.03em; text-transform: uppercase; overflow-wrap: break-word; }
-.xmas-subtitle { margin: 22px 0 0; color: var(--orange); font-size: 13px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
-.xmas-hero .hero-lede { max-width: 470px; margin-top: 18px; }
-.xmas-benefits { margin: 30px 0 0; padding: 0; display: grid; gap: 12px; list-style: none; }
-.xmas-benefits li { display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-.xmas-benefits svg { width: 40px; height: 40px; flex: 0 0 40px; padding: 7px; border: 1px solid rgba(168, 68, 29, .35); border-radius: 50%; fill: none; stroke: var(--orange); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; background: var(--white); }
-.xmas-cta { min-height: 54px; padding: 0 24px; box-shadow: 0 14px 30px rgba(168, 68, 29, .22); }
+/* Hero (según el mockup: foto con borde curvo, etiqueta Black Friday con moño y tarjeta 15% OFF) */
+.xmas-hero { grid-template-columns: minmax(420px, .72fr) 1.28fr; min-height: clamp(580px, calc(100svh - 230px), 780px); background: #f8f5f0; }
+.xmas-hero .hero-copy { z-index: 2; padding: 48px calc(5vw + 20px) 48px clamp(28px, 5vw, 88px); background: transparent; }
+.xmas-hero .eyebrow { margin-bottom: 20px; font-size: 13px; letter-spacing: .2em; }
+.xmas-hero .xmas-title { max-width: 560px; margin: 0; font-family: var(--serif); font-size: clamp(50px, 5.3vw, 86px); font-weight: 500; line-height: .98; letter-spacing: -.025em; }
+.xmas-title span, .xmas-title em { display: block; }
+.xmas-title em { color: var(--orange); font-style: italic; font-weight: 500; }
+.xmas-hero .hero-lede { max-width: 440px; margin-top: 26px; color: #2f2b26; font-size: 18px; line-height: 1.5; }
+.xmas-benefits { width: 100%; max-width: 440px; margin: 30px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); list-style: none; }
+.xmas-benefits li { padding: 0 10px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; color: #2f2b26; font-size: 15px; font-weight: 600; line-height: 1.3; }
+.xmas-benefits li + li { border-left: 1px solid rgba(37, 35, 31, .22); }
+.xmas-benefits svg { width: 42px; height: 42px; fill: none; stroke: var(--orange); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.xmas-hero .hero-actions { margin-top: 32px; }
+.xmas-cta { min-height: 58px; padding: 0 32px; gap: 22px; font-size: 14px !important; letter-spacing: .14em; box-shadow: 0 14px 30px rgba(168, 68, 29, .22); }
 .xmas-promo-chip { display: none; }
-
-.xmas-visual { background: #1d1a16; }
-.xmas-visual.is-placeholder img { filter: saturate(.9) brightness(.82) sepia(.12); }
-.xmas-visual::after { background: linear-gradient(180deg, rgba(20, 16, 12, .28), transparent 30%), linear-gradient(0deg, rgba(20, 16, 12, .55), transparent 42%); }
-.xmas-garland { position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: 70px; filter: drop-shadow(0 0 6px rgba(255, 196, 102, .85)); }
-.xmas-badge { position: absolute; z-index: 2; top: 40px; right: 40px; width: 132px; height: 132px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; background: var(--ink); color: var(--white); text-align: center; font-size: 12px; font-weight: 700; letter-spacing: .14em; line-height: 1.5; text-transform: uppercase; box-shadow: 0 0 0 6px rgba(37, 35, 31, .25), 0 18px 40px rgba(0, 0, 0, .3); transform: rotate(-8deg); }
-.xmas-badge span:first-child { color: var(--glow); }
-.xmas-offer { position: absolute; z-index: 2; left: 40px; bottom: 40px; width: min(360px, calc(100% - 80px)); padding: 24px 26px; background: var(--white); box-shadow: 0 24px 60px rgba(0, 0, 0, .28); }
-.xmas-offer-kicker { margin: 0; color: var(--orange); font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
-.xmas-offer-value { margin: 6px 0 8px; font-family: var(--serif); font-size: clamp(52px, 5vw, 72px); font-weight: 600; line-height: .95; letter-spacing: -.03em; color: var(--orange-dark); }
-.xmas-offer-value span { display: block; margin-top: 6px; font-family: var(--sans); font-size: 15px; font-weight: 700; letter-spacing: .16em; }
 .xmas-promo-chip em, .xmas-aside-promo em { font-style: normal; }
-.xmas-offer-text { margin: 0; color: #4e4942; font-size: 14px; line-height: 1.6; }
+
+.xmas-visual { min-height: 0; margin-left: -5vw; background: linear-gradient(180deg, #e7c46a, #b8862b 55%, #e9cd7d); clip-path: ellipse(100% 128% at 100% 50%); }
+.xmas-visual img { clip-path: ellipse(calc(100% - 5px) 128% at 100% 50%); object-position: 30% center; }
+.xmas-visual.is-placeholder img { filter: saturate(.9) brightness(.82) sepia(.12); }
+.xmas-visual::after { display: none; }
+.xmas-garland { display: none; }
+
+.xmas-badge { position: absolute; z-index: 3; top: 0; right: 0; width: clamp(220px, 19vw, 300px); height: clamp(170px, 15vw, 230px); pointer-events: none; }
+.xmas-badge-tag { position: absolute; top: 26%; right: 13%; padding: 14px 22px 16px 34px; display: flex; flex-direction: column; background: linear-gradient(160deg, #2a2621, #151310); color: #fff; font-family: "DM Sans", Arial, sans-serif; font-size: clamp(30px, 2.8vw, 44px); font-style: italic; font-weight: 700; line-height: .95; letter-spacing: -.01em; text-transform: uppercase; clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%, 0 26%); box-shadow: 0 18px 40px rgba(0, 0, 0, .35); transform: rotate(-9deg); transform-origin: top right; }
+.xmas-badge-tag::before { position: absolute; inset: 4px; content: ""; border: 1.5px solid rgba(231, 196, 106, .55); clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%, 0 26%); }
+.xmas-badge-tag strong { background: linear-gradient(180deg, #fbe7a1, #d9a93f 60%, #b07c22); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 800; }
+.xmas-bow { position: absolute; z-index: 1; top: -6px; right: -6px; width: 46%; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .35)); }
+
+.xmas-offer { position: absolute; z-index: 3; right: clamp(20px, 3vw, 44px); bottom: clamp(28px, 7%, 60px); width: min(360px, 42%); padding: 22px 26px 24px; background: linear-gradient(160deg, #24211d, #12110f); border: 2px solid #d6ad55; border-radius: 22px; box-shadow: 0 0 0 5px rgba(214, 173, 85, .18), 0 26px 60px rgba(0, 0, 0, .45); text-align: center; transform: rotate(-3deg); }
+.xmas-offer-value { margin: 0 0 8px; font-family: var(--serif); font-size: clamp(54px, 4.8vw, 80px); font-style: italic; font-weight: 700; line-height: 1; letter-spacing: -.02em; background: linear-gradient(180deg, #fff1b8, #e3b24b 55%, #b9822a); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
+.xmas-offer-value span { display: inline; font-family: var(--serif); font-size: .82em; letter-spacing: 0; }
+.xmas-offer-text { margin: 0; color: #f4efe6; font-family: var(--serif); font-size: clamp(17px, 1.45vw, 22px); font-style: italic; line-height: 1.35; }
+
+/* Franja de paquetes bajo el hero */
+.xmas-strip { padding: 26px clamp(28px, 5vw, 88px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: #efe9e0; border-bottom: 1px solid var(--line); }
+.xmas-strip a { padding: 8px clamp(14px, 2.4vw, 40px); display: flex; align-items: center; gap: 22px; transition: background .2s; }
+.xmas-strip a + a { border-left: 1px solid rgba(37, 35, 31, .3); }
+.xmas-strip a:first-child { padding-left: 0; }
+.xmas-strip a:hover strong { color: var(--orange-dark); }
+.xmas-strip svg { width: 52px; height: 52px; flex: 0 0 52px; fill: none; stroke: var(--orange); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.xmas-strip span { display: flex; flex-direction: column; gap: 5px; }
+.xmas-strip strong { color: var(--ink); font-size: 21px; font-weight: 600; transition: color .2s; }
+.xmas-strip small { color: #3d3933; font-size: 16px; line-height: 1.4; }
 
 /* Alcance */
 .xmas-scope { padding-bottom: 96px; }
@@ -117,9 +137,6 @@
 .xmas-thanks-note { margin-top: -10px !important; font-size: 13px !important; }
 
 @media (max-width: 980px) {
-  .xmas-hero .xmas-title { font-size: clamp(36px, 4.6vw, 50px); }
-  .xmas-badge { top: 24px; right: 24px; width: 112px; height: 112px; font-size: 11px; }
-  .xmas-offer { left: 24px; bottom: 24px; width: calc(100% - 48px); }
   .xmas-steps { grid-template-columns: 1fr 1fr; }
   .xmas-steps li:nth-child(2) { border-right: 0; }
   .xmas-steps li:nth-child(3) { padding-left: 0; }
@@ -131,21 +148,6 @@
 }
 
 @media (max-width: 700px) {
-  .xmas-hero .hero-copy { min-height: 0; padding: 40px 20px 36px; }
-  .xmas-promo-chip { margin: 0 0 18px; display: inline-flex; align-items: center; gap: 10px; padding: 8px 8px 8px 14px; background: var(--ink); color: var(--paper); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
-  .xmas-promo-chip strong { font-weight: 700; }
-  .xmas-promo-chip span { padding: 5px 9px; background: var(--orange); color: #fff; font-weight: 700; }
-  .xmas-hero .xmas-title { font-size: clamp(36px, 10.5vw, 48px); line-height: 1.02; overflow-wrap: break-word; }
-  .xmas-subtitle { font-size: 12px; }
-  .xmas-benefits li { font-size: 12px; }
-  .xmas-hero .hero-actions { width: 100%; margin-top: 26px; }
-  .xmas-hero .hero-actions .button { width: 100%; max-width: 100%; justify-content: space-between; }
-  .xmas-visual { min-height: 0; aspect-ratio: 4 / 3.4; }
-  .xmas-badge { top: 16px; right: 16px; width: 92px; height: 92px; font-size: 10px; }
-  .xmas-visual.has-offer { overflow: visible; margin-bottom: 72px; }
-  .xmas-offer { position: absolute; left: 16px; right: 16px; bottom: -56px; width: auto; margin: 0; padding: 18px 20px; }
-  .xmas-offer-value { font-size: 48px; }
-  .xmas-offer-text { font-size: 13px; }
   .xmas-steps { grid-template-columns: 1fr; }
   .xmas-steps li, .xmas-steps li + li { padding: 22px 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .xmas-packages { padding-top: 72px; }
@@ -162,3 +164,52 @@
   .xmas-chip span { width: 100%; justify-content: center; }
   .field input, .field select, .field textarea { font-size: 16px; }
 }
+
+/* Ajustes responsive del hero del mockup (van al final para prevalecer) */
+@media (max-width: 1440px) {
+  .xmas-hero { grid-template-columns: minmax(380px, .8fr) 1.2fr; }
+  .xmas-hero .xmas-title { font-size: clamp(48px, 5vw, 64px); }
+  .xmas-benefits li { padding: 0 6px; font-size: 13px; }
+  .xmas-cta { padding: 0 22px; gap: 14px; font-size: 13px !important; letter-spacing: .1em; white-space: nowrap; }
+  .xmas-offer { width: min(320px, 48%); padding: 18px 20px; }
+}
+@media (max-width: 980px) {
+  .xmas-hero { grid-template-columns: 1fr 1fr; }
+  .xmas-hero .hero-copy { padding: 44px calc(5vw + 12px) 44px 32px; }
+  .xmas-hero .xmas-title { font-size: clamp(44px, 6vw, 58px); }
+  .xmas-hero .hero-lede { font-size: 16px; }
+  .xmas-benefits li { padding: 0 6px; font-size: 13px; }
+  .xmas-badge { width: 200px; height: 160px; }
+  .xmas-badge-tag { font-size: 28px; padding: 12px 18px 12px 28px; }
+  .xmas-offer { right: 18px; left: auto; bottom: 22px; width: calc(100% - 60px); }
+  .xmas-strip { grid-template-columns: 1fr; gap: 6px; }
+  .xmas-strip a, .xmas-strip a:first-child { padding: 12px 0; }
+  .xmas-strip a + a { border-left: 0; border-top: 1px solid var(--line); }
+}
+@media (max-width: 700px) {
+  .xmas-hero { display: flex; }
+  .xmas-hero .hero-copy { padding: 36px 20px 32px !important; }
+  .xmas-hero .xmas-title { font-size: clamp(42px, 13vw, 56px); }
+  .xmas-hero .hero-lede { font-size: 16px; }
+  .xmas-promo-chip { margin: 0 0 18px; display: inline-flex; align-items: center; gap: 10px; padding: 8px 8px 8px 14px; background: var(--ink); color: var(--paper); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+  .xmas-promo-chip span { padding: 5px 9px; background: var(--orange); color: #fff; font-weight: 700; }
+  .xmas-benefits { max-width: none; }
+  .xmas-hero .hero-actions, .xmas-hero .hero-actions .button { width: 100%; max-width: 100%; }
+  .xmas-cta { justify-content: space-between; padding: 0 22px; font-size: 13px !important; }
+  .xmas-visual { margin: 0; clip-path: none; background: #1d1a16; aspect-ratio: 16 / 11; min-height: 0; }
+  .xmas-visual img { clip-path: none; object-position: 28% center; }
+  .xmas-visual.has-offer { overflow: visible; margin-bottom: 96px; }
+  .xmas-badge { width: 170px; height: 130px; }
+  .xmas-badge-tag { top: 22%; right: 10%; font-size: 22px; padding: 9px 14px 10px 22px; }
+  .xmas-offer { left: 16px; right: 16px; bottom: -84px; width: auto; padding: 16px 18px; border-radius: 18px; transform: rotate(-1.5deg); }
+  .xmas-offer-value { font-size: 50px; margin-bottom: 4px; }
+  .xmas-offer-text { font-size: 16px; }
+  .xmas-strip { padding: 18px 20px; }
+  .xmas-strip svg { width: 40px; height: 40px; flex-basis: 40px; }
+  .xmas-strip strong { font-size: 18px; }
+  .xmas-strip small { font-size: 15px; }
+}
+
+/* En español "DE DESCUENTO" es largo: va en una segunda línea más pequeña. */
+html[lang="es"] .xmas-offer-value { white-space: normal; }
+html[lang="es"] .xmas-offer-value span { display: block; margin-top: 2px; font-size: .46em; letter-spacing: .04em; }

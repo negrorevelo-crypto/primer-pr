@@ -24,6 +24,13 @@ window.chelartExtraTranslations = Object.assign(window.chelartExtraTranslations 
   'When you book your Christmas installation and removal package before December 1st.': 'Al reservar tu paquete de instalación y retiro navideño antes del 1 de diciembre.',
   'Florida home decorated for Christmas with warm LED lights on the roofline, lit palm trees and wreaths': 'Casa de Florida decorada para Navidad con luces LED cálidas en el techo, palmeras iluminadas y coronas',
 
+  // Hero según el mockup
+  'Christmas': 'Servicio de', 'Decoration': 'Decoración', 'Service': 'Navideña',
+  'Make your home shine this Christmas without the stress. We handle the installation, maintenance and removal of your holiday decorations.': 'Haz que tu hogar brille esta Navidad sin estrés. Nosotros nos encargamos de la instalación, el mantenimiento y el retiro de tu decoración navideña.',
+  'Exterior lights installation and removal.': 'Instalación y retiro de luces exteriores.',
+  'Full exterior decoration, façade, garden and removal.': 'Decoración exterior completa, fachada, jardín y retiro.',
+  'Custom design, complete interior & exterior decoration, maintenance and removal.': 'Diseño a la medida, decoración interior y exterior completa, mantenimiento y retiro.',
+
   // Franja y alcance
   'Christmas service area': 'Zona de servicio navideño',
   'Installation · maintenance · removal.': 'Instalación · mantenimiento · retiro.',

@@ -124,8 +124,8 @@ function christmas_choice_chips(string $name, array $catalog, string $type, bool
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="<?= h($heroBase) ?>-800.jpg" imagesrcset="<?= h(implode(', ', $heroSources)) ?>" imagesizes="(max-width: 700px) 100vw, 55vw">
   <link rel="stylesheet" href="assets/css/site.css?v=20261126">
-  <link rel="stylesheet" href="assets/css/christmas.css?v=20261127">
-  <script defer src="assets/js/christmas-i18n.js?v=20261126"></script>
+  <link rel="stylesheet" href="assets/css/christmas.css?v=20261130">
+  <script defer src="assets/js/christmas-i18n.js?v=20261128"></script>
   <script defer src="assets/js/i18n.js?v=20261126"></script>
   <script defer src="assets/js/site.js?v=20261126"></script>
   <script defer src="assets/js/christmas.js?v=20261127"></script>
@@ -147,34 +147,40 @@ function christmas_choice_chips(string $name, array $catalog, string $type, bool
       <div class="hero-copy">
         <p class="eyebrow reveal">Holiday services</p>
         <?php if ($promoActive): ?><p class="xmas-promo-chip reveal"><strong>Black Friday special</strong><span><?= $discount ?>% <em>OFF</em></span></p><?php endif; ?>
-        <h1 id="xmas-title" class="xmas-title reveal">Christmas Decoration Service</h1>
-        <p class="xmas-subtitle reveal">Make your home shine this Christmas.</p>
-        <p class="hero-lede reveal">Enjoy the magic of Christmas without the stress. We handle the installation, maintenance and removal of your holiday decorations.</p>
+        <h1 id="xmas-title" class="xmas-title reveal"><span>Christmas</span> <em>Decoration</em> <span>Service</span></h1>
+        <p class="hero-lede reveal">Make your home shine this Christmas without the stress. We handle the installation, maintenance and removal of your holiday decorations.</p>
         <ul class="xmas-benefits reveal" aria-label="What’s included">
-          <li><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 9c8 7 18 7 26 0"/><path d="M8 12.6v2.6M16 14.6v2.6M24 12.6v2.6"/><path d="M6.6 15.2h2.8l.6 3.2c.2 1.1-.6 2.1-1.7 2.1h-.6c-1.1 0-1.9-1-1.7-2.1zM14.6 17.2h2.8l.6 3.2c.2 1.1-.6 2.1-1.7 2.1h-.6c-1.1 0-1.9-1-1.7-2.1zM22.6 15.2h2.8l.6 3.2c.2 1.1-.6 2.1-1.7 2.1h-.6c-1.1 0-1.9-1-1.7-2.1z"/></svg><span>Professional Installation</span></li>
-          <li><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="7" width="22" height="20" rx="1.5"/><path d="M5 13h22M11 4v5M21 4v5"/><path d="m11.5 20 3 3 6-6"/></svg><span>Seasonal Maintenance</span></li>
-          <li><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 13h22v14H5z"/><path d="M3 8h26v5H3zM13 18h6"/><path d="m16 1.8v4.4M13.8 4l2.2-2.2L18.2 4"/></svg><span>Post-Holiday Removal</span></li>
+          <li><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M3 10c10 9 24 9 34 0"/><path d="M10 15.2v3M20 17.6v3M30 15.2v3"/><path d="M10 18.2c-2.6 0-4 2.3-4 4.6 0 2.4 1.8 4.2 4 4.2s4-1.8 4-4.2c0-2.3-1.4-4.6-4-4.6zM20 20.6c-2.6 0-4 2.3-4 4.6 0 2.4 1.8 4.2 4 4.2s4-1.8 4-4.2c0-2.3-1.4-4.6-4-4.6zM30 18.2c-2.6 0-4 2.3-4 4.6 0 2.4 1.8 4.2 4 4.2s4-1.8 4-4.2c0-2.3-1.4-4.6-4-4.6z"/></svg><span>Professional Installation</span></li>
+          <li><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M27.5 4.5a6.5 6.5 0 0 0-6.2 8.6L6.6 27.8a3 3 0 1 0 4.2 4.2l14.7-14.7a6.5 6.5 0 0 0 8.4-8.2l-4 4-3.6-.6-.6-3.6 4-4a6.5 6.5 0 0 0-2.2-.4z"/><path d="m6 6 3.5-1.5 2 2-1.5 3.5L22 22M24 24l9 9a2.5 2.5 0 0 1-3.5 3.5l-9-9"/></svg><span>Seasonal Maintenance</span></li>
+          <li><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="8" width="30" height="27" rx="2"/><path d="M5 15h30M13 4v7M27 4v7"/><path d="M11 21h3v3h-3zM18.5 21h3v3h-3zM26 21h3v3h-3zM11 28h3v3h-3zM18.5 28h3v3h-3z"/></svg><span>Post-Holiday Removal</span></li>
         </ul>
-        <div class="hero-actions reveal"><a class="button button-primary xmas-cta" href="<?= h($page) ?>#christmas-quote">Book your Christmas service <span aria-hidden="true">→</span></a><a class="text-link" href="<?= h($page) ?>#packages">See packages <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-actions reveal"><a class="button button-primary xmas-cta" href="<?= h($page) ?>#christmas-quote">Book your Christmas service <span aria-hidden="true">→</span></a></div>
       </div>
       <div class="hero-visual xmas-visual<?= $heroIsSeasonal ? '' : ' is-placeholder' ?><?= $promoActive ? ' has-offer' : '' ?>">
-        <?php if (!$heroIsSeasonal): ?><!-- REEMPLAZAR FOTO: residencia de Florida de noche con luces LED cálidas en techo y fachada, palmeras iluminadas, guirnaldas, coronas y jardín iluminado. Guardar como assets/img/christmas/christmas-home-hero.jpg (+ -480, -800, -1200, -1600 .jpg) y la página la usa sola. --><?php endif; ?>
-        <img src="<?= h($heroBase) ?>-800.jpg" alt="<?= $heroIsSeasonal ? 'Florida home decorated for Christmas with warm LED lights on the roofline, lit palm trees and wreaths' : 'Modern Florida home with a covered living area and pool' ?>" fetchpriority="high" width="<?= (int)$heroInfo[0] ?>" height="<?= (int)$heroInfo[1] ?>" srcset="<?= h(implode(', ', $heroSources)) ?>" sizes="(max-width: 700px) 100vw, 55vw">
-        <?php if (!$heroIsSeasonal): ?><svg class="xmas-garland" viewBox="0 0 600 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 8 Q75 58 150 14 T300 14 T450 14 T600 8" fill="none" stroke="#2b2620" stroke-width="1.5"/><?php for ($i = 1; $i < 16; $i++): $x = $i * 37.5; $y = 14 + 20 * abs(sin($x / 600 * M_PI * 4)); ?><circle cx="<?= round($x, 1) ?>" cy="<?= round($y + 6, 1) ?>" r="4.6" fill="#ffd58a"/><?php endfor; ?></svg><?php endif; ?>
+        <?php if (!$heroIsSeasonal): ?><!-- REEMPLAZAR FOTO: guardar como assets/img/christmas/christmas-home-hero.jpg (+ -480, -800, -1200, -1600 .jpg) y la página la usa sola. --><?php endif; ?>
+        <img src="<?= h($heroBase) ?>-800.jpg" alt="<?= $heroIsSeasonal ? 'Florida home decorated for Christmas with warm LED lights on the roofline, lit palm trees and wreaths' : 'Modern Florida home with a covered living area and pool' ?>" fetchpriority="high" width="<?= (int)$heroInfo[0] ?>" height="<?= (int)$heroInfo[1] ?>" srcset="<?= h(implode(', ', $heroSources)) ?>" sizes="(max-width: 700px) 100vw, 64vw">
         <?php if ($promoActive): ?>
-          <div class="xmas-badge" aria-hidden="true"><span>Black Friday</span><span>Special</span></div>
+          <div class="xmas-badge" aria-hidden="true">
+            <svg class="xmas-bow" viewBox="0 0 140 110"><defs><linearGradient id="xmas-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ef3b3b"/><stop offset=".55" stop-color="#c3141c"/><stop offset="1" stop-color="#7d0a10"/></linearGradient></defs>
+              <path d="M64 52 30 104l14-4 6 10 20-50z" fill="url(#xmas-red)"/><path d="M72 52l28 50 3-12 13 2-34-44z" fill="url(#xmas-red)"/>
+              <path d="M66 48C46 20 10 14 8 34c-2 18 32 22 58 14z" fill="url(#xmas-red)"/><path d="M74 48c18-30 56-38 60-18 4 18-30 26-60 18z" fill="url(#xmas-red)"/>
+              <path d="M24 32c14 0 28 6 38 13M118 28c-14 2-28 9-38 17" fill="none" stroke="#5e070b" stroke-opacity=".45" stroke-width="2"/>
+              <rect x="60" y="40" width="20" height="16" rx="6" fill="#a50f17"/></svg>
+            <span class="xmas-badge-tag"><span>Black</span> <span>Friday</span> <strong>Special</strong></span>
+          </div>
           <aside class="xmas-offer" aria-label="Black Friday special">
-            <p class="xmas-offer-kicker">Black Friday special</p>
-            <p class="xmas-offer-value"><?= $discount ?>%<span>OFF</span></p>
+            <p class="xmas-offer-value"><?= $discount ?>% <span>OFF</span></p>
             <p class="xmas-offer-text">When you book your Christmas installation and removal package before December 1st.</p>
           </aside>
         <?php endif; ?>
       </div>
     </section>
 
-    <section class="intro-band reveal" aria-label="Christmas service area">
-      <p>Installation · maintenance · removal.</p><span>Christmas light installation for homes in DeBary, Orlando and across Central Florida.</span>
-    </section>
+    <nav class="xmas-strip" aria-label="Christmas packages">
+      <a href="<?= h($page) ?>?package=essential#christmas-quote" data-package-link="essential"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 19 20 6l15 13"/><path d="M9 16v18h22V16"/><path d="M17 34V24h6v10"/></svg><span><strong>Essential Christmas</strong><small>Exterior lights installation and removal.</small></span></a>
+      <a href="<?= h($page) ?>?package=premium#christmas-quote" data-package-link="premium"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M13 5 6 18h4l-5 9h16l-5-9h4zM13 27v6"/><path d="M27 9l-6 11h3l-4 8h14l-4-8h3zM27 28v5"/><path d="M3 34h34"/></svg><span><strong>Premium Christmas</strong><small>Full exterior decoration, façade, garden and removal.</small></span></a>
+      <a href="<?= h($page) ?>?package=luxury#christmas-quote" data-package-link="luxury"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M11 8h18l7 9-16 16L4 17z"/><path d="M4 17h32M16 8l-3 9 7 16 7-16-3-9"/></svg><span><strong>Luxury Christmas</strong><small>Custom design, complete interior &amp; exterior decoration, maintenance and removal.</small></span></a>
+    </nav>
 
     <section class="section xmas-scope" aria-labelledby="scope-title">
       <div class="section-heading reveal"><p class="eyebrow">One team, the whole season</p><h2 id="scope-title">From the first light<br>to the last box.</h2>

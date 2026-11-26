@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 require_once dirname(__DIR__) . '/config/bootstrap.php';
+require_once dirname(__DIR__) . '/config/christmas.php';
+$christmasEnabled = christmas_campaign_enabled();
 ?>
 <!doctype html>
 <html lang="en">
@@ -26,7 +28,7 @@ require_once dirname(__DIR__) . '/config/bootstrap.php';
   <script src="assets/js/language-init.js?v=20261125"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css?v=20261125"><script defer src="assets/js/i18n.js?v=20261125"></script><script defer src="assets/js/site.js?v=20261125"></script>
+  <link rel="stylesheet" href="assets/css/site.css?v=20261126"><script defer src="assets/js/christmas-i18n.js?v=20261126"></script><script defer src="assets/js/i18n.js?v=20261126"></script><script defer src="assets/js/site.js?v=20261126"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -51,6 +53,15 @@ require_once dirname(__DIR__) . '/config/bootstrap.php';
     </div><div class="hero-visual">
       <img src="assets/img/projects/hero-florida-home.jpg" alt="Modern Florida home with a covered living area and pool" fetchpriority="high" width="1672" height="941" srcset="assets/img/projects/hero-florida-home-480.jpg 480w, assets/img/projects/hero-florida-home-800.jpg 800w, assets/img/projects/hero-florida-home-1200.jpg 1200w, assets/img/projects/hero-florida-home-1600.jpg 1600w, assets/img/projects/hero-florida-home.jpg 1672w" sizes="(max-width: 700px) 100vw, 55vw">
     </div></section>
+
+    <?php if ($christmasEnabled): ?>
+    <section class="xmas-home-band" aria-label="Christmas decoration service"><a href="christmas-decoration-services/">
+      <p class="eyebrow">Holiday services · Christmas decoration</p>
+      <strong>Make your home shine this Christmas</strong>
+      <?php if (christmas_promo_active()): ?><em>Black Friday: <?= christmas_discount_percent() ?>% off before Dec 1</em><?php endif; ?>
+      <span class="text-link">See Christmas packages <span aria-hidden="true">→</span></span>
+    </a></section>
+    <?php endif; ?>
 
     <section class="intro-band reveal" aria-label="Chelart service area and qualifications">
       <p>Considered care for every part of your home.</p><span>Tell us what your home needs — we’ll take it from there.</span>

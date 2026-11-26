@@ -87,6 +87,10 @@ powershell -ExecutionPolicy Bypass -File dev/servidor-local.ps1
 
 Abre http://localhost:8080. Para cambiar valores, copia `dev/local.env.example` como `.env` en la raíz.
 
+## Campaña de Navidad (Black Friday 2026)
+
+Página `/christmas-decoration-services/` y módulo `/admin/christmas.php`. Las tablas nuevas, los archivos modificados, los pasos para publicar en Plesk y el interruptor de activación están en [`chelart/CAMPANA-NAVIDAD.md`](chelart/CAMPANA-NAVIDAD.md). Antes de publicar, ejecuta `chelart/sql/christmas_campaign.sql` en la base, previo respaldo.
+
 ## Flujo de trabajo
 
 1. Crea una rama para cada cambio, edita en `chelart/` y revisa en http://localhost:8080.

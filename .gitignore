@@ -7,3 +7,6 @@ chelart/public/hash-temporal.php
 .env
 *.log
 entregas/
+# Fotos de clientes (campaña de Navidad): datos privados, nunca al repositorio
+chelart/storage/christmas-uploads/*
+!chelart/storage/christmas-uploads/.gitkeep

@@ -58,6 +58,8 @@ portal/
 
 ## Instalación en Plesk (subdominio)
 
+> **Servidor Windows (IIS):** la raíz del documento se escribe con barra invertida: `entrenamiento.tudominio.com\public`. Las carpetas `app`, `database` y `storage` traen un `web.config` que bloquea su contenido, porque IIS no lee los archivos `.htaccess`. Si `instalar.php` responde **404**, la raíz del documento no apunta a `public`.
+
 1. **Crear el subdominio.** En Plesk entre a **Sitios web y dominios → Agregar subdominio**, por ejemplo `entrenamiento.tudominio.com`. En **Raíz del documento** escriba `entrenamiento.tudominio.com/public`. Así solo la carpeta `public` queda expuesta a internet.
 2. **Versión de PHP.** En **Configuración de PHP** del subdominio elija PHP 8.1 o superior.
 3. **Subir los archivos.** En el **Administrador de archivos**, entre a la carpeta `entrenamiento.tudominio.com` y suba ahí el contenido de `portal/`. Deben quedar las carpetas `app`, `database`, `storage` y `public` una al lado de la otra.

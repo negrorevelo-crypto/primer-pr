@@ -1,0 +1,56 @@
+# Entorno local de Chelart: sitio PHP + MariaDB + buzón de prueba
+#   docker compose up -d   ->  http://localhost:8080
+services:
+  web:
+    build: ./dev
+    ports:
+      - "8080:80"
+    volumes:
+      - ./chelart:/var/www/chelart
+    environment:
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_NAME: chelart_local
+      DB_USER: chelart_app
+      DB_PASSWORD: chelart_local_pass
+      QUOTE_NOTIFY_EMAIL: pruebas@chelart.local
+      QUOTE_MAIL_FROM: website@chelart.local
+      QUOTE_ADMIN_USERNAME: admin
+      # Contraseña local: chelart-local-2026 (solo para este entorno)
+      QUOTE_ADMIN_PASSWORD_HASH: "$$2y$$10$$fRouH3Y3F1az5g2bnauvPupvTPbCw.usz4e/w1XYBOo9SaY2DApvq"
+      QUOTE_ADMIN_URL: https://localhost:8080/admin/
+    depends_on:
+      - db
+      - mailpit
+
+  db:
+    image: mariadb:10.11
+    environment:
+      MARIADB_DATABASE: chelart_local
+      MARIADB_USER: chelart_app
+      MARIADB_PASSWORD: chelart_local_pass
+      MARIADB_ROOT_PASSWORD: root_local
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./chelart/sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    ports:
+      - "3307:3306"
+
+  mailpit:
+    image: axllent/mailpit:v1.21
+    ports:
+      - "8025:8025"
+
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root_local
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+
+volumes:
+  db_data:

@@ -124,7 +124,7 @@ function christmas_choice_chips(string $name, array $catalog, string $type, bool
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="<?= h($heroBase) ?>-800.jpg" imagesrcset="<?= h(implode(', ', $heroSources)) ?>" imagesizes="(max-width: 700px) 100vw, 55vw">
   <link rel="stylesheet" href="assets/css/site.css?v=20261126">
-  <link rel="stylesheet" href="assets/css/christmas.css?v=20261130">
+  <link rel="stylesheet" href="assets/css/christmas.css?v=20261131">
   <script defer src="assets/js/christmas-i18n.js?v=20261128"></script>
   <script defer src="assets/js/i18n.js?v=20261126"></script>
   <script defer src="assets/js/site.js?v=20261126"></script>

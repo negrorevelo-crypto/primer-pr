@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "roboto",
+        "files": [
+          "portal/public/assets/subasta.css"
+        ],
+        "createdAt": "2026-11-26T18:35:59.682Z",
+        "reason": "Claude: la réplica reproduce la tipografía de la plataforma real vista en la grabación del usuario; fidelidad del simulador"
+      }
+    ]
+  }
+}

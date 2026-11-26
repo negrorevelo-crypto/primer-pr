@@ -99,6 +99,5 @@ Abra `http://localhost:8000/instalar.php`.
 
 ## Pendiente
 
-- **Logo:** se usa una marca aproximada de Revelco en SVG. Para cambiarla, reemplace la función `marca()` en `app/vista.php` por el vector oficial.
 - **Escenario real:** cuando llegue la grabación de la sesión, se reemplaza el escenario `lanzamiento-v1` del juego por la réplica.
 - **Pagos y competencia:** la pasarela de pago en línea y la competencia en vivo quedan para una siguiente fase. La tabla `pagos` ya acepta el medio `pasarela`.

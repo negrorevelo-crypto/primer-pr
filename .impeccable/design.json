@@ -624,7 +624,7 @@
       "Don't poner rótulos en MAYÚSCULAS espaciadas encima de los títulos; las mayúsculas son de la banda de rueda.",
       "Don't convertir el portal en un tablero SaaS de tarjetas grises con sombra y un acento rojo suelto.",
       "Don't poner sombras en paneles, tablas o botones.",
-      "Don't redibujar ni estilizar la marca aproximada; se reemplaza por el vector oficial de Revelco cuando llegue.",
+      "Don't recolorear ni estilizar la marca; se usa siempre con sus colores originales.",
       "Don't agregar animación al juego más allá de la banda y la activación de la ventana; nada debe distraer ni sumar latencia al corredor."
     ]
   }

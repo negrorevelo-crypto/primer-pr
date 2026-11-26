@@ -28,16 +28,19 @@ function icono(string $n, string $clase = 'ico'): string
     return '<svg class="' . h($clase) . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . ($p[$n] ?? '') . '</svg>';
 }
 
+function marca_svg(): string
+{
+    // Logo de Revelco redibujado en vector a partir del PNG oficial
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">'
+        . '<circle cx="69" cy="32" r="25" fill="#8a8a8a"/><circle cx="32" cy="68" r="25" fill="#8a8a8a"/>'
+        . '<path d="M65 34 36 66" stroke="#e31e24" stroke-width="35" stroke-linecap="round"/>'
+        . '<circle cx="32" cy="31" r="17.5" fill="#231f20" stroke="#8a8a8a" stroke-width="3"/>'
+        . '<circle cx="69" cy="68" r="17.5" fill="#231f20" stroke="#8a8a8a" stroke-width="3"/></svg>';
+}
+
 function marca(bool $sobreOscuro = true): string
 {
-    // Marca aproximada de Revelco (reemplazar por el vector oficial: assets/logo.svg)
-    $tinta = $sobreOscuro ? '#f3f1ec' : '#16140f';
-    return '<span class="marca"><svg viewBox="0 0 40 40" aria-hidden="true">'
-        . '<circle cx="13" cy="13" r="8.5" fill="' . $tinta . '"/>'
-        . '<circle cx="15" cy="27.5" r="8.5" fill="#9b968c"/>'
-        . '<circle cx="27.5" cy="29" r="7.5" fill="' . $tinta . '"/>'
-        . '<circle cx="26.5" cy="16.5" r="10" fill="#d2161e"/>'
-        . '</svg><span class="marca-txt">Revelco</span></span>';
+    return '<span class="marca">' . marca_svg() . '<span class="marca-txt">Revelco</span></span>';
 }
 
 /**
@@ -83,7 +86,7 @@ function pagina_inicio(string $titulo, string $seccion = '', array $o = []): voi
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
 <title><?= h($titulo) ?> · <?= h(config('app.nombre')) ?></title>
-<link rel="icon" href="data:image/svg+xml,<?= rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="13" cy="13" r="8.5" fill="#16140f"/><circle cx="15" cy="27.5" r="8.5" fill="#9b968c"/><circle cx="27.5" cy="29" r="7.5" fill="#16140f"/><circle cx="26.5" cy="16.5" r="10" fill="#d2161e"/></svg>') ?>">
+<link rel="icon" href="data:image/svg+xml,<?= rawurlencode(str_replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ', marca_svg())) ?>">
 <link rel="stylesheet" href="<?= h(url('assets/app.css')) ?>?v=<?= VERSION_ESTATICOS ?>">
 </head>
 <body class="<?= $sinRiel ? 'sin-riel' : 'con-riel' ?> <?= h($o['clase_body'] ?? '') ?>">

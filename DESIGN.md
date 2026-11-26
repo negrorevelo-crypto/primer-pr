@@ -273,7 +273,7 @@ Esquinas suaves y uniformes de 6px en paneles, botones, campos, avisos, la banda
 
 Los iconos son SVG en línea de 24×24 con trazo de 1.75, extremos redondeados, dibujados a 18px (17px dentro de botones) y en `currentColor`. El rombo es el único icono relleno.
 
-La marca Revelco es por ahora un SVG en línea aproximado (cuatro círculos: dos en tinta o crema según el fondo, uno gris `#9b968c`, uno rojo Revelco) seguido de la palabra "Revelco" en peso 300. Es un reemplazo provisional hasta recibir el vector oficial (`assets/logo.svg`); no se debe redibujar ni derivar más allá de este uso.
+La marca Revelco es un SVG en línea (`marca_svg()` en `app/vista.php`) redibujado del PNG oficial: dos círculos grises `#8a8a8a` al fondo, una cápsula diagonal roja `#e31e24` y dos círculos negros `#231f20` con anillo gris, seguido de la palabra "Revelco" en peso 300. Se usa con sus colores originales en cualquier fondo: el anillo gris separa los círculos negros del riel oscuro.
 
 ## Components
 
@@ -349,5 +349,5 @@ La línea de tiempo de tres fases que da nombre al mundo.
 - **Don't** poner rótulos en MAYÚSCULAS espaciadas encima de los títulos; las mayúsculas son de la banda de rueda.
 - **Don't** convertir el portal en un tablero SaaS de tarjetas grises con sombra y un acento rojo suelto.
 - **Don't** poner sombras en paneles, tablas o botones.
-- **Don't** redibujar ni estilizar la marca aproximada; se reemplaza por el vector oficial de Revelco cuando llegue.
+- **Don't** recolorear ni estilizar la marca; se usa siempre con sus colores originales.
 - **Don't** agregar animación al juego más allá de la banda y la activación de la ventana; nada debe distraer ni sumar latencia al corredor.

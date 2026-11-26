@@ -106,6 +106,7 @@
 .xmas-privacy p { margin: 4px 0 8px; color: var(--muted); font-size: 14px; line-height: 1.65; }
 .xmas-form .consent { margin-top: 10px; font-size: 14px; }
 .xmas-form .consent input { width: 20px; height: 20px; flex: 0 0 20px; }
+.xmas-form .consent:has(input[aria-invalid="true"]) { padding: 10px 12px; border-left: 2px solid #a33423; background: #fbefec; color: #6d2418; }
 .xmas-form .form-controls { border-top: 0; padding-top: 4px; }
 .xmas-submit { width: 100%; min-height: 58px; justify-content: space-between; font-size: 13px; }
 

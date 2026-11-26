@@ -50,7 +50,7 @@ function christmas_fail(int $status, array $errorKeys, string $language): never
     }
     $form = CHRISTMAS_PAGE_PATH . '#christmas-quote';
     echo '<!doctype html><html lang="' . ($es ? 'es' : 'en') . '"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><base href="' . h(app_base_path()) . '">'
-        . '<title>' . ($es ? 'Solicitud no enviada' : 'Request not sent') . ' | Chelart</title><link rel="stylesheet" href="assets/css/site.css?v=20261126"><link rel="stylesheet" href="assets/css/christmas.css?v=20261126"></head>'
+        . '<title>' . ($es ? 'Solicitud no enviada' : 'Request not sent') . ' | Chelart</title><link rel="stylesheet" href="assets/css/site.css?v=20261126"><link rel="stylesheet" href="assets/css/christmas.css?v=20261127"></head>'
         . '<body class="thanks-page"><main class="thanks-card xmas-error-card"><p class="eyebrow">' . ($es ? 'Solicitud no enviada' : 'Request not sent') . '</p>'
         . '<h1>' . ($es ? 'Revisa estos datos.' : 'Please review these details.') . '</h1><ul class="xmas-error-list">' . $items . '</ul>'
         . '<a class="button button-primary" href="' . h($form) . '" onclick="if(history.length>1){history.back();return false;}">' . ($es ? 'Volver al formulario' : 'Back to the form') . ' <span aria-hidden="true">←</span></a></main></body></html>';

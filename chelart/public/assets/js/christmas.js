@@ -164,7 +164,7 @@
     const errors = [];
     const flag = (key, element) => {
       errors.push({ key, element });
-      if (element?.matches?.('input:not([type=radio]):not([type=checkbox]), select, textarea')) element.setAttribute('aria-invalid', 'true');
+      if (element?.matches?.('input:not([type=radio]):not([type=checkbox]), select, textarea, input[name=privacy_consent]')) element.setAttribute('aria-invalid', 'true');
       else groupOf(element)?.classList.add('is-invalid');
     };
     form.querySelectorAll('[aria-invalid]').forEach((element) => element.removeAttribute('aria-invalid'));
@@ -213,7 +213,7 @@
 
   // Al corregir un campo se quita su marca.
   form.addEventListener('input', (event) => event.target.removeAttribute?.('aria-invalid'));
-  form.addEventListener('change', (event) => groupOf(event.target)?.classList.remove('is-invalid'));
+  form.addEventListener('change', (event) => { groupOf(event.target)?.classList.remove('is-invalid'); event.target.removeAttribute?.('aria-invalid'); });
   // Cambiar de idioma limpia los mensajes generados en el idioma anterior.
   document.querySelectorAll('[data-language-switch]').forEach((button) => button.addEventListener('click', () => {
     errorBox.hidden = true;

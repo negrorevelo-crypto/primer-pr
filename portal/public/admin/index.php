@@ -66,7 +66,7 @@ cabeza('Usuarios', 'Cuentas de corredores, licencias y accesos.', '<a class="btn
     <thead><tr><th>Usuario</th><th>Firma</th><th>Rol</th><th>Licencia</th><th>Periodo · vence</th><th>Último acceso</th><th class="num">Partidas</th></tr></thead>
     <tbody>
     <?php foreach ($filas as $f):
-      $chip = ['activa' => ['Activa', 'chip-verde'], 'por-vencer' => ['Por vencer', 'chip-ambar'], 'vencida' => ['Vencida', 'chip-rojo'], 'sin' => ['Sin licencia', 'chip-gris'], 'inactivo' => ['Desactivada', 'chip-gris']][$f['estado']];
+      $chip = ['activa' => ['Activa', 'chip-verde'], 'por-vencer' => ['Por vencer', 'chip-ambar'], 'vencida' => ['Vencida', 'chip-gris'], 'sin' => ['Sin licencia', 'chip-gris'], 'inactivo' => ['Desactivada', 'chip-gris']][$f['estado']];
       if ($f['rol'] === 'admin') $chip = ['Administrador', 'chip-gris'];
     ?>
       <tr>

@@ -247,7 +247,7 @@ if ($claveTemp):
     <tbody>
     <?php foreach ($licencias as $l):
       $hoy = date('Y-m-d');
-      $est = $l['estado'] !== 'activa' ? [$l['estado'] === 'suspendida' ? 'Suspendida' : 'Anulada', 'chip-gris'] : ($l['fin'] < $hoy ? ['Vencida', 'chip-rojo'] : ($l['inicio'] > $hoy ? ['Programada', 'chip-laton'] : ['Vigente', 'chip-verde']));
+      $est = $l['estado'] !== 'activa' ? [$l['estado'] === 'suspendida' ? 'Suspendida' : 'Anulada', 'chip-gris'] : ($l['fin'] < $hoy ? ['Vencida', 'chip-gris'] : ($l['inicio'] > $hoy ? ['Programada', 'chip-laton'] : ['Vigente', 'chip-verde']));
     ?>
       <tr>
         <td><?= h(fmt_fecha($l['inicio'])) ?> – <?= h(fmt_fecha($l['fin'])) ?></td>

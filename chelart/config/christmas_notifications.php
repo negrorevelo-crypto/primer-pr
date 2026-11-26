@@ -148,7 +148,7 @@ function christmas_send_admin_notification(array $request, array $photos): bool
         ($request['additional_details'] ?? '') !== '' ? $request['additional_details'] : '—',
         '',
         '— PHOTOS (' . count($photos) . ') —',
-        $photos === [] ? 'No photos attached.' : implode("\n", $photoLines),
+        $photos === [] ? (($request['photo_warning'] ?? '') !== '' ? 'WARNING: ' . $request['photo_warning'] : 'No photos attached.') : implode("\n", $photoLines),
         count($attachments) < count($photos) ? 'Some photos were too large to attach; view them in the admin panel.' : '',
         '',
         'Manage this lead (private, sign-in required): ' . $adminUrl,

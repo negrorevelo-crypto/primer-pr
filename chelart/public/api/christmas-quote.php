@@ -301,19 +301,25 @@ try {
 
     $campaign = christmas_campaign_values();
     $uploadDir = christmas_upload_dir();
-    if ($photos !== [] && !is_dir($uploadDir) && !@mkdir($uploadDir, 0750, true) && !is_dir($uploadDir)) {
-        throw new RuntimeException('Upload directory is missing and could not be created: ' . $uploadDir);
+    // Si la carpeta privada no existe o no tiene permiso de escritura, la solicitud se guarda igual
+    // (sin fotos) y queda la advertencia en las notas internas y en el correo al equipo.
+    $photoWarning = '';
+    if ($photos !== [] && ((!is_dir($uploadDir) && !@mkdir($uploadDir, 0750, true) && !is_dir($uploadDir)) || !is_writable($uploadDir))) {
+        error_log('Chelart Christmas photos skipped: upload directory is not writable: ' . $uploadDir);
+        $photoWarning = count($photos) . ' photo(s) were attached but could not be stored (storage folder not writable). Ask the customer to send them by email or WhatsApp.';
+        $cleanupTemp();
+        $photos = [];
     }
 
     $pdo->beginTransaction();
     $insert = $pdo->prepare('INSERT INTO christmas_quote_requests
         (request_number, full_name, email, phone, contact_method, property_address, city, zip_code, property_type,
          package_type, decoration_areas, decoration_supplier, property_size, installation_date, removal_date,
-         additional_details, uploaded_photos, privacy_consent, consent_at, language, campaign_source, discount_percentage, request_status)
+         additional_details, uploaded_photos, internal_notes, privacy_consent, consent_at, language, campaign_source, discount_percentage, request_status)
         VALUES
         (:request_number, :full_name, :email, :phone, :contact_method, :property_address, :city, :zip_code, :property_type,
          :package_type, :decoration_areas, :decoration_supplier, :property_size, :installation_date, :removal_date,
-         :additional_details, :uploaded_photos, 1, UTC_TIMESTAMP(), :language, :campaign_source, :discount_percentage, \'NEW_REQUEST\')');
+         :additional_details, :uploaded_photos, :internal_notes, 1, UTC_TIMESTAMP(), :language, :campaign_source, :discount_percentage, \'NEW_REQUEST\')');
     $values = [
         ':full_name' => $fullName,
         ':email' => $email,
@@ -331,6 +337,7 @@ try {
         ':removal_date' => $removalDate?->format('Y-m-d'),
         ':additional_details' => $details !== '' ? $details : null,
         ':uploaded_photos' => count($photos),
+        ':internal_notes' => $photoWarning !== '' ? '[' . christmas_now()->format('Y-m-d g:i A') . '] ' . $photoWarning : null,
         ':language' => $language,
         ':campaign_source' => $campaign['campaign_source'],
         ':discount_percentage' => $campaign['discount_percentage'],
@@ -397,6 +404,7 @@ try {
         'language' => $language,
         'campaign_source' => $campaign['campaign_source'],
         'discount_percentage' => $campaign['discount_percentage'],
+        'photo_warning' => $photoWarning,
     ];
     christmas_send_admin_notification($request, $savedPhotos);
     christmas_send_customer_confirmation($request);

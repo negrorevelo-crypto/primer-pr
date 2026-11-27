@@ -34,6 +34,8 @@ Pago (transferencia / Nequi)  →  Administrador activa la licencia  →  Corred
 | **Subasta (réplica de la rueda)** | La pantalla de subasta descendente de la grabación del 24 de noviembre: reloj hasta la apertura, aparece **Lanzar Oferta**, ventana **Colocación** con precio base y **Soy humano**, **Lanzar** y **Aceptar**. Un operador simulado compite por el calce (normal 4,5 s, exigente 3,5 s, experto 2,8 s). |
 | **Lanzamiento básico** | El juego original, con las ventanas del puesto calibrado. |
 
+**Tiempos de la plataforma simulada:** en **Administración › Simulador** se ajusta cuánto tarda cada momento de la réplica: el botón tras la apertura, la ventana Colocación, la verificación Soy humano y la ventana Atención. Cada partida sortea un valor entre el mínimo y el máximo, casi siempre cerca del típico. Hay tres perfiles listos: *Como la grabación*, *Rueda congestionada* y *Rueda ágil*. El ajuste se guarda en `storage/ajustes-simulador.json`.
+
 Cada escenario tiene sus propias marcas y su propio ranking. La réplica no usa el logo ni la dirección de la plataforma real, y se identifica como simulación.
 
 ## Base de datos

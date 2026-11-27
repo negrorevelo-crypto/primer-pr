@@ -5,8 +5,50 @@ const ESCENARIOS = ['subasta-v1' => 'Subasta (réplica de la rueda)', 'lanzamien
 const ESCENARIO_DEFECTO = 'subasta-v1';
 
 /** Rangos de demora de la plataforma en la réplica: [mínimo, típico, máximo] en ms */
+const TIEMPOS_MOMENTOS = [
+    'boton_tras_apertura' => ['Apertura → aparece Lanzar Oferta', 680],
+    'ventana_colocacion' => ['Clic en Lanzar Oferta → ventana Colocación', 300],
+    'captcha' => ['Clic en Soy humano → verificado', 1300],
+    'ventana_atencion' => ['Clic en Lanzar → ventana Atención', 200],
+];
+const TIEMPOS_PERFILES = [
+    'grabacion' => ['Como la grabación', ['boton_tras_apertura' => [400, 700, 1500], 'ventana_colocacion' => [150, 300, 1200], 'captcha' => [700, 1300, 4000], 'ventana_atencion' => [80, 250, 1500]]],
+    'congestionada' => ['Rueda congestionada', ['boton_tras_apertura' => [600, 1200, 3000], 'ventana_colocacion' => [300, 800, 2500], 'captcha' => [1200, 2500, 6000], 'ventana_atencion' => [200, 700, 3000]]],
+    'agil' => ['Rueda ágil', ['boton_tras_apertura' => [300, 500, 900], 'ventana_colocacion' => [100, 200, 500], 'captcha' => [500, 900, 1800], 'ventana_atencion' => [50, 150, 400]]],
+];
+
+function archivo_ajustes(): string
+{
+    return rtrim((string)config('almacenamiento'), '/\\') . '/ajustes-simulador.json';
+}
+
+/** Ajustes guardados desde Administración › Simulador */
+function ajustes_simulador(): array
+{
+    $f = archivo_ajustes();
+    if (!is_file($f)) return [];
+    $d = json_decode((string)@file_get_contents($f), true);
+    return is_array($d) ? $d : [];
+}
+
+function tiempos_validos($t): array
+{
+    $ok = [];
+    foreach (array_keys(TIEMPOS_MOMENTOS) as $k) {
+        $v = is_array($t) ? ($t[$k] ?? null) : null;
+        if (is_array($v) && count($v) === 3) {
+            $v = array_map('intval', array_values($v));
+            if ($v[0] >= 0 && $v[0] <= $v[1] && $v[1] <= $v[2] && $v[2] <= 20000 && $v[0] < $v[2]) $ok[$k] = $v;
+        }
+    }
+    return $ok;
+}
+
 function tiempos_subasta(): array
 {
+    // Prioridad: ajustes del panel › config.php › valores medidos en la grabación
+    $panel = tiempos_validos(ajustes_simulador()['tiempos'] ?? null);
+    if ($panel) return $panel + tiempos_validos(config('app.tiempos_subasta'));
     $t = config('app.tiempos_subasta');
     $ok = [];
     foreach (['boton_tras_apertura', 'ventana_colocacion', 'captcha', 'ventana_atencion'] as $k) {

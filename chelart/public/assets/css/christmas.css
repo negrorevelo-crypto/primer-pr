@@ -1,0 +1,216 @@
+/* Campaña Christmas Decoration Service: usa los tokens de site.css (marfil, terracota, Playfair + DM Sans). */
+.xmas-page { --glow: #ffd58a; }
+
+/* Hero (según el mockup: foto con borde curvo, etiqueta Black Friday con moño y tarjeta 15% OFF) */
+.xmas-hero { grid-template-columns: minmax(420px, .72fr) 1.28fr; min-height: clamp(580px, calc(100svh - 230px), 780px); background: #f8f5f0; }
+.xmas-hero .hero-copy { z-index: 2; padding: 48px calc(5vw + 20px) 48px clamp(28px, 5vw, 88px); background: transparent; }
+.xmas-hero .eyebrow { margin-bottom: 20px; font-size: 13px; letter-spacing: .2em; }
+.xmas-hero .xmas-title { max-width: 560px; margin: 0; font-family: var(--serif); font-size: clamp(50px, 5.3vw, 86px); font-weight: 500; line-height: .98; letter-spacing: -.025em; }
+.xmas-title span, .xmas-title em { display: block; }
+.xmas-title em { color: var(--orange); font-style: italic; font-weight: 500; }
+.xmas-hero .hero-lede { max-width: 440px; margin-top: 26px; color: #2f2b26; font-size: 18px; line-height: 1.5; }
+.xmas-benefits { width: 100%; max-width: 440px; margin: 30px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); list-style: none; }
+.xmas-benefits li { padding: 0 10px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; color: #2f2b26; font-size: 15px; font-weight: 600; line-height: 1.3; }
+.xmas-benefits li + li { border-left: 1px solid rgba(37, 35, 31, .22); }
+.xmas-benefits svg { width: 42px; height: 42px; fill: none; stroke: var(--orange); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.xmas-hero .hero-actions { margin-top: 32px; }
+.xmas-cta { min-height: 58px; padding: 0 32px; gap: 22px; font-size: 14px !important; letter-spacing: .14em; box-shadow: 0 14px 30px rgba(168, 68, 29, .22); }
+.xmas-promo-chip { display: none; }
+.xmas-promo-chip em, .xmas-aside-promo em { font-style: normal; }
+
+.xmas-visual { min-height: 0; margin-left: -5vw; background: linear-gradient(180deg, #e7c46a, #b8862b 55%, #e9cd7d); clip-path: ellipse(100% 128% at 100% 50%); }
+.xmas-visual img { clip-path: ellipse(calc(100% - 5px) 128% at 100% 50%); object-position: 30% center; }
+.xmas-visual.is-placeholder img { filter: saturate(.9) brightness(.82) sepia(.12); }
+.xmas-visual::after { display: none; }
+.xmas-garland { display: none; }
+
+.xmas-badge { position: absolute; z-index: 3; top: 0; right: 0; width: clamp(220px, 19vw, 300px); height: clamp(170px, 15vw, 230px); pointer-events: none; }
+.xmas-badge-tag { position: absolute; top: 26%; right: 13%; padding: 14px 22px 16px 34px; display: flex; flex-direction: column; background: linear-gradient(160deg, #2a2621, #151310); color: #fff; font-family: var(--sans); font-size: clamp(30px, 2.8vw, 44px); font-style: italic; font-weight: 700; line-height: .95; letter-spacing: -.01em; text-transform: uppercase; clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%, 0 26%); box-shadow: 0 18px 40px rgba(0, 0, 0, .35); transform: rotate(-9deg); transform-origin: top right; }
+.xmas-badge-tag::before { position: absolute; inset: 4px; content: ""; border: 1.5px solid rgba(231, 196, 106, .55); clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%, 0 26%); }
+.xmas-badge-tag strong { color: #e8bc57; font-weight: 800; text-shadow: 0 1px 0 #8a5e17; }
+.xmas-bow { position: absolute; z-index: 1; top: -6px; right: -6px; width: 46%; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .35)); }
+
+.xmas-offer { position: absolute; z-index: 3; right: clamp(20px, 3vw, 44px); bottom: clamp(28px, 7%, 60px); width: min(360px, 42%); padding: 22px 26px 24px; background: linear-gradient(160deg, #24211d, #12110f); border: 2px solid #d6ad55; border-radius: 22px; box-shadow: 0 0 0 5px rgba(214, 173, 85, .18), 0 26px 60px rgba(0, 0, 0, .45); text-align: center; transform: rotate(-3deg); }
+.xmas-offer-value { margin: 0 0 8px; font-family: var(--serif); font-size: clamp(54px, 4.8vw, 80px); font-style: italic; font-weight: 700; line-height: 1; letter-spacing: -.02em; color: #e8bc57; text-shadow: 0 2px 0 #8a5e17; white-space: nowrap; }
+.xmas-offer-value span { display: inline; font-family: var(--serif); font-size: .82em; letter-spacing: 0; }
+.xmas-offer-text { margin: 0; color: #f4efe6; font-family: var(--serif); font-size: clamp(17px, 1.45vw, 22px); font-style: italic; line-height: 1.35; }
+
+/* Franja de paquetes bajo el hero */
+.xmas-strip { padding: 26px clamp(28px, 5vw, 88px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: #efe9e0; border-bottom: 1px solid var(--line); }
+.xmas-strip a { padding: 8px clamp(14px, 2.4vw, 40px); display: flex; align-items: center; gap: 22px; transition: background .2s; }
+.xmas-strip a + a { border-left: 1px solid rgba(37, 35, 31, .3); }
+.xmas-strip a:first-child { padding-left: 0; }
+.xmas-strip a:hover strong { color: var(--orange-dark); }
+.xmas-strip svg { width: 52px; height: 52px; flex: 0 0 52px; fill: none; stroke: var(--orange); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.xmas-strip span { display: flex; flex-direction: column; gap: 5px; }
+.xmas-strip strong { color: var(--ink); font-size: 21px; font-weight: 600; transition: color .2s; }
+.xmas-strip small { color: #3d3933; font-size: 16px; line-height: 1.4; }
+
+/* Alcance */
+.xmas-scope { padding-bottom: 96px; }
+.xmas-steps { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; border-top: 1px solid var(--line); }
+.xmas-steps li { padding: 28px 26px 30px 0; border-right: 1px solid var(--line); }
+.xmas-steps li + li { padding-left: 26px; }
+.xmas-steps li:last-child { border-right: 0; }
+.xmas-steps span { color: var(--orange); font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+.xmas-steps h3 { margin: 14px 0 10px; font-family: var(--serif); font-size: 23px; font-weight: 500; letter-spacing: -.02em; }
+.xmas-steps p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
+
+/* Paquetes */
+.xmas-packages { padding-top: 96px; background: #efe9e0; }
+.xmas-package-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+.xmas-package { position: relative; display: flex; flex-direction: column; padding: 34px 30px 30px; background: var(--white); border: 1px solid rgba(37, 35, 31, .08); transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .25s; }
+.xmas-package:hover { transform: translateY(-6px); box-shadow: 0 22px 55px rgba(40, 31, 24, .09); }
+.xmas-package.is-featured { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.xmas-package-tier { margin: 0; color: var(--orange); font-size: 12px; font-weight: 700; letter-spacing: .14em; }
+.xmas-package.is-featured .xmas-package-tier { color: #e07a4f; }
+.xmas-package h3 { margin: 14px 0 22px; font-family: var(--serif); font-size: clamp(28px, 2.4vw, 34px); font-weight: 500; line-height: 1.1; letter-spacing: -.025em; text-transform: uppercase; }
+.xmas-package ul { margin: 0 0 26px; padding: 18px 0 0; display: grid; gap: 12px; list-style: none; border-top: 1px solid var(--line); }
+.xmas-package.is-featured ul { border-color: rgba(255, 255, 255, .2); }
+.xmas-package li { position: relative; padding-left: 26px; color: #4e4942; font-size: 15px; line-height: 1.5; }
+.xmas-package.is-featured li { color: #ddd6cb; }
+.xmas-package li::before { position: absolute; left: 0; top: .5em; width: 10px; height: 10px; content: ""; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 3px rgba(168, 68, 29, .15); }
+.xmas-package.is-featured li::before { background: var(--glow); box-shadow: 0 0 10px rgba(255, 213, 138, .7); }
+.xmas-package-price { margin: auto 0 16px; color: var(--muted); font-family: var(--serif); font-size: 17px; font-style: italic; }
+.xmas-package.is-featured .xmas-package-price { color: #c8c0b5; }
+.xmas-package .button { width: 100%; justify-content: space-between; }
+.xmas-package.is-featured .button-primary:hover { background: var(--orange-dark); }
+.xmas-package-note { margin: 26px 0 0; color: var(--muted); font-size: 15px; }
+
+/* Formulario */
+.xmas-quote-section { max-width: 1320px; margin: auto; padding: 110px 28px; display: grid; grid-template-columns: .66fr 1.34fr; gap: clamp(36px, 6vw, 96px); align-items: start; }
+.xmas-quote-aside { top: 110px; padding-top: 30px; }
+.xmas-aside-title { margin: 0; font-family: var(--serif); font-size: clamp(42px, 4.4vw, 60px); font-weight: 500; line-height: 1.04; letter-spacing: -.045em; }
+.xmas-aside-promo { margin: 30px 0 0; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; border-left: 3px solid var(--orange); background: #f6e3d9; }
+.xmas-aside-promo strong { color: var(--orange-dark); font-family: var(--serif); font-size: 34px; font-weight: 600; line-height: 1; }
+.xmas-aside-promo span { color: #4e4942; font-size: 14px; line-height: 1.55; }
+.xmas-form-panel .quote-form-head { margin-bottom: 8px; }
+.xmas-form-panel .quote-form-head h2 { font-size: clamp(28px, 3vw, 36px); }
+.xmas-fieldset { min-width: 0; margin: 0; padding: 30px 0 26px; border: 0; border-bottom: 1px solid var(--line); }
+.xmas-fieldset legend { float: left; width: 100%; margin-bottom: 18px; padding: 0; font-family: var(--serif); font-size: 24px; }
+.xmas-fieldset legend + * { clear: both; }
+.field span b, .xmas-group-label b { color: var(--orange); }
+.field span i { color: #8a8378; font-style: normal; font-weight: 500; letter-spacing: .04em; text-transform: none; }
+.xmas-group { margin-top: 22px; }
+.xmas-group-label { margin: 0 0 10px; color: #4e4942; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.xmas-group-label small { margin-left: 6px; color: #8a8378; font-weight: 500; letter-spacing: .02em; text-transform: none; }
+.xmas-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.xmas-chip { position: relative; cursor: pointer; }
+.xmas-chip input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.xmas-chip span { min-height: 44px; padding: 10px 15px; display: inline-flex; align-items: center; border: 1px solid #ded8cf; background: #fff; font-size: 14px; transition: border-color .2s, background .2s, color .2s; }
+.xmas-chip:hover span { border-color: #c9a18f; }
+.xmas-chip input:checked + span { border-color: var(--orange); background: #fbf1eb; color: var(--orange-dark); font-weight: 700; }
+.xmas-chip input:focus-visible + span { outline: 2px solid var(--ink); outline-offset: 2px; }
+.xmas-package-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.xmas-package-options .choice-card { min-height: 74px; }
+.xmas-package-options .choice-text strong { font-size: 14px; }
+.xmas-package-options .choice-text small { font-size: 13px; }
+.xmas-dates { margin-top: 24px; }
+.xmas-group.is-invalid .xmas-chip span, .xmas-group.is-invalid .choice-card { border-color: #a33423; }
+.field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: #a33423; }
+.xmas-upload { position: relative; min-height: 96px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; border: 1px dashed #c9bfb2; background: #fbf8f3; cursor: pointer; transition: border-color .2s, background .2s; }
+.xmas-upload:hover, .xmas-upload:focus-within { border-color: var(--orange); background: #fbf1eb; }
+.xmas-upload input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.xmas-upload-icon { width: 44px; height: 44px; flex: 0 0 44px; display: grid; place-items: center; border-radius: 50%; background: var(--orange); color: #fff; font-size: 24px; }
+.xmas-upload-text { display: flex; flex-direction: column; gap: 4px; }
+.xmas-upload-text strong { font-size: 14px; letter-spacing: .04em; text-transform: uppercase; }
+.xmas-upload-text small { color: var(--muted); font-size: 13px; }
+.xmas-photo-list { margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; list-style: none; }
+.xmas-photo-list:empty { display: none; }
+.xmas-photo-list li { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--sand); }
+.xmas-photo-list img { width: 100%; height: 100%; object-fit: cover; }
+.xmas-photo-list button { position: absolute; top: 4px; right: 4px; width: 32px; height: 32px; border: 0; border-radius: 50%; background: rgba(37, 35, 31, .82); color: #fff; font-size: 16px; cursor: pointer; }
+.xmas-photo-status { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+.xmas-privacy { margin: 0 0 6px; font-size: 14px; }
+.xmas-privacy summary { min-height: 44px; display: inline-flex; align-items: center; color: var(--orange-dark); font-weight: 700; cursor: pointer; }
+.xmas-privacy p { margin: 4px 0 8px; color: var(--muted); font-size: 14px; line-height: 1.65; }
+.xmas-form .consent { margin-top: 10px; font-size: 14px; }
+.xmas-form .consent input { width: 20px; height: 20px; flex: 0 0 20px; }
+.xmas-form .consent:has(input[aria-invalid="true"]) { padding: 10px 12px; border-left: 2px solid #a33423; background: #fbefec; color: #6d2418; }
+.xmas-form .form-controls { border-top: 0; padding-top: 4px; }
+.xmas-submit { width: 100%; min-height: 58px; justify-content: space-between; font-size: 13px; }
+
+/* Cierre y páginas auxiliares */
+.xmas-closing { background: #e9e3da; }
+.xmas-error-list { max-width: 440px; margin: 20px auto 28px; padding: 0; list-style: none; text-align: left; }
+.xmas-error-list li { margin-bottom: 8px; padding: 10px 13px; border-left: 2px solid #a33423; background: #fbefec; color: #6d2418; font-size: 14px; line-height: 1.5; }
+.xmas-thanks-note { margin-top: -10px !important; font-size: 13px !important; }
+
+@media (max-width: 980px) {
+  .xmas-steps { grid-template-columns: 1fr 1fr; }
+  .xmas-steps li:nth-child(2) { border-right: 0; }
+  .xmas-steps li:nth-child(3) { padding-left: 0; }
+  .xmas-steps li:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .xmas-package-grid { grid-template-columns: 1fr; max-width: 640px; }
+  .xmas-quote-section { grid-template-columns: 1fr; padding: 80px 28px; }
+  .xmas-quote-aside { position: static; padding-top: 0; }
+  .xmas-quote-aside .aside-contact { margin-top: 24px; }
+}
+
+@media (max-width: 700px) {
+  .xmas-steps { grid-template-columns: 1fr; }
+  .xmas-steps li, .xmas-steps li + li { padding: 22px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+  .xmas-packages { padding-top: 72px; }
+  .xmas-package { padding: 28px 22px 24px; }
+  .xmas-quote-section { padding: 64px 0 56px; gap: 26px; }
+  .xmas-quote-aside { margin: 0; padding: 0 20px; }
+  .xmas-quote-aside > p:not(.eyebrow) { font-size: 15px; }
+  .xmas-aside-title { font-size: 38px; }
+  .xmas-quote-aside .aside-contact { display: flex; }
+  .xmas-form-panel { margin: 0; padding: 24px 18px; box-shadow: none; }
+  .xmas-fieldset legend { font-size: 21px; }
+  .xmas-package-options { grid-template-columns: 1fr; }
+  .xmas-chip { flex: 1 1 auto; }
+  .xmas-chip span { width: 100%; justify-content: center; }
+  .field input, .field select, .field textarea { font-size: 16px; }
+}
+
+/* Ajustes responsive del hero del mockup (van al final para prevalecer) */
+@media (max-width: 1440px) {
+  .xmas-hero { grid-template-columns: minmax(380px, .8fr) 1.2fr; }
+  .xmas-hero .xmas-title { font-size: clamp(48px, 5vw, 64px); }
+  .xmas-benefits li { padding: 0 6px; font-size: 13px; }
+  .xmas-cta { padding: 0 22px; gap: 14px; font-size: 13px !important; letter-spacing: .1em; white-space: nowrap; }
+  .xmas-offer { width: min(320px, 48%); padding: 18px 20px; }
+}
+@media (max-width: 980px) {
+  .xmas-hero { grid-template-columns: 1fr 1fr; }
+  .xmas-hero .hero-copy { padding: 44px calc(5vw + 12px) 44px 32px; }
+  .xmas-hero .xmas-title { font-size: clamp(44px, 6vw, 58px); }
+  .xmas-hero .hero-lede { font-size: 16px; }
+  .xmas-benefits li { padding: 0 6px; font-size: 13px; }
+  .xmas-badge { width: 200px; height: 160px; }
+  .xmas-badge-tag { font-size: 28px; padding: 12px 18px 12px 28px; }
+  .xmas-offer { right: 18px; left: auto; bottom: 22px; width: calc(100% - 60px); }
+  .xmas-strip { grid-template-columns: 1fr; gap: 6px; }
+  .xmas-strip a, .xmas-strip a:first-child { padding: 12px 0; }
+  .xmas-strip a + a { border-left: 0; border-top: 1px solid var(--line); }
+}
+@media (max-width: 700px) {
+  .xmas-hero { display: flex; }
+  .xmas-hero .hero-copy { padding: 36px 20px 32px !important; }
+  .xmas-hero .xmas-title { font-size: clamp(42px, 13vw, 56px); }
+  .xmas-hero .hero-lede { font-size: 16px; }
+  .xmas-promo-chip { margin: 0 0 18px; display: inline-flex; align-items: center; gap: 10px; padding: 8px 8px 8px 14px; background: var(--ink); color: var(--paper); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+  .xmas-promo-chip span { padding: 5px 9px; background: var(--orange); color: #fff; font-weight: 700; }
+  .xmas-benefits { max-width: none; }
+  .xmas-hero .hero-actions, .xmas-hero .hero-actions .button { width: 100%; max-width: 100%; }
+  .xmas-cta { justify-content: space-between; padding: 0 22px; font-size: 13px !important; }
+  .xmas-visual { margin: 0; clip-path: none; background: #1d1a16; aspect-ratio: 16 / 11; min-height: 0; }
+  .xmas-visual img { clip-path: none; object-position: 28% center; }
+  .xmas-visual.has-offer { overflow: visible; margin-bottom: 96px; }
+  .xmas-badge { width: 170px; height: 130px; }
+  .xmas-badge-tag { top: 22%; right: 10%; font-size: 22px; padding: 9px 14px 10px 22px; }
+  .xmas-offer { left: 16px; right: 16px; bottom: -84px; width: auto; padding: 16px 18px; border-radius: 18px; transform: rotate(-1.5deg); }
+  .xmas-offer-value { font-size: 50px; margin-bottom: 4px; }
+  .xmas-offer-text { font-size: 16px; }
+  .xmas-strip { padding: 18px 20px; }
+  .xmas-strip svg { width: 40px; height: 40px; flex-basis: 40px; }
+  .xmas-strip strong { font-size: 18px; }
+  .xmas-strip small { font-size: 15px; }
+}
+
+/* En español "DE DESCUENTO" es largo: va en una segunda línea más pequeña. */
+html[lang="es"] .xmas-offer-value { white-space: normal; }
+html[lang="es"] .xmas-offer-value span { display: block; margin-top: 2px; font-size: .46em; letter-spacing: .04em; }
+.xmas-submit [hidden] { display: none !important; }

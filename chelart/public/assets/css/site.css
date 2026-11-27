@@ -413,3 +413,16 @@ html.animations-ready .reveal.is-visible { opacity: 1; transform: translateY(0);
   .process-list small { font-size: 12px; }
 }
 
+
+/* Aviso de temporada en la portada */
+.xmas-home-band { padding: 0 clamp(28px, 5.5vw, 88px); background: var(--ink); color: var(--paper); }
+.xmas-home-band a { min-height: 76px; padding: 18px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px 28px; }
+.xmas-home-band .eyebrow { margin: 0; color: #e07a4f; }
+.xmas-home-band strong { font-family: var(--serif); font-size: clamp(20px, 2vw, 26px); font-weight: 500; }
+.xmas-home-band em { color: #ffd58a; font-style: normal; font-weight: 700; }
+.xmas-home-band .text-link { color: var(--paper); }
+
+@media (max-width: 700px) {
+  .xmas-home-band { padding: 0 20px; }
+  .xmas-home-band a { flex-direction: column; align-items: flex-start; }
+}

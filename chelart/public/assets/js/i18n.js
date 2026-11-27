@@ -126,6 +126,9 @@
     'Interior stairs opening toward a landscaped garden': 'Escalera interior junto a un jardín paisajístico',
   };
 
+  // Diccionarios adicionales de otras secciones (p. ej. christmas-i18n.js).
+  Object.assign(translations, window.chelartExtraTranslations || {});
+
   const keepWhitespace = (original, replacement) => {
     const leading = original.match(/^\s*/)?.[0] || '';
     const trailing = original.match(/\s*$/)?.[0] || '';
@@ -136,17 +139,12 @@
     const spanish = language === 'es';
     document.documentElement.lang = spanish ? 'es' : 'en';
     document.documentElement.dataset.language = spanish ? 'es' : 'en';
-    const description = spanish
-      ? 'Reparaciones, remodelación de cocinas y baños y diseño interior para hogares y negocios en DeBary, Sanford, Orlando y Central Florida. Hablamos español.'
-      : 'Repairs, kitchen and bath remodeling and interior design for homes and businesses in DeBary, Sanford, Orlando and Central Florida. Hablamos español.';
-    document.querySelector('meta[name="description"]')?.setAttribute('content', description);
-    document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
-    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description);
-    const title = spanish
-      ? 'Chelart Construction | Reparaciones, remodelación y diseño en Central Florida'
-      : 'Chelart Construction | Repairs, Remodeling & Interior Design in Central Florida';
-    document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
-    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', title);
+    // Metadatos: se traduce el texto original de cada página (antes se forzaba el de la portada).
+    for (const meta of document.querySelectorAll('meta[name="description"],meta[property="og:description"],meta[name="twitter:description"],meta[property="og:title"],meta[name="twitter:title"]')) {
+      if (meta.dataset.chelartSource === undefined) meta.dataset.chelartSource = meta.getAttribute('content') || '';
+      const source = meta.dataset.chelartSource;
+      meta.setAttribute('content', spanish ? (translations[source] || source) : source);
+    }
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     let node;
     while ((node = walker.nextNode())) {

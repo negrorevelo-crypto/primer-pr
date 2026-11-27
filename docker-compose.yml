@@ -33,6 +33,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./chelart/sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./chelart/sql/christmas_campaign.sql:/docker-entrypoint-initdb.d/02-christmas.sql:ro
     ports:
       - "3307:3306"
 

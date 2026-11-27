@@ -36,6 +36,7 @@ $cfg = [
     'modo' => $cal['modo'] ?? null,
     'mejor' => $est['mejor'],
     'escenario' => $esc,
+    'tiempos' => tiempos_subasta(),
     'nombreCorto' => explode(' ', trim($u['nombre']))[0],
     'token' => $_SESSION['partida']['token'],
     'csrf' => csrf_token(),

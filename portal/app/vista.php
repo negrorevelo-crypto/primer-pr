@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-const VERSION_ESTATICOS = '20261127b';
+const VERSION_ESTATICOS = '20261128';
 
 function icono(string $n, string $clase = 'ico'): string
 {

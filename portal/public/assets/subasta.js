@@ -15,6 +15,16 @@
 
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const rnd = (a, b) => a + Math.random() * (b - a);
+  // Triangular: casi siempre cerca del valor típico, a veces más rápido o más lento
+  const tri = ([a, c, b]) => { const u = Math.random(), f = (c - a) / (b - a); return Math.round(u < f ? a + Math.sqrt(u * (b - a) * (c - a)) : b - Math.sqrt((1 - u) * (b - a) * (b - c))); };
+  // Demoras de la plataforma medidas en la grabación (ms): [mínimo, típico, máximo]
+  const T = Object.assign({
+    boton_tras_apertura: [400, 700, 1500],
+    ventana_colocacion: [150, 300, 1200],
+    captcha: [700, 1300, 4000],
+    ventana_atencion: [80, 250, 1500],
+  }, cfg.tiempos || {});
+  let demoras = {};
   const normal = (m, d) => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return m + d * Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
   const fmtS = (ms) => (ms / 1000).toFixed(3).replace(".", ",") + " s";
   const fmtUS = (n) => "$ " + Math.round(n).toLocaleString("en-US");
@@ -138,7 +148,7 @@
     const viejo = $("#rp"); if (viejo) viejo.remove();
     escena.insertAdjacentHTML("afterbegin", pantalla());
     ajustar();
-    errores = 0; marcas = {}; rivalHecho = false; valor = PRECIO_BASE; eventos.length = 0;
+    esperando = false; errores = 0; marcas = {}; demoras = {}; rivalHecho = false; valor = PRECIO_BASE; eventos.length = 0;
     // La apertura cae en un minuto exacto del reloj simulado, como en la rueda
     demora = Math.round(rnd(6000, 15000));
     const base = new Date(Date.now() + demora + 60000);
@@ -163,7 +173,7 @@
     $("#rpPos").textContent = "0";
     aviso("info", `SUBASTA CON ID ${ident} INICIADA`);
     // Latencia de la plataforma antes de habilitar la postura (≈1,2 s en la grabación)
-    const latencia = Math.round(rnd(600, 1400));
+    const latencia = demoras.boton = tri(T.boton_tras_apertura);
     programar(() => {
       tBoton = performance.now();
       marcas.latencia = latencia;
@@ -190,12 +200,20 @@
 
   const desdeBoton = (t) => Math.round(t - tBoton);
 
+  let esperando = false;
   function abrirColocacion(t) {
-    if (fase !== "abierta" || $("#rpColoc")) return;
+    if (fase !== "abierta" || $("#rpColoc") || esperando) return;
     if (marcas.lanzar === undefined) marcas.lanzar = desdeBoton(t);
     eventos.push(["lanzar_oferta", desdeBoton(t)]);
+    esperando = true;
+    const d = tri(T.ventana_colocacion);
+    demoras.colocacion = d;
+    programar(() => { esperando = false; if (fase === "abierta") mostrarColocacion(); }, d);
+  }
+
+  function mostrarColocacion() {
     $("#rpCapa").innerHTML = `<div class="abs rp-velo"></div>
-      <div class="abs rp-modal rp-coloc" id="rpColoc" role="dialog" aria-label="Colocación">
+      <div class="abs rp-modal rp-coloc entra" id="rpColoc" role="dialog" aria-label="Colocación">
         <h3>Colocación</h3><h4>Mercados Fisicos</h4>
         <span class="abs rp-pblbl">Precio Base</span>
         <input class="abs rp-pbin" id="rpValor" type="text" inputmode="numeric" autocomplete="off" value="${fmtUS(valor)}">
@@ -216,20 +234,25 @@
         cap.classList.remove("girando"); cap.classList.add("ok"); cap.setAttribute("aria-checked", "true");
         marcas.captcha_ok = desdeBoton(performance.now());
         const b = $("#rpBLanzar"); b.disabled = false; b.focus({ preventScroll: true });
-      }, Math.round(rnd(900, 2200)));
+      }, (demoras.captcha = tri(T.captcha)));
     };
     cap.addEventListener("click", verificar);
     cap.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); verificar(e); } });
     $("#rpBLanzar").addEventListener("click", (e) => {
       if (valor < 1) { errores++; eventos.push(["valor_invalido", desdeBoton(performance.now())]); inp.focus(); return; }
+      if (esperando) return;
       marcas.colocar = desdeBoton(e.timeStamp || performance.now());
-      atencion();
+      // La ventana de colocación se cierra y la confirmación llega tras la demora del servidor
+      $("#rpCapa").innerHTML = "";
+      esperando = true;
+      const d = demoras.atencion = tri(T.ventana_atencion);
+      programar(() => { esperando = false; if (fase === "abierta") atencion(); }, d);
     });
   }
 
   function atencion() {
     $("#rpCapa").innerHTML = `<div class="abs rp-velo"></div>
-      <div class="abs rp-modal rp-aten" id="rpAten" role="alertdialog" aria-label="Atención">
+      <div class="abs rp-modal rp-aten entra" id="rpAten" role="alertdialog" aria-label="Atención">
         <button class="abs rp-aten-x" id="rpX" type="button" aria-label="Cerrar">x</button>
         <h3>Atención</h3><p>¿Está de acuerdo con el lanzamiento de la oferta?</p>
         <button class="abs rp-btn rp-bacep" id="rpAceptar" type="button">Aceptar</button>
@@ -261,7 +284,7 @@
       tiempo_total_ms: total,
       valor_inicial: PRECIO_BASE,
       valor_lanzado: resultado === "lanzada" ? valor : null,
-      detalle: { gano, rival_ms: rivalMs, dificultad, marcas, desde_apertura_ms: total !== null ? total + (marcas.latencia || 0) : null, eventos, pantalla: { w: innerWidth, h: innerHeight, dpr: devicePixelRatio, completa: !!document.fullscreenElement } },
+      detalle: { gano, rival_ms: rivalMs, dificultad, marcas, demoras, desde_apertura_ms: total !== null ? total + (marcas.latencia || 0) : null, eventos, pantalla: { w: innerWidth, h: innerHeight, dpr: devicePixelRatio, completa: !!document.fullscreenElement } },
     };
     let resp = null, fallo = "";
     try {
@@ -306,6 +329,7 @@
         <div><b>${errores}</b><span>Errores</span></div>
         <div><b>${resp && resp.posicion ? resp.posicion + " de " + resp.total_ranking : "—"}</b><span>Puesto en la firma</span></div>
       </div>
+      <p class="tenue" style="font-size:13px">Esta vez la plataforma tardó: ${[["ventana Colocación", demoras.colocacion], ["verificación Soy humano", demoras.captcha], ["ventana Atención", demoras.atencion]].filter((x) => x[1] !== undefined).map((x) => `${x[0]} ${fmtS(x[1])}`).join(" · ") || "—"}</p>
       ${fallo ? `<div class="aviso aviso-error" style="margin:0"><span>${esc(fallo)}</span></div>` : ""}
       ${selectorDificultad()}
       <div class="fila">

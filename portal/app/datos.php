@@ -4,6 +4,20 @@ declare(strict_types=1);
 const ESCENARIOS = ['subasta-v1' => 'Subasta (réplica de la rueda)', 'lanzamiento-v1' => 'Lanzamiento básico'];
 const ESCENARIO_DEFECTO = 'subasta-v1';
 
+/** Rangos de demora de la plataforma en la réplica: [mínimo, típico, máximo] en ms */
+function tiempos_subasta(): array
+{
+    $t = config('app.tiempos_subasta');
+    $ok = [];
+    foreach (['boton_tras_apertura', 'ventana_colocacion', 'captcha', 'ventana_atencion'] as $k) {
+        $v = $t[$k] ?? null;
+        if (is_array($v) && count($v) === 3 && $v[0] >= 0 && $v[0] <= $v[1] && $v[1] <= $v[2] && $v[2] <= 20000 && $v[0] < $v[2]) {
+            $ok[$k] = array_map('intval', array_values($v));
+        }
+    }
+    return $ok; // lo que falte usa los valores medidos en la grabación
+}
+
 function escenario_valido($e): string
 {
     return is_string($e) && isset(ESCENARIOS[$e]) ? $e : ESCENARIO_DEFECTO;

@@ -116,3 +116,6 @@
 .rp .rp-marcadores { color: #444; }
 .rp input.rp-pbin { width: 378px; min-height: 0; height: 34px; padding: 0; background: transparent; border: 0; border-bottom: 1px solid #c9ced6; border-radius: 0; box-shadow: none; color: #fff; font: 500 20px Roboto, "Segoe UI", Arial, sans-serif; }
 .rp input.rp-pbin:focus { border-bottom: 2px solid #2078cc; box-shadow: none; }
+/* Aparición de ventanas como en la plataforma (≈0,25 s) */
+.rp-modal.entra { animation: rp-entra 250ms ease-out both; }
+@keyframes rp-entra { from { opacity: 0; } to { opacity: 1; } }

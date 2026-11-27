@@ -35,7 +35,8 @@ if ($verEquipo) {
                   MAX(i.creado_en) ultima
                  FROM usuarios u LEFT JOIN intentos i ON i.usuario_id = u.id AND i.escenario = ? AND i.creado_en >= ?
                  WHERE u.firma_id = ? AND u.activo = 1 AND u.rol <> 'admin'
-                 GROUP BY u.id, u.nombre, u.usuario ORDER BY mejor IS NULL, mejor ASC", [$esc, $desde, $firmaId])->fetchAll();
+                 GROUP BY u.id, u.nombre, u.usuario
+                 ORDER BY MIN(CASE WHEN i.resultado = 'lanzada' THEN i.tiempo_total_ms END) IS NULL, MIN(CASE WHEN i.resultado = 'lanzada' THEN i.tiempo_total_ms END) ASC, u.nombre", [$esc, $desde, $firmaId])->fetchAll();
 }
 
 $filtro = '<div class="seg" role="group" aria-label="Periodo">';

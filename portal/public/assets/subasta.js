@@ -375,6 +375,7 @@
       <div class="fila">
         <button class="btn btn-rojo btn-grande" id="btnOtra" type="button">Jugar otra vez</button>
         <a class="btn" href="${cfg.resultados}">Ver resultados</a>
+        <a class="btn btn-sutil" href="${cfg.inicio}">Salir</a>
       </div>
       <p class="tenue" style="font-size:13px">Presione Enter para jugar otra vez.</p>`;
     centro.hidden = false;

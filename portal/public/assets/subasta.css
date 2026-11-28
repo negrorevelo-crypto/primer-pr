@@ -151,3 +151,12 @@
 .rp-lista::-webkit-scrollbar-thumb { background: #5f8de2; border-radius: 4px; }
 .rp-lista thead th { position: sticky; top: 0; z-index: 1; }
 .rp-vbar { display: none; }
+/* La réplica ocupa toda la ventana: sin la barra del portal encima */
+.juego.replica .juego-barra, .juego.replica.en-pausa .juego-barra { display: none !important; }
+.juego.replica, .juego.replica.en-pausa { grid-template-rows: 1fr; }
+/* Textos de filas en peso normal; solo los encabezados en negrilla */
+.rp-adj td { font-weight: 400; }
+.rp-lista td b { font-weight: 400; }
+/* Nada de la réplica puede quedar por encima de las tarjetas del juego */
+.rp { isolation: isolate; z-index: 0; }
+.juego.replica .juego-centro { z-index: 5; }

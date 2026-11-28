@@ -91,6 +91,7 @@ $otro = $replica ? 'lanzamiento-v1' : 'subasta-v1';
         <?php endif; ?>
         <div class="fila">
           <button class="btn btn-rojo btn-grande" id="btnIniciar" type="button" autofocus><?= icono('jugar') ?>Iniciar</button>
+          <a class="btn" href="<?= h(url('inicio.php')) ?>"><?= icono('salir') ?>Salir</a>
           <?php if ($est['mejor'] !== null): ?><span class="record"><?= icono('rombo') ?>Su récord: <?= h(fmt_s($est['mejor'])) ?></span><?php endif; ?>
         </div>
         <p class="tenue" style="font-size:13px">Escenario: <b><?= h(ESCENARIOS[$esc]) ?></b> · <a href="?e=<?= h($otro) ?>">Cambiar a <?= h(ESCENARIOS[$otro]) ?></a></p>

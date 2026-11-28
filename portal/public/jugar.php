@@ -36,7 +36,16 @@ $cfg = [
     'modo' => $cal['modo'] ?? null,
     'mejor' => $est['mejor'],
     'escenario' => $esc,
-    'tiempos' => tiempos_subasta(),
+    'tiempos' => tiempos_para_usuario($u),
+    'misTiempos' => mis_tiempos($u) ?? ['perfil' => 'oficial', 'tiempos' => aplicar_minimos(tiempos_subasta(), tiempos_minimos())],
+    'oficiales' => aplicar_minimos(tiempos_subasta(), tiempos_minimos()),
+    'minimos' => tiempos_minimos(),
+    'perfiles' => array_map(fn($p) => ['nombre' => $p[0], 'tiempos' => aplicar_minimos($p[1], tiempos_minimos())], TIEMPOS_PERFILES),
+    'momentos' => array_map(fn($m) => ['nombre' => $m[0], 'desc' => $m[1]], TIEMPOS_MOMENTOS),
+    'guardarAjustes' => url('api/guardar-ajustes.php'),
+    'iniciales' => mb_strtoupper(implode('', array_map(fn($p) => mb_substr($p, 0, 1), array_slice(preg_split('/\s+/', trim($u['nombre'])), 0, 2)))),
+    'operador' => $u['usuario'],
+    'codigoOperador' => str_pad((string)(1000 + (int)$u['id']), 4, '0', STR_PAD_LEFT),
     'nombreCorto' => explode(' ', trim($u['nombre']))[0],
     'token' => $_SESSION['partida']['token'],
     'csrf' => csrf_token(),
@@ -47,7 +56,7 @@ $cfg = [
 ];
 
 pagina_inicio('Rueda de entrenamiento', 'jugar', ['sin_riel' => true, 'clase_body' => 'juego-body']);
-if ($replica) echo '<link rel="stylesheet" href="' . h(url('assets/subasta.css')) . '?v=' . VERSION_ESTATICOS . '">';
+if ($replica) echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"><link rel="stylesheet" href="' . h(url('assets/subasta.css')) . '?v=' . VERSION_ESTATICOS . '">';
 $otro = $replica ? 'lanzamiento-v1' : 'subasta-v1';
 ?>
 <div class="juego" id="juego">
@@ -66,8 +75,9 @@ $otro = $replica ? 'lanzamiento-v1' : 'subasta-v1';
         <?php if ($replica): ?>
           <h2>Subasta descendente · réplica de la rueda</h2>
           <p>La pantalla reproduce la sesión grabada. El reloj avanza hasta la hora de apertura; cuando aparezca <b>Lanzar Oferta</b>, haga clic, marque <b>Soy humano</b>, presione <b>Lanzar</b> y luego <b>Aceptar</b>.</p>
-          <p class="tenue" style="font-size:14px">Un operador simulado compite por el calce. El tiempo se mide desde que aparece Lanzar Oferta hasta Aceptar. Los clics antes de tiempo cuentan como error.</p>
+          <p class="tenue" style="font-size:14px">Un operador simulado compite por el calce. Su <b>tiempo propio</b> va desde que aparece Lanzar Oferta hasta Aceptar, sin contar lo que tarda la plataforma. Los clics antes de tiempo cuentan como error.</p>
           <div id="selectorInicial"></div>
+          <div id="misTiempos"></div>
         <?php else: ?>
           <h2>Lanzamiento básico</h2>
           <p>Al iniciar, la pantalla pasa a modo completo y la rueda queda en pre-apertura. En un momento al azar suena el campanazo y aparece <b>LANZAR OFERTA</b>. Lance, ajuste el valor si quiere y confirme lo más rápido posible.</p>

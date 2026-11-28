@@ -93,7 +93,7 @@ cabeza($saludo . ', ' . $nombreCorto, h($u['firma_nombre'] ?? 'Cuenta individual
       <div class="panel-cuerpo">
         <?php if (count($serie) >= 2): ?>
           <?= grafica_tiempos($serie) ?>
-          <p class="tenue" style="font-size:13px;margin-top:6px">Últimas <?= count($serie) ?> ofertas lanzadas. Más abajo es más rápido; el punto dorado es su récord.</p>
+          <p class="tenue" style="font-size:13px;margin-top:6px">Tiempo propio de las últimas <?= count($serie) ?> ofertas lanzadas. Más abajo es más rápido; el punto dorado es su récord.</p>
         <?php else: ?>
           <div class="vacio"><p>Juegue dos partidas para ver su tendencia.</p></div>
         <?php endif; ?>

@@ -37,6 +37,7 @@ function db(): PDO
                 PDO::ATTR_EMULATE_PREPARES => false,
             ]);
             $pdo->exec("SET time_zone = '-05:00'");
+            asegurar_esquema($pdo);
         } catch (PDOException $e) {
             error_log('DB: ' . $e->getMessage());
             http_response_code(500);
@@ -57,6 +58,34 @@ function db(): PDO
         }
     }
     return $pdo;
+}
+
+/**
+ * Actualiza la base de datos de versiones anteriores (agrega columnas nuevas).
+ * Se ejecuta una sola vez: deja una marca en la carpeta de almacenamiento.
+ */
+function asegurar_esquema(PDO $pdo): void
+{
+    $marca = rtrim((string)config('almacenamiento'), '/\\') . '/.esquema-v2';
+    if (is_file($marca)) return;
+    $cambios = [
+        ['usuarios', 'ajustes_juego', 'ALTER TABLE usuarios ADD COLUMN ajustes_juego TEXT NULL'],
+        ['intentos', 'tiempo_propio_ms', 'ALTER TABLE intentos ADD COLUMN tiempo_propio_ms INT UNSIGNED NULL AFTER tiempo_total_ms'],
+    ];
+    try {
+        foreach ($cambios as [$tabla, $col, $sql]) {
+            $st = $pdo->prepare('SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?');
+            $st->execute([$tabla, $col]);
+            if (!(int)$st->fetchColumn()) $pdo->exec($sql);
+        }
+        @file_put_contents($marca, date('c'));
+    } catch (PDOException $e) {
+        error_log('Migración: ' . $e->getMessage());
+        http_response_code(500);
+        header('Content-Type: text/html; charset=utf-8');
+        exit('<p style="font:16px system-ui;margin:24px">Hay que actualizar la base de datos y el usuario no tiene permiso para hacerlo.<br>'
+            . 'Abra phpMyAdmin, elija la base y ejecute el archivo <b>database/migracion-v2.sql</b>. Luego recargue esta página.</p>');
+    }
 }
 
 function q(string $sql, array $params = []): PDOStatement

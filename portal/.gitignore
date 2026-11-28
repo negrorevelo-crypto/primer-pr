@@ -1,0 +1,4 @@
+app/config.php
+storage/*
+!storage/.htaccess
+!storage/web.config

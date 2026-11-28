@@ -1,0 +1,5 @@
+Fotos privadas de las solicitudes de Navidad (christmas-uploads/).
+Esta carpeta va al mismo nivel que public/ y config/, fuera de la raíz web.
+En Plesk, el usuario de PHP del sitio necesita permiso de escritura en christmas-uploads/.
+Las fotos solo se ven desde /admin/christmas.php con sesión iniciada.
+No subir el contenido de christmas-uploads/ al repositorio.

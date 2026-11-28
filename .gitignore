@@ -1,0 +1,16 @@
+# Credenciales reales de Plesk: nunca al repositorio
+chelart/config/plesk-secrets.php
+chelart/config/plesk-secrets*.php
+!chelart/config/plesk-secrets.example.php
+chelart/public/hash-temporal.php
+# Entorno local
+.env
+*.log
+entregas/
+# SumaRitmo (aturitmo): credenciales reales
+aturitmo/config/plesk-secrets.php
+aturitmo/config/plesk-secrets*.php
+!aturitmo/config/plesk-secrets.example.php
+# Fotos de clientes (campaña de Navidad): datos privados, nunca al repositorio
+chelart/storage/christmas-uploads/*
+!chelart/storage/christmas-uploads/.gitkeep

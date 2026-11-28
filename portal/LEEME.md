@@ -34,6 +34,16 @@ Pago (transferencia / Nequi)  →  Administrador activa la licencia  →  Corred
 | **Subasta (réplica de la rueda)** | La pantalla de subasta descendente de la grabación del 24 de noviembre: reloj hasta la apertura, aparece **Lanzar Oferta**, ventana **Colocación** con precio base y **Soy humano**, **Lanzar** y **Aceptar**. Un operador simulado compite por el calce (normal 4,5 s, exigente 3,5 s, experto 2,8 s). |
 | **Lanzamiento básico** | El juego original, con las ventanas del puesto calibrado. |
 
+**Tiempos de la plataforma simulada:** en **Administración › Simulador** se ajusta cuánto tarda cada momento de la réplica: el botón tras la apertura, la ventana Colocación, la verificación Soy humano y la ventana Atención. Cada partida sortea un valor entre el mínimo y el máximo, casi siempre cerca del típico. Hay tres perfiles listos: *Como la grabación*, *Rueda congestionada* y *Rueda ágil*. El ajuste se guarda en `storage/ajustes-simulador.json`.
+
+**Tiempos de cada corredor:** en la tarjeta de inicio del juego, **Mis tiempos de la plataforma** deja elegir Oficiales, Como la grabación, Rueda congestionada, Rueda ágil o Personalizados. Nadie puede bajar de los **mínimos para corredores** que fija el administrador en **Simulador**.
+
+**Tiempo propio:** es el tiempo total menos lo que tardó la plataforma (ventanas y captcha). Las marcas y el ranking usan el tiempo propio, así que los tiempos que elija cada corredor no cambian su posición.
+
+**Sonidos:** la réplica reproduce los avisos sonoros de la grabación (ventana Colocación, ventana Atención y oferta de otro operador) con el sintetizador del navegador. Cada corredor puede apagarlos.
+
+**Actualización de la base de datos:** desde esta versión el portal agrega solo las columnas nuevas la primera vez que se abre. Si el usuario de la base no tiene permiso, el portal pide ejecutar `database/migracion-v2.sql` en phpMyAdmin.
+
 Cada escenario tiene sus propias marcas y su propio ranking. La réplica no usa el logo ni la dirección de la plataforma real, y se identifica como simulación.
 
 ## Base de datos

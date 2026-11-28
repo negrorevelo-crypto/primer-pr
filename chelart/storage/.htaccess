@@ -1,0 +1,2 @@
+# Carpeta privada: nunca debe servirse por la web.
+Require all denied

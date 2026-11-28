@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-const VERSION_ESTATICOS = '20261127b';
+const VERSION_ESTATICOS = '20261128d';
 
 function icono(string $n, string $clase = 'ico'): string
 {
@@ -110,6 +110,7 @@ function pagina_inicio(string $titulo, string $seccion = '', array $o = []): voi
             'admin-usuarios' => ['admin/index.php', 'Usuarios', 'usuarios'],
             'admin-firmas' => ['admin/firmas.php', 'Firmas y cupos', 'firmas'],
             'admin-pagos' => ['admin/pagos.php', 'Pagos', 'pagos'],
+            'admin-simulador' => ['admin/simulador.php', 'Simulador', 'reloj'],
         ];
         foreach ($adm as $k => [$href, $txt, $ic]) {
             echo '<a href="' . h(url($href)) . '"' . ($seccion === $k ? ' aria-current="page"' : '') . '>' . icono($ic) . '<span>' . $txt . '</span></a>';

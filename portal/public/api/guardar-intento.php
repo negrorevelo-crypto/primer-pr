@@ -54,6 +54,20 @@ if ($resultado === 'lanzada') {
 }
 
 $escenario = escenario_valido($d['escenario'] ?? 'lanzamiento-v1');
+
+// Tiempo propio: el total menos lo que tardó la plataforma simulada en mostrar ventanas y verificar el captcha
+$propio = $total;
+if ($total !== null && $escenario === 'subasta-v1') {
+    $dem = $d['detalle']['demoras'] ?? [];
+    $espera = 0;
+    foreach (['colocacion', 'captcha', 'atencion'] as $k) {
+        $v = $dem[$k] ?? null;
+        if (!is_numeric($v) || $v < 0 || $v > 20000) salir_json(400, ['ok' => false, 'error' => 'Tiempos inválidos.', 'token' => $nuevo]);
+        $espera += (int)$v;
+    }
+    $propio = $total - $espera;
+    if ($propio < 100) salir_json(400, ['ok' => false, 'error' => 'Tiempos inválidos.', 'token' => $nuevo]);
+}
 $detalle = json_encode($d['detalle'] ?? null, JSON_UNESCAPED_UNICODE);
 if (strlen((string)$detalle) > 8000) $detalle = null;
 
@@ -61,10 +75,10 @@ $uid = (int)$u['id'];
 $antes = estadisticas($uid, $escenario)['mejor'];
 $cal = ultima_calibracion($uid);
 
-q('INSERT INTO intentos (usuario_id, firma_id, escenario, resultado, tiempo_reaccion_ms, tiempo_total_ms, valor_inicial, valor_lanzado, errores, calibracion_id, detalle) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
-    [$uid, $u['firma_id'], $escenario, $resultado, $reac, $total, $vIni, $vLan, $errores, $cal['id'] ?? null, $detalle]);
+q('INSERT INTO intentos (usuario_id, firma_id, escenario, resultado, tiempo_reaccion_ms, tiempo_total_ms, tiempo_propio_ms, valor_inicial, valor_lanzado, errores, calibracion_id, detalle) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
+    [$uid, $u['firma_id'], $escenario, $resultado, $reac, $total, $propio, $vIni, $vLan, $errores, $cal['id'] ?? null, $detalle]);
 
-$esRecord = $resultado === 'lanzada' && ($antes === null || $total < $antes);
+$esRecord = $resultado === 'lanzada' && ($antes === null || $propio < $antes);
 $posicion = null;
 $rank = ranking_firma($u['firma_id'] ? (int)$u['firma_id'] : null, date('Y-m-d', strtotime('-30 days')), $escenario);
 foreach ($rank as $i => $r) if ((int)$r['id'] === $uid) $posicion = $i + 1;
@@ -74,7 +88,8 @@ salir_json(200, [
     'token' => $nuevo,
     'es_record' => $esRecord,
     'mejor_anterior' => $antes,
-    'mejor' => $esRecord ? $total : $antes,
+    'mejor' => $esRecord ? $propio : $antes,
+    'propio' => $propio,
     'posicion' => $posicion,
     'total_ranking' => count($rank),
 ]);

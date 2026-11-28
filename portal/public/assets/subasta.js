@@ -56,20 +56,30 @@
   let mis = cfg.misTiempos || { perfil: "oficial", tiempos: cfg.oficiales };
 
   // ---------- Datos de la subasta ----------
-  const num = Math.floor(rnd(20000, 29999)), ident = Math.floor(rnd(400000000, 499999999)), idProd = Math.floor(rnd(100000000, 199999999));
-  const PRECIO_BASE = 450000000;
-  const DESC = "BI-190-SERVICIO-VIGILANCIA";
-  const SUBYACENTE = "13328-SERVICIO DE VIGILANCIA Y SEGURIDAD";
+  // Subastas de servicio de vigilancia (Rueda de Negociación): consecutivo, nombre, entidad, presupuesto, apertura y publicación
+  const SUBASTAS = [
+    { cons: 571, nombre: "BI-571-MEDICINA-LEGAL-VIGILANCIA-ASEO", entidad: "INSTITUTO NACIONAL DE MEDICINA LEGAL Y CIENCIAS FORENSES", sub: "13328-SERVICIO DE VIGILANCIA - SERVICIO INTEGRAL DE ASEO Y CAFETERÍA", presupuesto: 85219975947, apertura: [25, 10, 2026], publicacion: [3, 11, 2026] },
+    { cons: 568, nombre: "BI-568-ALCALDIA-KENNEDY-VIGILANCIA", entidad: "ALCALDIA LOCAL DE KENNEDY", sub: "13328-SERVICIO DE VIGILANCIA", presupuesto: 1522084428, apertura: [21, 10, 2026], publicacion: [5, 11, 2026] },
+    { cons: 564, nombre: "BI-564-ICBF-VIGILANCIA", entidad: "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR-I.C.B.F.", sub: "13328-SERVICIO DE VIGILANCIA", presupuesto: 20031374369, apertura: [12, 10, 2026], publicacion: [22, 10, 2026] },
+    { cons: 558, nombre: "BI-558-SCRD-VIGILANCIA", entidad: "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE", sub: "13328-SERVICIO DE VIGILANCIA", presupuesto: 236289849, apertura: [15, 9, 2026], publicacion: [28, 9, 2026] },
+    { cons: 551, nombre: "BI-551-GOB-CUNDINAMARCA-VIGILANCIA", entidad: "GOBERNACIÓN DE CUNDINAMARCA - SECRETARÍA GENERAL Y DE CERCANÍA AL CIUDADANO", sub: "13328-SERVICIO DE VIGILANCIA", presupuesto: 1587667575, apertura: [27, 8, 2026], publicacion: [9, 9, 2026] },
+  ].map((x) => ({ ...x, id: Number(`${x.cons}112026`), codigoBolsa: 109000000 + x.cons * 977 }));
+  const OPERADOR = cfg.operadorSim || "AAcuña", COD_OPERADOR = cfg.codigoOperadorSim || "1359";
+  const fechaTxt = ([d, m, y]) => `${String(d).padStart(2, "0")}/${String(m).padStart(2, "0")}/${y}`;
+  // Adjudicaciones anteriores, consistentes con las subastas de la lista (precio un poco por debajo del presupuesto)
+  const ADJ_PREVIAS = SUBASTAS.slice(2).map((x, i) => ({ x, precio: Math.round(x.presupuesto * [0.947, 0.962, 0.931][i]) }));
+  let actual = SUBASTAS[0], num = 0, ident = 0, idProd = 0, PRECIO_BASE = 0, DESC = "", SUBYACENTE = "";
+  function elegirSubasta() {
+    actual = SUBASTAS[Math.floor(Math.random() * 2)]; // se juegan las dos en curso; las demás ya fueron adjudicadas
+    num = 22000 + actual.cons; ident = actual.id; idProd = actual.codigoBolsa;
+    PRECIO_BASE = actual.presupuesto; DESC = actual.nombre; SUBYACENTE = actual.sub;
+  }
+  elegirSubasta();
+  const filaAdj = (cod, subasta, sub, op, codOp, precio, fec) => `<tr><td>${cod}</td><td>${subasta.slice(0, 9)}...</td><td>${sub.slice(0, 13)}...</td><td>${esc(op)}</td><td>${esc(codOp)}</td><td>${fmtCOP(precio)}</td><td>1</td><td>${fec}</td></tr>`;
 
   function pantalla() {
-    const hoy = new Date();
-    const otras = [
-      [ident, DESC, hoy],
-      [ident + 1000000, "SUBASTA-LECHE-LIQUIDA-REGIONAL-1", hoy],
-      [ident + 2000000, "SUBASTA-LECHE-LIQUIDA-REGIONAL-2", hoy],
-      [ident + 3000000, "BI-191-DISPOSITIVOS-TECNOLOGICOS", new Date(hoy.getTime() + 6 * 86400000)],
-    ];
-    const filasLista = otras.map(([id, n, d]) => `<tr><td><a>${id}</a></td><td><a>Entrar</a></td><td><b>${n}</b></td><td class="d">${dia(d)}</td><td class="d">${dia(d)}</td></tr>`).join("");
+    const filasLista = SUBASTAS.map((x) => `<tr title="${esc(x.entidad)} · Presupuesto ${fmtCOP(x.presupuesto)}"><td><a>${x.id}</a></td><td><a>Entrar</a></td><td><b>${x.nombre}</b></td><td class="d">${fechaTxt(x.apertura)}</td><td class="d">${fechaTxt(x.publicacion)}</td></tr>`).join("");
+    const filasAdj = ADJ_PREVIAS.map(({ x, precio }) => filaAdj(x.codigoBolsa, x.nombre, x.sub, OPERADOR, COD_OPERADOR, precio, fechaTxt(x.publicacion))).join("");
     const campo = (l, v, id = "") => `<div class="rp-campo"><span class="l">${l}</span><span class="v"${id ? ` id="${id}"` : ""}>${v}</span></div>`;
     return `<div class="rp" id="rp">
       <header class="rp-cab">
@@ -96,7 +106,7 @@
           </div>
           <div class="rp-der">
             <div class="rp-tabs"><span class="sel">ADJUDICACIÓN <i>×</i></span></div>
-            <div class="rp-adj"><table><thead><tr><th>Código de Bolsa</th><th>Subasta</th><th>Subyacente</th><th>Operador</th><th>Código de Operador</th><th>Precio</th><th>Cantidad</th><th>Fecha</th></tr></thead><tbody id="rpAdj"></tbody></table></div>
+            <div class="rp-adj"><table><thead><tr><th>Código de Bolsa</th><th>Subasta</th><th>Subyacente</th><th>Operador</th><th>Código de Operador</th><th>Precio</th><th>Cantidad</th><th>Fecha</th></tr></thead><tbody id="rpAdj">${filasAdj}</tbody></table></div>
             <div class="rp-barra" style="width:98%"></div>
           </div>
         </section>
@@ -171,6 +181,7 @@
   function iniciar() {
     audio();
     limpiar();
+    elegirSubasta();
     juego.classList.remove("en-pausa");
     centro.hidden = true;
     montar();
@@ -300,7 +311,7 @@
       $("#rpPostura").textContent = fmtCOP(valor);
       $("#rpPuja").textContent = "P";
       $("#rpPos").textContent = gano ? "1" : "2";
-      $("#rpAdj").innerHTML = `<tr><td>${idProd}</td><td>${DESC.slice(0, 9)}...</td><td>${SUBYACENTE.slice(0, 13)}...</td><td>${gano ? esc(cfg.operador) : "Otro operador"}</td><td>${gano ? esc(cfg.codigoOperador) : "—"}</td><td>${fmtCOP(valor)}</td><td>1</td><td>${dia(new Date())}</td></tr>`;
+      $("#rpAdj").insertAdjacentHTML("afterbegin", filaAdj(idProd, DESC, SUBYACENTE, gano ? OPERADOR : "Otro operador", gano ? COD_OPERADOR : "—", valor, dia(new Date())));
       if (gano) $("#rpPB").classList.add("verde");
       else aviso("error", "Algo salió mal al lanzar la postura.");
     }

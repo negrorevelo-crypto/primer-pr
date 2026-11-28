@@ -145,3 +145,9 @@
 .mt-tabla input { width: 72px; min-height: 30px; padding: 4px 8px; }
 .mt-tabla input:disabled { background: var(--suelo); color: var(--texto-2); }
 .tarjeta-juego { max-height: calc(100vh - 120px); overflow: auto; }
+/* La lista de subastas se desplaza de verdad para ver todas las filas */
+.rp-lista { overflow-y: auto; scrollbar-width: thin; scrollbar-color: #5f8de2 transparent; padding-right: 0; }
+.rp-lista::-webkit-scrollbar { width: 7px; }
+.rp-lista::-webkit-scrollbar-thumb { background: #5f8de2; border-radius: 4px; }
+.rp-lista thead th { position: sticky; top: 0; z-index: 1; }
+.rp-vbar { display: none; }

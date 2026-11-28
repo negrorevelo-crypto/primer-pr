@@ -46,6 +46,9 @@ $cfg = [
     'iniciales' => mb_strtoupper(implode('', array_map(fn($p) => mb_substr($p, 0, 1), array_slice(preg_split('/\s+/', trim($u['nombre'])), 0, 2)))),
     'operador' => $u['usuario'],
     'codigoOperador' => str_pad((string)(1000 + (int)$u['id']), 4, '0', STR_PAD_LEFT),
+    // Operador que aparece en la tabla de adjudicación del simulador
+    'operadorSim' => config('app.operador_simulado') ?: 'AAcuña',
+    'codigoOperadorSim' => config('app.codigo_operador_simulado') ?: '1359',
     'nombreCorto' => explode(' ', trim($u['nombre']))[0],
     'token' => $_SESSION['partida']['token'],
     'csrf' => csrf_token(),

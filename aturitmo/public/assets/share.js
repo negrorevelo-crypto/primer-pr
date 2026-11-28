@@ -707,6 +707,8 @@
       const ext = type === 'video/mp4' ? 'mp4' : 'webm';
       downloadVideo.href = state.videoUrl;
       downloadVideo.download = fileName(ext);
+      downloadVideo.lastChild.textContent = ' Descargar video';
+      sendVideo.hidden = false;
       previewVideo.src = state.videoUrl;
       previewVideo.hidden = false;
       previewVideo.play().catch(() => {});
@@ -726,15 +728,18 @@
     }
   }
 
-  function download(blob, name) {
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = name;
-    document.body.append(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 4000);
+  // Sin clics automáticos: el archivo se ofrece en un enlace visible que la persona pulsa.
+  let offeredUrl = '';
+  function offerDownload(blob, name, isVideo) {
+    if (offeredUrl && offeredUrl !== state.videoUrl) URL.revokeObjectURL(offeredUrl);
+    offeredUrl = isVideo ? state.videoUrl : URL.createObjectURL(blob);
+    downloadVideo.href = offeredUrl;
+    downloadVideo.download = name;
+    downloadVideo.lastChild.textContent = isVideo ? ' Descargar video' : ' Descargar imagen';
+    sendVideo.hidden = !isVideo;
+    resultText.textContent = isVideo ? resultText.textContent : 'Tu imagen está lista (PNG, 1080×1920).';
+    result.hidden = false;
+    downloadVideo.focus();
   }
   async function shareBlob(blob, name) {
     const file = new File([blob], name, { type: blob.type });
@@ -748,8 +753,8 @@
         if (error.name === 'AbortError') { setStatus(''); return; }
       }
     }
-    download(blob, name);
-    setStatus('Se descargó el archivo. Súbelo desde tu galería a TikTok, Instagram o WhatsApp.');
+    offerDownload(blob, name, blob.type.startsWith('video/'));
+    setStatus('Pulsa «Descargar» y luego súbelo desde tu galería a TikTok, Instagram o WhatsApp.');
   }
 
   async function shareImage() {

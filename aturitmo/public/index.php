@@ -65,7 +65,7 @@ function icon(string $name, string $class = 'icon'): string
   <link rel="stylesheet" href="assets/app.css?v=20261128-1">
   <script src="assets/app.js?v=20261128-1" defer></script>
 <?php if ($user): ?>
-  <script src="assets/share.js?v=20261128-1" defer></script>
+  <script src="assets/share.js?v=20261128-2" defer></script>
 <?php endif; ?>
 </head>
 <body class="<?= $user ? 'is-app' : 'is-auth' ?>"<?= $user ? ' data-login-token="' . e((string) ($_SESSION['login_token'] ?? '')) . '"' : '' ?>>

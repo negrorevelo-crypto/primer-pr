@@ -1,6 +1,6 @@
 # Subir SumaRitmo Nivel 1 Piloto a Plesk
 
-Paquete: `sumaritmo-nivel1-piloto-v1.11.zip`
+Paquete: `sumaritmo-nivel1-piloto-v1.11.1.zip`
 
 Esta actualización renueva la apariencia de la app y de la página pública para que se lean bien en teléfono, tablet y escritorio, y agrega **Comparte tu logro**: un video vertical (y una imagen) para TikTok, Instagram o WhatsApp. No cambia la base de datos.
 
@@ -27,7 +27,7 @@ No requiere migraciones. Si aún no aplicaste `migration-v7.sql`, hazlo primero.
 ## Actualizar los archivos
 
 1. En **Archivos**, entra a la carpeta raíz del subdominio `aturitmo.revelco.com.co`.
-2. Sube `sumaritmo-nivel1-piloto-v1.11.zip` y extráelo allí. El ZIP contiene `config/`, `public/` y `sql/`.
+2. Sube `sumaritmo-nivel1-piloto-v1.11.1.zip` y extráelo allí. El ZIP contiene `config/`, `public/` y `sql/`.
 3. Cuando Plesk pregunte si reemplazar, reemplaza los archivos de la app. Conserva `config/plesk-secrets.php`.
 4. Abre `https://aturitmo.revelco.com.co` y actualiza con **Ctrl+F5** (en el teléfono, cierra y vuelve a abrir la pestaña).
 

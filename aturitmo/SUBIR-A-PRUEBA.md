@@ -1,6 +1,6 @@
 # Subir SumaRitmo Nivel 1 Piloto a Plesk
 
-Paquete: `sumaritmo-nivel1-piloto-v1.11.1.zip`
+Paquete: `sumaritmo-nivel1-piloto-v1.11.2.zip`
 
 Esta actualización renueva la apariencia de la app y de la página pública para que se lean bien en teléfono, tablet y escritorio, y agrega **Comparte tu logro**: un video vertical (y una imagen) para TikTok, Instagram o WhatsApp. No cambia la base de datos.
 
@@ -27,9 +27,10 @@ No requiere migraciones. Si aún no aplicaste `migration-v7.sql`, hazlo primero.
 ## Actualizar los archivos
 
 1. En **Archivos**, entra a la carpeta raíz del subdominio `aturitmo.revelco.com.co`.
-2. Sube `sumaritmo-nivel1-piloto-v1.11.1.zip` y extráelo allí. El ZIP contiene `config/`, `public/` y `sql/`.
+2. Sube `sumaritmo-nivel1-piloto-v1.11.2.zip` y extráelo allí. El ZIP contiene `config/`, `public/` y `sql/`.
 3. Cuando Plesk pregunte si reemplazar, reemplaza los archivos de la app. Conserva `config/plesk-secrets.php`.
-4. Abre `https://aturitmo.revelco.com.co` y actualiza con **Ctrl+F5** (en el teléfono, cierra y vuelve a abrir la pestaña).
+4. La página pública ahora es `public/landing.html`. Puedes borrar el `public/landing.php` antiguo del servidor; ya no se usa.
+5. Abre `https://aturitmo.revelco.com.co` y actualiza con **Ctrl+F5** (en el teléfono, cierra y vuelve a abrir la pestaña).
 
 ## Recorrido de prueba
 
@@ -41,6 +42,8 @@ No requiere migraciones. Si aún no aplicaste `migration-v7.sql`, hazlo primero.
 - Pulsa **Compartir imagen** y confirma que se comparte o descarga un PNG vertical.
 
 ## Notas
+
+- Windows Defender marcaba `landing.php` como `Trojan:Script/Ulthar.A!ml`, un falso positivo de su detección automática (el archivo era HTML puro, sin código PHP). Desde v1.11.2 esa página es `landing.html`.
 
 - El video se crea en el dispositivo. Safari (iPhone) y Chrome recientes graban MP4; si un navegador solo graba WebM, la app lo avisa y se puede usar la imagen.
 - La grabación necesita que la pantalla quede abierta durante esos segundos; si la persona cambia de app, el video puede salir incompleto.

@@ -39,7 +39,8 @@ $error = $errors[(string) ($_GET['error'] ?? '')] ?? '';
 $showAuth = $creating || $error !== '' || isset($_GET['entrar']) || isset($_GET['eliminada']);
 $showAuth = $showAuth || isset($_GET['bienvenida']);
 if (!$user && !$showAuth) {
-    require __DIR__ . '/landing.php';
+    header('Content-Type: text/html; charset=utf-8');
+    readfile(__DIR__ . '/landing.html');
     exit;
 }
 $days = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];

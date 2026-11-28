@@ -11,6 +11,24 @@
         ],
         "createdAt": "2026-11-26T18:35:59.682Z",
         "reason": "Claude: la réplica reproduce la tipografía de la plataforma real vista en la grabación del usuario; fidelidad del simulador"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "archivo",
+        "files": [
+          "aturitmo/public/assets/app.css"
+        ],
+        "createdAt": "2026-11-28T16:47:29.393Z",
+        "reason": "Claude: DESIGN.md describe el portal Revelco; SumaRitmo es otra marca con su propia tipografía"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "archivo",
+        "files": [
+          "aturitmo/public/assets/landing.css"
+        ],
+        "createdAt": "2026-11-28T16:47:29.399Z",
+        "reason": "Claude: DESIGN.md describe el portal Revelco; SumaRitmo es otra marca con su propia tipografía"
       }
     ]
   }

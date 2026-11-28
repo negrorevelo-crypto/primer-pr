@@ -7,3 +7,7 @@ chelart/public/hash-temporal.php
 .env
 *.log
 entregas/
+# SumaRitmo (aturitmo): credenciales reales
+aturitmo/config/plesk-secrets.php
+aturitmo/config/plesk-secrets*.php
+!aturitmo/config/plesk-secrets.example.php
